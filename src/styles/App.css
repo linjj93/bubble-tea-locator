@@ -34,7 +34,7 @@ header {
 .search-brand p,
 .search-location p {
   display: flex;
-
+  min-width: 35%;
   align-items: center;
 }
 
@@ -51,36 +51,4 @@ header {
 
 .outlet-wrapper {
   overflow: scroll;
-}
-
-ul li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  grid-template-columns: repeat(3, 1fr);
-  font-size: 1em;
-  padding: 0.5em;
-  background-color: #d7e4ed;
-  font-weight: 700;
-  color: black;
-}
-
-ul li span {
-  flex: 2;
-  text-align: center;
-}
-
-ul li span:first-child {
-  flex: 1;
-}
-
-ul li:first-child {
-  border-bottom: double;
-  background-color: #5e8199;
-  color: white;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
 }
