@@ -1,3 +1,90 @@
+import koi from "./koi.png";
+import koiExpress from "./Koi Express.png";
+import gongCha from "./GongCha.png";
+import liHo from "./LiHo.png";
+import tigerSugar from "./Tiger Sugar.png";
+// import eachACup from "./Each-A-Cup.png";
+import tenRen from "./tenren.png";
+
+const koiShops = [
+  {
+    id: "koi-rafflescity",
+    logo: koiExpress,
+    name: "Raffles City",
+
+    latitude: 1.293418,
+    longitude: 103.851561
+  },
+  {
+    id: "koi-citylink",
+    logo: koi,
+    name: "Citylink Mall",
+    latitude: 1.2928431,
+    longitude: 103.8508764
+  }
+];
+
+const gongChaShops = [
+  {
+    id: "gongcha-onerafflesplace",
+    logo: gongCha,
+    name: "One Raffles Place",
+    latitude: 1.2843399,
+    longitude: 103.8509823
+  }
+];
+
+const liHoShops = [
+  {
+    id: "liho-thecentral",
+    logo: liHo,
+    name: "The Central",
+    latitude: 1.2891413,
+    longitude: 103.8447874
+  },
+  {
+    id: "liho-fareastsquare",
+    logo: liHo,
+    name: "Far East Square",
+    latitude: 1.2831,
+    longitude: 103.848341
+  },
+  {
+    id: "liho-onerafflesplace",
+    logo: liHo,
+    name: "One Raffles Place",
+    latitude: 1.2844078,
+    longitude: 103.8487931
+  }
+];
+
+const tigerSugarShops = [
+  {
+    id: "tiger-chinatown",
+    logo: tigerSugar,
+    name: "Chinatown Point",
+    latitude: 1.2856316,
+    longitude: 103.8443801
+  },
+  {
+    id: "tiger-capitolpiazza",
+    logo: tigerSugar,
+    name: "Capitol Piazza",
+    latitude: 1.2933627,
+    longitude: 103.8497737
+  }
+];
+
+const tenRenShops = [
+  {
+    id: "tenren-chinatown",
+    logo: tenRen,
+    name: "Chinatown Point",
+    latitude: 1.2849138,
+    longitude: 103.8424951
+  }
+];
+
 const userLocation = [
   {
     id: "NE5",
@@ -36,71 +123,13 @@ const userLocation = [
     longitude: 103.8506241
   }
 ];
-const brands = ["Gong Cha", "Koi", "LiHo", "Tiger Sugar"];
+const brands = ["Show me all!", "Gong Cha", "Koi", "LiHo", "Tiger Sugar"];
 const shops = [
-  {
-    id: "koi-rafflescity",
-    logo: "../assets/Koi.png",
-    name: "Koi Express Raffles City",
-    latitude: 1.293418,
-    longitude: 103.851561
-  },
-  {
-    id: "koi-citylink",
-    logo: "../assets/Koi.png",
-    name: "Koi Citylink Mall",
-    latitude: 1.2928431,
-    longitude: 103.8508764
-  },
-  {
-    id: "gongcha-rafflesplace",
-    logo: "../assets/GongCha.png",
-    name: "Gong Cha Raffles Place",
-    latitude: 1.2844844,
-    longitude: 103.8488933
-  },
-  {
-    id: "liho-clarkequay",
-    logo: "../assets/LiHo.png",
-    name: "Liho The Central",
-    latitude: 1.2891413,
-    longitude: 103.8447874
-  },
-  {
-    id: "liho-fareastsquare",
-    logo: "../assets/LiHo.png",
-    name: "LiHo Far East Square",
-    latitude: 1.2831,
-    longitude: 103.848341
-  },
-  {
-    id: "liho-onerafflesplace",
-    logo: "../assets/LiHo.png",
-    name: "Liho One Raffles Place",
-    latitude: 1.2844078,
-    longitude: 103.8487931
-  },
-  {
-    id: "tiger-chinatown",
-    logo: "../assets/Tiger Sugar.png",
-    name: "Tiger Sugar Chinatown Point",
-    latitude: 1.2856316,
-    longitude: 103.8443801
-  },
-  {
-    id: "tiger-capitolpiazza",
-    logo: "../assets/Tiger Sugar.png",
-    name: "Tiger Sugar Capitol",
-    latitude: 1.2933627,
-    longitude: 103.8497737
-  },
-  {
-    id: "tenren-chinatown",
-    logo: "TenRen",
-    name: "TenRen Chinatown Point",
-    latitude: 1.2849138,
-    longitude: 103.8424951
-  }
+  ...koiShops,
+  ...gongChaShops,
+  ...liHoShops,
+  ...tigerSugarShops,
+  ...tenRenShops
 ];
 
 export { brands, userLocation, shops };
