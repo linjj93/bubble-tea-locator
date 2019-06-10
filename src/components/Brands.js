@@ -12,7 +12,6 @@ function Brands(props) {
     <div className="search-brand">
       <p>Craving For:</p>
       <select id="brand-dropdown" onChange={props.onChange} multiple>
-        <option>Any</option>
         {brands}
       </select>
     </div>

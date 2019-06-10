@@ -1,15 +1,30 @@
 import React from "react";
+import "../styles/Listing.css";
 
 function Listing(props) {
-  const thereIsNoSelection = props.nearestShops === undefined;
+  const thereIsNoSelection = !props.nearestShops.length;
   if (thereIsNoSelection) {
-    return <h1>Select dropdown</h1>;
+    return (
+      <React.Fragment>
+        <ul className="outlet-wrapper">
+          <li>
+            <span>Shop</span>
+            <span>Shop Name</span>
+            <span>Distance (in metres)</span>
+          </li>
+          <p>Select your craving, location or both!</p>
+        </ul>
+        )
+      </React.Fragment>
+    );
   }
 
   const listOfShops = props.nearestShops.map(shop => {
     return (
       <li key={shop.id}>
-        <span>{shop.logo}</span>
+        <span>
+          <img src={shop.logo} alt={shop.id} />
+        </span>
         <span>{shop.name}</span>
         <span>{shop.distanceFromOrigin}</span>
       </li>
@@ -17,14 +32,16 @@ function Listing(props) {
   });
 
   return (
-    <ul className="outlet-wrapper">
-      <li>
-        <span>Shop Logo</span>
-        <span>Shop Name</span>
-        <span>Distance (in metres)</span>
-      </li>
-      {listOfShops}
-    </ul>
+    <React.Fragment>
+      <ul className="outlet-wrapper">
+        <li>
+          <span>Shop</span>
+          <span>Location</span>
+          <span>Distance (in metres)</span>
+        </li>
+        {listOfShops}
+      </ul>
+    </React.Fragment>
   );
 }
 

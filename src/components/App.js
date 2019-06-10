@@ -28,7 +28,6 @@ class App extends React.Component {
         break;
       }
     }
-
     this.findNearestShops();
   }
 
@@ -48,21 +47,21 @@ class App extends React.Component {
   }
 
   findNearestShops() {
-    if (this.state.selectedLocation === undefined) {
-      return;
-    } else {
-      const originLat = this.state.selectedLocation.latitude;
-      const originLong = this.state.selectedLocation.longitude;
-      let Listing = this.state.shops;
-      for (let shop of Listing) {
-        shop.distanceFromOrigin = calcDistance(
-          originLat,
-          originLong,
-          shop.latitude,
-          shop.longitude
-        );
-        shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(3) * 1000;
-      }
+    // if (!this.state.selectedLocation.length) {
+    //   return;
+    // } else {
+    const originLat = this.state.selectedLocation.latitude;
+    const originLong = this.state.selectedLocation.longitude;
+    let Listing = this.state.shops;
+    for (let shop of Listing) {
+      shop.distanceFromOrigin = calcDistance(
+        originLat,
+        originLong,
+        shop.latitude,
+        shop.longitude
+      );
+      shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(3) * 1000;
+      // }
       Listing = Listing.sort((a, b) =>
         a.distanceFromOrigin > b.distanceFromOrigin ? 1 : -1
       );
@@ -76,7 +75,7 @@ class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div class="search-wrapper">
+        <div className="search-wrapper">
           <Brands
             brands={this.state.brands}
             onChange={this.extractChosenBrands.bind(this)}
