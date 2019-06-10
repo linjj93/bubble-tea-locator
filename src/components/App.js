@@ -10,11 +10,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      shops,
-      brands,
-      userLocation,
       selectedBrands: [],
-      selectedLocation: "",
+      selectedLocation: "None",
       nearestShops: []
     };
   }
@@ -34,31 +31,17 @@ class App extends React.Component {
         chosen.push(choice.value);
       }
     }
-
     this.setState({
       selectedBrands: chosen
     });
+
     this.findNearestShops();
   }
 
-  filterByBrands() {
-    let filteredBrands = this.state.shops;
-    filteredBrands = filteredBrands.filter(shop =>
-      this.state.selectedBrands.includes(shop.brand)
-    );
-    console.log(filteredBrands);
-    this.setState({
-      shops: filteredBrands
-    });
-  }
-
-  filterByLocation() {}
-
   findNearestShops() {
-    let Listing = this.state.shops;
-    for (let locObj of this.state.userLocation) {
+    let Listing = shops;
+    for (let locObj of userLocation) {
       if (this.state.selectedLocation === locObj.name) {
-        console.log(this.state.selectedLocation);
         const originLat = locObj.latitude;
         const originLong = locObj.longitude;
 
@@ -71,10 +54,10 @@ class App extends React.Component {
           );
           shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(3) * 1000;
         }
+
         Listing = Listing.sort((a, b) =>
           a.distanceFromOrigin > b.distanceFromOrigin ? 1 : -1
         );
-
         break;
       }
     }
@@ -88,13 +71,11 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <div className="search-wrapper">
-          <Brands
-            brands={this.state.brands}
-            onChange={this.selectBrands.bind(this)}
-          />
+          <Brands brands={brands} onChange={this.selectBrands.bind(this)} />
           <LocationSelect
             onChange={this.selectLocation.bind(this)}
-            userLocation={this.state.userLocation}
+            userLocation={userLocation}
+            selectedLocation={this.state.selectedLocation}
           />
         </div>
         <Listing nearestShops={this.state.nearestShops} />

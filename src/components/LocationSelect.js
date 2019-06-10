@@ -11,7 +11,11 @@ function LocationSelect(props) {
   return (
     <div className="search-location">
       <p>Where Are You?</p>
-      <select onChange={props.onChange} id="location-dropdown">
+      <select
+        value={props.selectedLocation}
+        onChange={props.onChange}
+        id="location-dropdown"
+      >
         <option key="default">Choose Location</option>
         {userLocation}
       </select>
