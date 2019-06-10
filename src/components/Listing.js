@@ -9,7 +9,7 @@ function Listing(props) {
         <ul className="outlet-wrapper">
           <li>
             <span>Shop</span>
-            <span>Shop Name</span>
+            <span>Location</span>
             <span>Distance (in metres)</span>
           </li>
           <p>Select your craving, location or both!</p>

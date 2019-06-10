@@ -14,24 +14,19 @@ class App extends React.Component {
       brands,
       userLocation,
       selectedBrands: [],
-      selectedLocation: {},
+      selectedLocation: "",
       nearestShops: []
     };
   }
 
-  extractChosenLocation(event) {
-    for (let locObj of this.state.userLocation) {
-      if (event.target.value === locObj.name) {
-        this.setState({
-          selectedLocation: locObj
-        });
-        break;
-      }
-    }
+  selectLocation(event) {
+    this.setState({
+      selectedLocation: event.target.value
+    });
     this.findNearestShops();
   }
 
-  extractChosenBrands(event) {
+  selectBrands(event) {
     let choices = event.target.options;
     let chosen = [];
     for (let choice of choices) {
@@ -46,30 +41,47 @@ class App extends React.Component {
     this.findNearestShops();
   }
 
-  findNearestShops() {
-    // if (!this.state.selectedLocation.length) {
-    //   return;
-    // } else {
-    const originLat = this.state.selectedLocation.latitude;
-    const originLong = this.state.selectedLocation.longitude;
-    let Listing = this.state.shops;
-    for (let shop of Listing) {
-      shop.distanceFromOrigin = calcDistance(
-        originLat,
-        originLong,
-        shop.latitude,
-        shop.longitude
-      );
-      shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(3) * 1000;
-      // }
-      Listing = Listing.sort((a, b) =>
-        a.distanceFromOrigin > b.distanceFromOrigin ? 1 : -1
-      );
+  filterByBrands() {
+    let filteredBrands = this.state.shops;
+    filteredBrands = filteredBrands.filter(shop =>
+      this.state.selectedBrands.includes(shop.brand)
+    );
+    console.log(filteredBrands);
+    this.setState({
+      shops: filteredBrands
+    });
+  }
 
-      this.setState({
-        nearestShops: Listing
-      });
+  filterByLocation() {}
+
+  findNearestShops() {
+    let Listing = this.state.shops;
+    for (let locObj of this.state.userLocation) {
+      if (this.state.selectedLocation === locObj.name) {
+        console.log(this.state.selectedLocation);
+        const originLat = locObj.latitude;
+        const originLong = locObj.longitude;
+
+        for (let shop of Listing) {
+          shop.distanceFromOrigin = calcDistance(
+            originLat,
+            originLong,
+            shop.latitude,
+            shop.longitude
+          );
+          shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(3) * 1000;
+        }
+        Listing = Listing.sort((a, b) =>
+          a.distanceFromOrigin > b.distanceFromOrigin ? 1 : -1
+        );
+
+        break;
+      }
     }
+
+    this.setState({
+      nearestShops: Listing
+    });
   }
 
   render() {
@@ -78,10 +90,10 @@ class App extends React.Component {
         <div className="search-wrapper">
           <Brands
             brands={this.state.brands}
-            onChange={this.extractChosenBrands.bind(this)}
+            onChange={this.selectBrands.bind(this)}
           />
           <LocationSelect
-            onChange={this.extractChosenLocation.bind(this)}
+            onChange={this.selectLocation.bind(this)}
             userLocation={this.state.userLocation}
           />
         </div>
