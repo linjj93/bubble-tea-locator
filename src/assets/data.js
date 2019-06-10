@@ -1,10 +1,10 @@
-import koi from "./koi.png";
+import koi from "./Koi.png";
 import koiExpress from "./Koi Express.png";
 import gongCha from "./GongCha.png";
 import liHo from "./LiHo.png";
 import tigerSugar from "./Tiger Sugar.png";
 // import eachACup from "./Each-A-Cup.png";
-import tenRen from "./tenren.png";
+import tenRen from "./Tenren.png";
 
 const brands = ["Show me all!", "Gong Cha", "Koi", "LiHo", "Tiger Sugar"];
 
