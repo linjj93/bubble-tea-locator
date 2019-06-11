@@ -33,7 +33,9 @@ class App extends React.Component {
           );
           shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(3) * 1000;
         }
-
+        Listing = Listing.filter(shop =>
+          this.state.selectedBrands.includes(shop.brand)
+        );
         Listing = Listing.sort((a, b) =>
           a.distanceFromOrigin > b.distanceFromOrigin ? 1 : -1
         );
