@@ -52,3 +52,9 @@ header {
 .outlet-wrapper {
   overflow: scroll;
 }
+
+.advanced-filters {
+  display: flex;
+  background-color: #f9dec9;
+  justify-content: space-around;
+}
