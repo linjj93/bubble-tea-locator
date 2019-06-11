@@ -18,6 +18,39 @@ function Listing(props) {
     );
   }
 
+  const filterNearestShops = props.showSubset;
+  if (filterNearestShops) {
+    const listOfShopsFiltered = props.nearestShops
+      .filter((shop, index) => index + 1 <= props.subsetSize)
+      .map(shop => {
+        return (
+          <li key={shop.id}>
+            <span>
+              <img src={shop.logo} alt={shop.brand} />
+            </span>
+            <span>{shop.name}</span>
+            <span>
+              {isNaN(shop.distanceFromOrigin)
+                ? "Select Location First"
+                : shop.distanceFromOrigin}
+            </span>
+          </li>
+        );
+      });
+    return (
+      <React.Fragment>
+        <ul className="outlet-wrapper">
+          <li>
+            <span>Shop</span>
+            <span>Location</span>
+            <span>Distance (in km)</span>
+          </li>
+          {listOfShopsFiltered}
+        </ul>
+      </React.Fragment>
+    );
+  }
+
   const listOfShops = props.nearestShops.map(shop => {
     return (
       <li key={shop.id}>
@@ -40,7 +73,7 @@ function Listing(props) {
         <li>
           <span>Shop</span>
           <span>Location</span>
-          <span>Distance (in metres)</span>
+          <span>Distance (in km)</span>
         </li>
         {listOfShops}
       </ul>
