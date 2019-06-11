@@ -1,6 +1,6 @@
 import React from "react";
 
-function BrandSelect(props) {
+function StoreSelect(props) {
   const brands = props.brands.map(brand => {
     return (
       <option key={brand} value={brand}>
@@ -18,4 +18,4 @@ function BrandSelect(props) {
   );
 }
 
-export default BrandSelect;
+export default StoreSelect;
