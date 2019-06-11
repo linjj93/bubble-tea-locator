@@ -26,7 +26,11 @@ function Listing(props) {
           <img src={shop.logo} alt={shop.id} />
         </span>
         <span>{shop.name}</span>
-        <span>{shop.distanceFromOrigin}</span>
+        <span>
+          {isNaN(shop.distanceFromOrigin)
+            ? "Select Location First"
+            : shop.distanceFromOrigin}
+        </span>
       </li>
     );
   });
