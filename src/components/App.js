@@ -65,6 +65,23 @@ class App extends React.Component {
     });
     let Listing = shops;
     Listing = Listing.filter(shop => chosen.includes(shop.brand));
+    let originLat;
+    let originLong;
+    for (let locObj of userLocation) {
+      if (locObj.name === this.state.selectedLocation) {
+        originLat = locObj.latitude;
+        originLong = locObj.longitude;
+      }
+    }
+    for (let shop of Listing) {
+      shop.distanceFromOrigin = calcDistance(
+        originLat,
+        originLong,
+        shop.latitude,
+        shop.longitude
+      );
+      shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(3) * 1000;
+    }
     this.setState({
       nearestShops: Listing
     });
