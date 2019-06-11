@@ -31,7 +31,7 @@ class App extends React.Component {
             shop.latitude,
             shop.longitude
           );
-          shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(3) * 1000;
+          shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(2);
         }
         Listing = Listing.filter(shop =>
           this.state.selectedBrands.includes(shop.brand)
@@ -82,7 +82,7 @@ class App extends React.Component {
         shop.latitude,
         shop.longitude
       );
-      shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(3) * 1000;
+      shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(2);
     }
 
     Listing = Listing.sort((a, b) =>

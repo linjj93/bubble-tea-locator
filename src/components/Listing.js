@@ -10,11 +10,10 @@ function Listing(props) {
           <li>
             <span>Shop</span>
             <span>Location</span>
-            <span>Distance (in metres)</span>
+            <span>Distance (in km)</span>
           </li>
           <p>Select the store you like and your location!</p>
         </ul>
-        )
       </React.Fragment>
     );
   }
