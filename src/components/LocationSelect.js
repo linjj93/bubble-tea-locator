@@ -17,7 +17,7 @@ function LocationSelect(props) {
         onChange={props.onChange}
         id="location-dropdown"
       >
-        <option selected disabled key="default">
+        <option defaultValue="default-option" disabled key="default">
           Choose Location
         </option>
         {userLocation}

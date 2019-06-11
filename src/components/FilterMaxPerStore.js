@@ -2,9 +2,9 @@ import React from "react";
 
 function FilterMaxPerStore(props) {
   return (
-    <div class="select-number-per-store">
+    <div className="select-number-per-store">
       <p>
-        Show max
+        max
         <select name="number-of-shops" id="store-limit-dropdown">
           <option value="1">1</option>
           <option value="2">2</option>

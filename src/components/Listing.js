@@ -21,7 +21,7 @@ function Listing(props) {
   const filterNearestShops = props.showSubset;
   if (filterNearestShops) {
     const listOfShopsFiltered = props.nearestShops
-      .filter((shop, index) => index + 1 <= props.subsetSize)
+      .filter((shop, index) => index + 1 <= props.subsetOfTopN)
       .map(shop => {
         return (
           <li key={shop.id}>

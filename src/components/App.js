@@ -16,7 +16,8 @@ class App extends React.Component {
       selectedLocation: "None",
       nearestShops: [],
       showSubset: false,
-      subsetSize: 0
+      subsetOfTopN: 0,
+      subsetOfMaxPerStore: 0
     };
   }
 
@@ -58,10 +59,6 @@ class App extends React.Component {
     });
   }
 
-  showTopN(shopListing, n) {
-    return shopListing.filter((shop, index) => index + 1 <= n);
-  }
-
   selectLocation(event) {
     const newLocation = event.target.value;
     this.setState({ selectedLocation: newLocation });
@@ -85,7 +82,7 @@ class App extends React.Component {
   limitNumberOfShops(event) {
     this.setState({
       showSubset: true,
-      subsetSize:
+      subsetOfTopN:
         event.target.value === "all"
           ? this.state.nearestShops.length
           : event.target.value
@@ -94,7 +91,7 @@ class App extends React.Component {
 
   limitMaxPerStore(event) {
     const maxi = event.target.value;
-    this.setState({ selectedMaxPerStore: maxi });
+    this.setState({ subsetOfMaxPerStore: maxi });
   }
 
   render() {
@@ -112,12 +109,13 @@ class App extends React.Component {
           />
         </div>
         <div className="advanced-filters">
+          <p>Show:</p>
           <FilterNumberOfShops onChange={this.limitNumberOfShops.bind(this)} />
           <FilterMaxPerStore onChange={this.limitMaxPerStore.bind(this)} />
         </div>
         <Listing
           showSubset={this.state.showSubset}
-          subsetSize={this.state.subsetSize}
+          subsetOfTopN={this.state.subsetOfTopN}
           nearestShops={this.state.nearestShops}
         />
       </React.Fragment>
