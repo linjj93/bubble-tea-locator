@@ -23,7 +23,7 @@ function Listing(props) {
     return (
       <li key={shop.id}>
         <span>
-          <img src={shop.logo} alt={shop.id} />
+          <img src={shop.logo} alt={shop.brand} />
         </span>
         <span>{shop.name}</span>
         <span>
