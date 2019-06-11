@@ -63,6 +63,14 @@ const koiShops = [
     brand: "Koi",
     latitude: 1.2928431,
     longitude: 103.8508764
+  },
+  {
+    id: "koi-chinatown",
+    logo: koi,
+    name: "Chinatown Point",
+    brand: "Koi",
+    latitude: 1.2855268,
+    longitude: 103.8451902
   }
 ];
 
@@ -74,6 +82,22 @@ const gongChaShops = [
     brand: "Gong Cha",
     latitude: 1.2843399,
     longitude: 103.8509823
+  },
+  {
+    id: "gongcha-SMU",
+    logo: gongCha,
+    name: "SMU",
+    brand: "Gong Cha",
+    latitude: 1.2950013,
+    longitude: 103.8505781
+  },
+  {
+    id: "gongcha-bugis",
+    logo: gongCha,
+    name: "Bugis Junction",
+    brand: "Gong Cha",
+    latitude: 1.299381,
+    longitude: 103.8554475
   }
 ];
 
