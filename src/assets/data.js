@@ -6,14 +6,7 @@ import tigerSugar from "./Tiger Sugar.png";
 // import eachACup from "./Each-A-Cup.png";
 import tenRen from "./Tenren.png";
 
-const brands = [
-  "Show me all!",
-  "Gong Cha",
-  "Koi",
-  "LiHo",
-  "Tiger Sugar",
-  "Ten Ren"
-];
+const brands = ["Gong Cha", "Koi", "LiHo", "Ten Ren", "Tiger Sugar"];
 
 const userLocation = [
   {
