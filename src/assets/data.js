@@ -6,7 +6,14 @@ import tigerSugar from "./Tiger Sugar.png";
 // import eachACup from "./Each-A-Cup.png";
 import tenRen from "./Tenren.png";
 
-const brands = ["Show me all!", "Gong Cha", "Koi", "LiHo", "Tiger Sugar"];
+const brands = [
+  "Show me all!",
+  "Gong Cha",
+  "Koi",
+  "LiHo",
+  "Tiger Sugar",
+  "Ten Ren"
+];
 
 const userLocation = [
   {
@@ -82,7 +89,7 @@ const liHoShops = [
     id: "liho-thecentral",
     logo: liHo,
     name: "The Central",
-    brand: "Gong Cha",
+    brand: "LiHo",
     latitude: 1.2891413,
     longitude: 103.8447874
   },
@@ -90,7 +97,7 @@ const liHoShops = [
     id: "liho-fareastsquare",
     logo: liHo,
     name: "Far East Square",
-    brand: "Gong Cha",
+    brand: "LiHo",
     latitude: 1.2831,
     longitude: 103.848341
   },
@@ -98,7 +105,7 @@ const liHoShops = [
     id: "liho-onerafflesplace",
     logo: liHo,
     name: "One Raffles Place",
-    brand: "Gong Cha",
+    brand: "LiHo",
     latitude: 1.2844078,
     longitude: 103.8487931
   }
