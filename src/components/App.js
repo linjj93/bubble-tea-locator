@@ -1,7 +1,9 @@
 import React from "react";
-import BrandSelect from "./BrandSelect";
+import StoreSelect from "./StoreSelect";
 import LocationSelect from "./LocationSelect";
 import Listing from "./Listing";
+import FilterNumberOfShops from "./FilterNumberOfShops";
+import FilterMaxPerStore from "./FilterMaxPerStore";
 import "../styles/App.css";
 import { brands, userLocation, shops } from "../assets/data";
 import { calcDistance } from "../assets/helper";
@@ -10,52 +12,64 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedBrands: [],
+      selectedStores: [],
       selectedLocation: "None",
-      nearestShops: []
+      nearestShops: [],
+      showSubset: false,
+      subsetSize: 0
     };
   }
 
-  findNearestShops(event) {
-    const newSelection = event.target.value;
-    let Listing = shops;
-    for (let locObj of userLocation) {
-      if (newSelection === locObj.name) {
-        const originLat = locObj.latitude;
-        const originLong = locObj.longitude;
+  calcAllShopDistances(shopListing, origin) {
+    for (let shop of shopListing) {
+      shop.distanceFromOrigin = calcDistance(
+        origin.latitude,
+        origin.longitude,
+        shop.latitude,
+        shop.longitude
+      );
+      shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(2);
+    }
+  }
 
-        for (let shop of Listing) {
-          shop.distanceFromOrigin = calcDistance(
-            originLat,
-            originLong,
-            shop.latitude,
-            shop.longitude
-          );
-          shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(2);
-        }
-        Listing = Listing.filter(shop =>
-          this.state.selectedBrands.includes(shop.brand)
-        );
-        Listing = Listing.sort((a, b) =>
-          a.distanceFromOrigin > b.distanceFromOrigin ? 1 : -1
-        );
+  sortShopsByDistance(shopListing) {
+    return shopListing.sort((a, b) =>
+      a.distanceFromOrigin > b.distanceFromOrigin ? 1 : -1
+    );
+  }
+
+  filterShopsByStore(shopListing, chosenStores) {
+    return shopListing.filter(shop => chosenStores.includes(shop.brand));
+  }
+
+  findNearestShops(chosenLocation, chosenStores) {
+    let listing = shops;
+    for (let locObj of userLocation) {
+      if (chosenLocation === locObj.name) {
+        this.calcAllShopDistances(listing, locObj);
         break;
       }
     }
+    listing = this.filterShopsByStore(listing, chosenStores);
+    listing = this.sortShopsByDistance(listing);
 
     this.setState({
-      nearestShops: Listing
+      nearestShops: listing
     });
   }
 
-  selectLocation(event) {
-    const newSelection = event.target.value;
-    this.setState({ selectedLocation: newSelection });
-    this.findNearestShops(event);
+  showTopN(shopListing, n) {
+    return shopListing.filter((shop, index) => index + 1 <= n);
   }
 
-  selectBrands(event) {
-    const choices = event.target.options;
+  selectLocation(event) {
+    const newLocation = event.target.value;
+    this.setState({ selectedLocation: newLocation });
+    this.findNearestShops(newLocation, this.state.selectedStores);
+  }
+
+  selectStores(event) {
+    let choices = event.target.options;
     const chosen = [];
     for (let choice of choices) {
       if (choice.selected) {
@@ -63,43 +77,30 @@ class App extends React.Component {
       }
     }
     this.setState({
-      selectedBrands: chosen
+      selectedStores: chosen
     });
-    let Listing = shops;
-    Listing = Listing.filter(shop => chosen.includes(shop.brand));
-    let originLat;
-    let originLong;
-    for (let locObj of userLocation) {
-      if (locObj.name === this.state.selectedLocation) {
-        originLat = locObj.latitude;
-        originLong = locObj.longitude;
-      }
-    }
-    for (let shop of Listing) {
-      shop.distanceFromOrigin = calcDistance(
-        originLat,
-        originLong,
-        shop.latitude,
-        shop.longitude
-      );
-      shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(2);
-    }
+    this.findNearestShops(this.state.selectedLocation, chosen);
+  }
 
-    Listing = Listing.sort((a, b) =>
-      a.distanceFromOrigin > b.distanceFromOrigin ? 1 : -1
-    );
+  limitNumberOfShops(event) {
     this.setState({
-      nearestShops: Listing
+      showSubset: true,
+      subsetSize: event.target.value
     });
+  }
+
+  limitMaxPerStore(event) {
+    const maxi = event.target.value;
+    this.setState({ selectedMaxPerStore: maxi });
   }
 
   render() {
     return (
       <React.Fragment>
         <div className="search-wrapper">
-          <BrandSelect
+          <StoreSelect
             brands={brands}
-            onChange={this.selectBrands.bind(this)}
+            onChange={this.selectStores.bind(this)}
           />
           <LocationSelect
             onChange={this.selectLocation.bind(this)}
@@ -107,7 +108,15 @@ class App extends React.Component {
             selectedLocation={this.state.selectedLocation}
           />
         </div>
-        <Listing nearestShops={this.state.nearestShops} />
+        <div className="advanced-filters">
+          <FilterNumberOfShops onChange={this.limitNumberOfShops.bind(this)} />
+          <FilterMaxPerStore onChange={this.limitMaxPerStore.bind(this)} />
+        </div>
+        <Listing
+          showSubset={this.state.showSubset}
+          subsetSize={this.state.subsetSize}
+          nearestShops={this.state.nearestShops}
+        />
       </React.Fragment>
     );
   }
