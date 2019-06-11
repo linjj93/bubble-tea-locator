@@ -85,7 +85,10 @@ class App extends React.Component {
   limitNumberOfShops(event) {
     this.setState({
       showSubset: true,
-      subsetSize: event.target.value
+      subsetSize:
+        event.target.value === "all"
+          ? this.state.nearestShops.length
+          : event.target.value
     });
   }
 
