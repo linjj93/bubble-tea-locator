@@ -1,9 +1,9 @@
 import React from "react";
-import Brands from "./Brands";
+import BrandSelect from "./BrandSelect";
 import LocationSelect from "./LocationSelect";
 import Listing from "./Listing";
-import { brands, userLocation, shops } from "../assets/data";
 import "../styles/App.css";
+import { brands, userLocation, shops } from "../assets/data";
 import { calcDistance } from "../assets/helper";
 
 class App extends React.Component {
@@ -16,32 +16,11 @@ class App extends React.Component {
     };
   }
 
-  selectLocation(event) {
-    this.setState({
-      selectedLocation: event.target.value
-    });
-    this.findNearestShops();
-  }
-
-  selectBrands(event) {
-    let choices = event.target.options;
-    let chosen = [];
-    for (let choice of choices) {
-      if (choice.selected) {
-        chosen.push(choice.value);
-      }
-    }
-    this.setState({
-      selectedBrands: chosen
-    });
-
-    this.findNearestShops();
-  }
-
-  findNearestShops() {
+  findNearestShops(event) {
+    const newSelection = event.target.value;
     let Listing = shops;
     for (let locObj of userLocation) {
-      if (this.state.selectedLocation === locObj.name) {
+      if (newSelection === locObj.name) {
         const originLat = locObj.latitude;
         const originLong = locObj.longitude;
 
@@ -67,11 +46,38 @@ class App extends React.Component {
     });
   }
 
+  selectLocation(event) {
+    const newSelection = event.target.value;
+    this.setState({ selectedLocation: newSelection });
+    this.findNearestShops(event);
+  }
+
+  selectBrands(event) {
+    const choices = event.target.options;
+    const chosen = [];
+    for (let choice of choices) {
+      if (choice.selected) {
+        chosen.push(choice.value);
+      }
+    }
+    this.setState({
+      selectedBrands: chosen
+    });
+    let Listing = shops;
+    Listing = Listing.filter(shop => chosen.includes(shop.brand));
+    this.setState({
+      nearestShops: Listing
+    });
+  }
+
   render() {
     return (
       <React.Fragment>
         <div className="search-wrapper">
-          <Brands brands={brands} onChange={this.selectBrands.bind(this)} />
+          <BrandSelect
+            brands={brands}
+            onChange={this.selectBrands.bind(this)}
+          />
           <LocationSelect
             onChange={this.selectLocation.bind(this)}
             userLocation={userLocation}
