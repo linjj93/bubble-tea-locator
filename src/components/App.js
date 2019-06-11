@@ -84,6 +84,10 @@ class App extends React.Component {
       );
       shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(3) * 1000;
     }
+
+    Listing = Listing.sort((a, b) =>
+      a.distanceFromOrigin > b.distanceFromOrigin ? 1 : -1
+    );
     this.setState({
       nearestShops: Listing
     });
