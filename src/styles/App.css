@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
   font-family: "Varela Round", sans-serif;
 }
 
@@ -50,11 +49,23 @@ header {
 }
 
 .outlet-wrapper {
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .advanced-filters {
   display: flex;
   background-color: #f9dec9;
-  justify-content: space-around;
+  justify-content: flex-start;
+}
+
+.advanced-filters p,
+.advanced-filters div {
+  margin-right: 1em;
+}
+
+.advanced-filters select {
+  border-radius: 50%;
+  font-weight: 1000;
+  margin: 0 0.5em;
 }
