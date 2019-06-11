@@ -12,11 +12,12 @@ function LocationSelect(props) {
     <div className="search-location">
       <p>Where Are You?</p>
       <select
-        value={props.selectedLocation}
+        defaultValue="Choose Location"
+        // value={props.selectedLocation}
         onChange={props.onChange}
         id="location-dropdown"
       >
-        <option disabled key="default">
+        <option selected disabled key="default">
           Choose Location
         </option>
         {userLocation}
