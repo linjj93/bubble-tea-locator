@@ -12,7 +12,7 @@ function Listing(props) {
             <span>Location</span>
             <span>Distance (in metres)</span>
           </li>
-          <p>Select your craving, location or both!</p>
+          <p>Select the store you like and your location!</p>
         </ul>
         )
       </React.Fragment>
