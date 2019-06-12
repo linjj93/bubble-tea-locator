@@ -6,7 +6,7 @@ import FilterNumberOfShops from "./FilterNumberOfShops";
 // import FilterMaxPerStore from "./FilterMaxPerStore";
 import "../styles/App.css";
 import { stores, userLocation, shops } from "../assets/data";
-import { calcDistance } from "../assets/helper";
+import { calcAllShopDistances } from "../assets/helper";
 
 class App extends React.Component {
   constructor(props) {
@@ -15,36 +15,11 @@ class App extends React.Component {
       selectedStores: [],
       selectedLocation: "None",
       nearestShops: [],
-      showSubsetOfTopN: false,
-      subsetOfTopN: 0,
-      showSubsetOfMaxPerStore: false,
-      subsetOfMaxPerStore: [],
+      showTopN: shops.length,
+      // showSubsetOfMaxPerStore: false,
+      // subsetOfMaxPerStore: [],
       limits: ["all", 1, 2, 3, 4, 5]
     };
-  }
-
-  calcAllShopDistances(shopListing, origin) {
-    for (let shop of shopListing) {
-      shop.distanceFromOrigin = calcDistance(
-        origin.latitude,
-        origin.longitude,
-        shop.latitude,
-        shop.longitude
-      );
-      shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(2);
-      if (shop.distanceFromOrigin >= 1) {
-        shop.distanceMarker = "far";
-      } else if (
-        shop.distanceFromOrigin > 0.25 &&
-        shop.distanceFromOrigin <= 0.5
-      ) {
-        shop.distanceMarker = "near";
-      } else if (shop.distanceFromOrigin <= 0.25) {
-        shop.distanceMarker = "very-near";
-      } else {
-        shop.distanceMarker = "";
-      }
-    }
   }
 
   sortShopsByDistance(shopListing) {
@@ -57,26 +32,18 @@ class App extends React.Component {
     return shopListing.filter(shop => chosenStores.includes(shop.brand));
   }
 
-  findNearestShops(chosenLocation, chosenStores) {
-    let listing = shops;
-    for (let locObj of userLocation) {
-      if (chosenLocation === locObj.name) {
-        this.calcAllShopDistances(listing, locObj);
-        break;
-      }
-    }
-    listing = this.filterShopsByStore(listing, chosenStores);
-    listing = this.sortShopsByDistance(listing);
-
-    this.setState({
-      nearestShops: listing
-    });
+  limitNumberOfShops(shopListing, n) {
+    return shopListing.filter((shop, index) => index + 1 <= n);
   }
 
   selectLocation(event) {
     const newLocation = event.target.value;
     this.setState({ selectedLocation: newLocation });
-    this.findNearestShops(newLocation, this.state.selectedStores);
+    this.findNearestShops(
+      newLocation,
+      this.state.selectedStores,
+      this.state.showTopN
+    );
   }
 
   selectStores(event) {
@@ -90,14 +57,39 @@ class App extends React.Component {
     this.setState({
       selectedStores: chosen
     });
-    this.findNearestShops(this.state.selectedLocation, chosen);
+    this.findNearestShops(
+      this.state.selectedLocation,
+      chosen,
+      this.state.showTopN
+    );
   }
 
-  limitNumberOfShops(event) {
+  selectLimit(event) {
+    const newLimit = event.target.value;
     this.setState({
-      showSubsetOfTopN: true,
-      subsetOfTopN:
-        event.target.value === "all" ? shops.length : event.target.value
+      showTopN: newLimit === "all" ? shops.length : newLimit
+    });
+    this.findNearestShops(
+      this.state.selectedLocation,
+      this.state.selectedStores,
+      newLimit
+    );
+  }
+
+  findNearestShops(chosenLocation, chosenStores, showTopN) {
+    let listing = shops;
+    for (let locObj of userLocation) {
+      if (chosenLocation === locObj.name) {
+        calcAllShopDistances(listing, locObj);
+        break;
+      }
+    }
+    listing = this.filterShopsByStore(listing, chosenStores);
+    listing = this.sortShopsByDistance(listing);
+    listing = this.limitNumberOfShops(listing, showTopN);
+
+    this.setState({
+      nearestShops: listing
     });
   }
 
@@ -119,13 +111,11 @@ class App extends React.Component {
           <p>Show:</p>
           <FilterNumberOfShops
             limits={this.state.limits}
-            onChange={this.limitNumberOfShops.bind(this)}
+            onChange={this.selectLimit.bind(this)}
           />
           {/* <FilterMaxPerStore onChange={this.limitMaxPerStore.bind(this)} /> */}
         </div>
         <Listing
-          showSubsetOfTopN={this.state.showSubsetOfTopN}
-          subsetOfTopN={this.state.subsetOfTopN}
           nearestShops={this.state.nearestShops}
           // showSubsetOfMaxPerStore={this.state.showSubsetOfMaxPerStore}
           // subsetOfMaxPerStore={this.state.subsetOfMaxPerStore}
