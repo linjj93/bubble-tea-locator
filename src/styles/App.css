@@ -58,14 +58,10 @@ header {
 
 .advanced-filters {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(384px, 1fr));
   grid-template-rows: repeat(auto-fit, minmax(30px, 1fr));
   background-color: #f9dec9;
 }
-
-/* .advanced-filters div {
-  margin-right: 1em;
-} */
 
 .advanced-filters select {
   border-radius: 50%;
@@ -101,10 +97,12 @@ header {
 .select-number {
   text-align: right;
   margin-right: 0.5em;
+  font-size: 0.8em;
 }
 
 .select-time {
   text-align: left;
+  font-size: 0.8em;
 }
 
 @media only screen and (max-width: 768px) {
