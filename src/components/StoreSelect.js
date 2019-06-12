@@ -1,18 +1,18 @@
 import React from "react";
 
 function StoreSelect(props) {
-  const brands = props.brands.map(brand => {
+  const stores = props.stores.map(store => {
     return (
-      <option key={brand} value={brand}>
-        {brand}
+      <option key={store} value={store}>
+        {store}
       </option>
     );
   });
   return (
     <div className="search-brand">
-      <p>Which Store?</p>
+      <label htmlFor="brand-dropdown">Which Store?</label>
       <select id="brand-dropdown" onChange={props.onChange} multiple>
-        {brands}
+        {stores}
       </select>
     </div>
   );

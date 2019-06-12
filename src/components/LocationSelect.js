@@ -10,7 +10,7 @@ function LocationSelect(props) {
   });
   return (
     <div className="search-location">
-      <p>Where Are You?</p>
+      <label htmlFor="location-dropdown">Where Are You?</label>
       <select
         defaultValue="Choose Location"
         // value={props.selectedLocation}

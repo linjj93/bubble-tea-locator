@@ -3,9 +3,9 @@ import StoreSelect from "./StoreSelect";
 import LocationSelect from "./LocationSelect";
 import Listing from "./Listing";
 import FilterNumberOfShops from "./FilterNumberOfShops";
-import FilterMaxPerStore from "./FilterMaxPerStore";
+// import FilterMaxPerStore from "./FilterMaxPerStore";
 import "../styles/App.css";
-import { brands, userLocation, shops } from "../assets/data";
+import { stores, userLocation, shops } from "../assets/data";
 import { calcDistance } from "../assets/helper";
 
 class App extends React.Component {
@@ -15,9 +15,11 @@ class App extends React.Component {
       selectedStores: [],
       selectedLocation: "None",
       nearestShops: [],
-      showSubset: false,
+      showSubsetOfTopN: false,
       subsetOfTopN: 0,
-      subsetOfMaxPerStore: 0
+      showSubsetOfMaxPerStore: false,
+      subsetOfMaxPerStore: [],
+      limits: ["all", 1, 2, 3, 4, 5]
     };
   }
 
@@ -30,6 +32,18 @@ class App extends React.Component {
         shop.longitude
       );
       shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(2);
+      if (shop.distanceFromOrigin >= 1) {
+        shop.distanceMarker = "far";
+      } else if (
+        shop.distanceFromOrigin > 0.25 &&
+        shop.distanceFromOrigin <= 0.5
+      ) {
+        shop.distanceMarker = "near";
+      } else if (shop.distanceFromOrigin <= 0.25) {
+        shop.distanceMarker = "very-near";
+      } else {
+        shop.distanceMarker = "";
+      }
     }
   }
 
@@ -81,17 +95,10 @@ class App extends React.Component {
 
   limitNumberOfShops(event) {
     this.setState({
-      showSubset: true,
+      showSubsetOfTopN: true,
       subsetOfTopN:
-        event.target.value === "all"
-          ? this.state.nearestShops.length
-          : event.target.value
+        event.target.value === "all" ? shops.length : event.target.value
     });
-  }
-
-  limitMaxPerStore(event) {
-    const maxi = event.target.value;
-    this.setState({ subsetOfMaxPerStore: maxi });
   }
 
   render() {
@@ -99,7 +106,7 @@ class App extends React.Component {
       <React.Fragment>
         <div className="search-wrapper">
           <StoreSelect
-            brands={brands}
+            stores={stores}
             onChange={this.selectStores.bind(this)}
           />
           <LocationSelect
@@ -110,13 +117,18 @@ class App extends React.Component {
         </div>
         <div className="advanced-filters">
           <p>Show:</p>
-          <FilterNumberOfShops onChange={this.limitNumberOfShops.bind(this)} />
-          <FilterMaxPerStore onChange={this.limitMaxPerStore.bind(this)} />
+          <FilterNumberOfShops
+            limits={this.state.limits}
+            onChange={this.limitNumberOfShops.bind(this)}
+          />
+          {/* <FilterMaxPerStore onChange={this.limitMaxPerStore.bind(this)} /> */}
         </div>
         <Listing
-          showSubset={this.state.showSubset}
+          showSubsetOfTopN={this.state.showSubsetOfTopN}
           subsetOfTopN={this.state.subsetOfTopN}
           nearestShops={this.state.nearestShops}
+          // showSubsetOfMaxPerStore={this.state.showSubsetOfMaxPerStore}
+          // subsetOfMaxPerStore={this.state.subsetOfMaxPerStore}
         />
       </React.Fragment>
     );

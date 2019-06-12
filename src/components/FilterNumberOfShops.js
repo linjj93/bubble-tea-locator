@@ -1,6 +1,13 @@
 import React from "react";
 
 function FilterNumberOfShops(props) {
+  const options = props.limits.map(num => {
+    return (
+      <option key={num} value={num}>
+        {num}
+      </option>
+    );
+  });
   return (
     <div className="select-number">
       <select
@@ -8,12 +15,7 @@ function FilterNumberOfShops(props) {
         name="number-of-shops"
         id="shop-limit-dropdown"
       >
-        <option value="all">all</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
+        {options}
       </select>
       nearest shop(s)
     </div>

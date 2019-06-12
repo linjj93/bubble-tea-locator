@@ -18,8 +18,41 @@ function Listing(props) {
     );
   }
 
-  const filterNearestShops = props.showSubset;
-  if (filterNearestShops) {
+  const filterMaxPerStore = props.showSubsetOfMaxPerStore;
+  if (filterMaxPerStore) {
+    const listOfShopsFiltered = props.subsetOfMaxPerStore
+      .filter(shop => shop.toDisplay)
+      .map(shop => {
+        return (
+          <li key={shop.id}>
+            <span>
+              <img src={shop.logo} alt={shop.brand} />
+            </span>
+            <span>{shop.name}</span>
+            <span className={shop.distanceMarker}>
+              {isNaN(shop.distanceFromOrigin)
+                ? "Select Location First"
+                : shop.distanceFromOrigin}
+            </span>
+          </li>
+        );
+      });
+    return (
+      <React.Fragment>
+        <ul className="outlet-wrapper">
+          <li>
+            <span>Shop</span>
+            <span>Location</span>
+            <span>Distance (in km)</span>
+          </li>
+          {listOfShopsFiltered}
+        </ul>
+      </React.Fragment>
+    );
+  }
+
+  const filterNearestShopsByNumber = props.showSubsetOfTopN;
+  if (filterNearestShopsByNumber) {
     const listOfShopsFiltered = props.nearestShops
       .filter((shop, index) => index + 1 <= props.subsetOfTopN)
       .map(shop => {
@@ -29,7 +62,7 @@ function Listing(props) {
               <img src={shop.logo} alt={shop.brand} />
             </span>
             <span>{shop.name}</span>
-            <span>
+            <span className={shop.distanceMarker}>
               {isNaN(shop.distanceFromOrigin)
                 ? "Select Location First"
                 : shop.distanceFromOrigin}
@@ -58,7 +91,7 @@ function Listing(props) {
           <img src={shop.logo} alt={shop.brand} />
         </span>
         <span>{shop.name}</span>
-        <span>
+        <span className={shop.distanceMarker}>
           {isNaN(shop.distanceFromOrigin)
             ? "Select Location First"
             : shop.distanceFromOrigin}
