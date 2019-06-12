@@ -13,7 +13,7 @@ function Listing(props) {
           <span>
             <img src={shop.logo} alt={shop.brand} />
           </span>
-          <span class="address">
+          <span className="address">
             <span>{shop.name}</span>
             <span>{shop.unit}</span>
           </span>
@@ -37,13 +37,13 @@ function Listing(props) {
           <span>Location</span>
           <span>
             Average Waiting Time{" "}
-            <span class="waiting-time" onClick={props.sortByWaitingTime}>
+            <span className="waiting-time" onClick={props.sortByWaitingTime}>
               {props.waitingTimeOrder}
             </span>
           </span>
           <span>
             Distance (in km){" "}
-            <span class="distance" onClick={props.sortByDistance}>
+            <span className="distance" onClick={props.sortByDistance}>
               {props.distanceOrder}
             </span>
           </span>
