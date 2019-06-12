@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Varela Round", sans-serif;
+  cursor: default;
 }
 
 header {
@@ -28,7 +29,7 @@ header {
   margin: 0;
   padding: 1%;
   justify-content: stretch;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .search-brand label,
@@ -42,8 +43,8 @@ header {
 #brand-dropdown,
 #location-dropdown {
   margin: 0 1em;
-  font-weight: 700;
-  font-size: 1em;
+  /* font-weight: 700; */
+  /* font-size: 1em; */
   color: #444;
   min-width: 60%;
   border: 1px solid #aaa;
@@ -58,7 +59,7 @@ header {
 .advanced-filters {
   display: flex;
   background-color: #f9dec9;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .advanced-filters p,
@@ -68,7 +69,7 @@ header {
 
 .advanced-filters select {
   border-radius: 50%;
-  font-weight: 1000;
+  /* font-weight: 1000; */
   margin: 0 0.5em;
 }
 
@@ -89,4 +90,10 @@ header {
 .address {
   display: flex;
   flex-direction: column;
+}
+
+.waiting-time,
+.distance {
+  cursor: pointer;
+  font-size: 1.3em;
 }
