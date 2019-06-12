@@ -26,12 +26,13 @@ header {
   display: flex;
   color: black;
   margin: 0;
-  padding: 20px;
+  padding: 1%;
   justify-content: stretch;
+  font-weight: bold;
 }
 
-.search-brand p,
-.search-location p {
+.search-brand label,
+.search-location label {
   display: flex;
   min-width: 35%;
   align-items: center;
@@ -42,7 +43,7 @@ header {
   margin: 0 1em;
   font-weight: 700;
   font-size: 1em;
-  color: #444;
+
   min-width: 60%;
   border: 1px solid #aaa;
   border-radius: 0.5em;
@@ -68,4 +69,18 @@ header {
   border-radius: 50%;
   font-weight: 1000;
   margin: 0 0.5em;
+}
+
+.very-near {
+  color: lime;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.near {
+  color: green;
+}
+
+.far {
+  color: red;
 }

@@ -5,7 +5,7 @@ ul li {
   grid-template-columns: repeat(3, 1fr);
   font-size: 1em;
   padding: 0.5em;
-  background-color: #d7e4ed;
+  background-color: white;
   font-weight: 700;
   color: black;
 }
