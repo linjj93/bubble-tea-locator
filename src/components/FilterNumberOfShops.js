@@ -11,6 +11,7 @@ function FilterNumberOfShops(props) {
   return (
     <div className="select-number">
       <select
+        defaultValue="all"
         onChange={props.onChange}
         name="number-of-shops"
         id="shop-limit-dropdown"
