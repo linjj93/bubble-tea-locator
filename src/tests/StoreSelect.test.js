@@ -31,13 +31,13 @@ describe("check functionality of select menu", () => {
   test("select multiple consecutive options", () => {
     const { getByLabelText } = render(<StoreSelect stores={testStores} />);
     const storeMenu = getByLabelText("Which Store?");
-    // fireEvent.change(storeMenu, {
-    //   target: { value: testStores[0] }
-    // });
     fireEvent.change(storeMenu, {
-      target: { options: testStores }
+      target: { selectedOptions: testStores }
     });
-
-    expect(storeMenu).toHaveValue(["ABC", "123", "#@$%$^%"]);
+    // fireEvent.click(storeMenu, {
+    //   target: { value: testStores[1] }
+    // });
+    // console.log(storeMenu);
+    expect(storeMenu).toHaveValue(["ABC", "123"]);
   });
 });
