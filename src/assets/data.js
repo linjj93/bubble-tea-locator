@@ -6,7 +6,7 @@ import tigerSugar from "./Tiger Sugar.png";
 // import eachACup from "./Each-A-Cup.png";
 import tenRen from "./Tenren.png";
 
-const brands = ["Gong Cha", "Koi", "LiHo", "Ten Ren", "Tiger Sugar"];
+const stores = ["Gong Cha", "Koi", "LiHo", "Ten Ren", "Tiger Sugar"];
 
 const userLocation = [
   {
@@ -166,4 +166,4 @@ const shops = [
   ...tenRenShops
 ];
 
-export { brands, userLocation, shops };
+export { stores, userLocation, shops };
