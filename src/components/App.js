@@ -3,7 +3,7 @@ import StoreSelect from "./StoreSelect";
 import LocationSelect from "./LocationSelect";
 import Listing from "./Listing";
 import FilterNumberOfShops from "./FilterNumberOfShops";
-// import FilterMaxPerStore from "./FilterMaxPerStore";
+import FilterWaitingTime from "./FilterWaitingTime";
 import "../styles/App.css";
 import { stores, userLocation, shops } from "../assets/data";
 import { calcAllShopDistances } from "../assets/helper";
@@ -16,24 +16,62 @@ class App extends React.Component {
       selectedLocation: "None",
       nearestShops: [],
       showTopN: shops.length,
-      // showSubsetOfMaxPerStore: false,
-      // subsetOfMaxPerStore: [],
-      limits: ["all", 1, 2, 3, 4, 5]
+      limits: ["all", 1, 2, 3, 4, 5],
+      minutes: [10, 20, 30, 40, 50],
+      showWaitingTime: 50,
+      waitingTimeOrder: "↗",
+      distanceOrder: "↗"
     };
   }
 
-  sortShopsByDistance(shopListing) {
-    return shopListing.sort((a, b) =>
-      a.distanceFromOrigin > b.distanceFromOrigin ? 1 : -1
-    );
+  sortShopsByDistanceAndTime(shopListing) {
+    return shopListing.sort((a, b) => {
+      if (a.distanceFromOrigin > b.distanceFromOrigin) {
+        return 1;
+      } else if (a.distanceFromOrigin < b.distanceFromOrigin) {
+        return -1;
+      } else {
+        return a.queueTime > b.queueTime ? 1 : -1;
+      }
+    });
   }
 
   filterShopsByStore(shopListing, chosenStores) {
     return shopListing.filter(shop => chosenStores.includes(shop.brand));
   }
 
+  filterShopsByWaitingTime(shopListing, duration) {
+    return shopListing.filter(shop => shop.queueTime <= duration);
+  }
+
   limitNumberOfShops(shopListing, n) {
     return shopListing.filter((shop, index) => index + 1 <= n);
+  }
+
+  sortByWaitingTime() {
+    const listing = this.state.nearestShops;
+    const order = this.state.waitingTimeOrder;
+    order === "↗"
+      ? listing.sort((a, b) => (a.queueTime > b.queueTime ? 1 : -1))
+      : listing.sort((a, b) => (a.queueTime < b.queueTime ? 1 : -1));
+    order === "↗"
+      ? this.setState({ waitingTimeOrder: "↘" })
+      : this.setState({ waitingTimeOrder: "↗" });
+  }
+
+  sortByDistance() {
+    const listing = this.state.nearestShops;
+    const order = this.state.distanceOrder;
+    order === "↗"
+      ? listing.sort((a, b) =>
+          a.distanceFromOrigin > b.distanceFromOrigin ? 1 : -1
+        )
+      : listing.sort((a, b) =>
+          a.distanceFromOrigin < b.distanceFromOrigin ? 1 : -1
+        );
+    order === "↗"
+      ? this.setState({ distanceOrder: "↘" })
+      : this.setState({ distanceOrder: "↗" });
   }
 
   selectLocation(event) {
@@ -42,7 +80,8 @@ class App extends React.Component {
     this.findNearestShops(
       newLocation,
       this.state.selectedStores,
-      this.state.showTopN
+      this.state.showTopN,
+      this.state.showWaitingTime
     );
   }
 
@@ -60,7 +99,8 @@ class App extends React.Component {
     this.findNearestShops(
       this.state.selectedLocation,
       chosen,
-      this.state.showTopN
+      this.state.showTopN,
+      this.state.showWaitingTime
     );
   }
 
@@ -72,11 +112,25 @@ class App extends React.Component {
     this.findNearestShops(
       this.state.selectedLocation,
       this.state.selectedStores,
-      newLimit
+      newLimit,
+      this.state.showWaitingTime
     );
   }
 
-  findNearestShops(chosenLocation, chosenStores, showTopN) {
+  selectTime(event) {
+    const newTimeLimit = event.target.value;
+    this.setState({
+      showWaitingTime: newTimeLimit
+    });
+    this.findNearestShops(
+      this.state.selectedLocation,
+      this.state.selectedStores,
+      this.state.showTopN,
+      newTimeLimit
+    );
+  }
+
+  findNearestShops(chosenLocation, chosenStores, showTopN, showWaitingTime) {
     let listing = shops;
     for (let locObj of userLocation) {
       if (chosenLocation === locObj.name) {
@@ -84,9 +138,11 @@ class App extends React.Component {
         break;
       }
     }
+
     listing = this.filterShopsByStore(listing, chosenStores);
-    listing = this.sortShopsByDistance(listing);
+    listing = this.sortShopsByDistanceAndTime(listing);
     listing = this.limitNumberOfShops(listing, showTopN);
+    listing = this.filterShopsByWaitingTime(listing, showWaitingTime);
 
     this.setState({
       nearestShops: listing
@@ -113,12 +169,18 @@ class App extends React.Component {
             limits={this.state.limits}
             onChange={this.selectLimit.bind(this)}
           />
-          {/* <FilterMaxPerStore onChange={this.limitMaxPerStore.bind(this)} /> */}
+          <p>with waiting time of </p>
+          <FilterWaitingTime
+            minutes={this.state.minutes}
+            onChange={this.selectTime.bind(this)}
+          />
         </div>
         <Listing
           nearestShops={this.state.nearestShops}
-          // showSubsetOfMaxPerStore={this.state.showSubsetOfMaxPerStore}
-          // subsetOfMaxPerStore={this.state.subsetOfMaxPerStore}
+          waitingTimeOrder={this.state.waitingTimeOrder}
+          sortByWaitingTime={this.sortByWaitingTime.bind(this)}
+          distanceOrder={this.state.distanceOrder}
+          sortByDistance={this.sortByDistance.bind(this)}
         />
       </React.Fragment>
     );
