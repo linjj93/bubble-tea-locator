@@ -36,6 +36,7 @@ header {
   display: flex;
   min-width: 35%;
   align-items: center;
+  justify-content: center;
 }
 
 #brand-dropdown,
@@ -43,15 +44,15 @@ header {
   margin: 0 1em;
   font-weight: 700;
   font-size: 1em;
-
+  color: #444;
   min-width: 60%;
   border: 1px solid #aaa;
   border-radius: 0.5em;
 }
 
 .outlet-wrapper {
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc(100vh - 120px);
 }
 
 .advanced-filters {
@@ -83,4 +84,9 @@ header {
 
 .far {
   color: red;
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
 }
