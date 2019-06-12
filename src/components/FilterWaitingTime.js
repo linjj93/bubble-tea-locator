@@ -10,6 +10,7 @@ function FilterWaitingTime(props) {
   });
   return (
     <div className="select-time">
+      with waiting time of
       <select
         defaultValue="50"
         onChange={props.onChange}

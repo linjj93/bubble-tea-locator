@@ -164,12 +164,11 @@ class App extends React.Component {
           />
         </div>
         <div className="advanced-filters">
-          <p>Show:</p>
           <FilterNumberOfShops
             limits={this.state.limits}
             onChange={this.selectLimit.bind(this)}
           />
-          <p>with waiting time of </p>
+
           <FilterWaitingTime
             minutes={this.state.minutes}
             onChange={this.selectTime.bind(this)}

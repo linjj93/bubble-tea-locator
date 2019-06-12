@@ -10,6 +10,7 @@ function FilterNumberOfShops(props) {
   });
   return (
     <div className="select-number">
+      Show
       <select
         defaultValue="all"
         onChange={props.onChange}

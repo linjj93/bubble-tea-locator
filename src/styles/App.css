@@ -57,15 +57,15 @@ header {
 }
 
 .advanced-filters {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(30px, 1fr));
   background-color: #f9dec9;
-  justify-content: center;
 }
 
-.advanced-filters p,
-.advanced-filters div {
+/* .advanced-filters div {
   margin-right: 1em;
-}
+} */
 
 .advanced-filters select {
   border-radius: 50%;
@@ -96,4 +96,20 @@ header {
 .distance {
   cursor: pointer;
   font-size: 1.3em;
+}
+
+.select-number {
+  text-align: right;
+  margin-right: 0.5em;
+}
+
+.select-time {
+  text-align: left;
+}
+
+@media only screen and (max-width: 768px) {
+  .select-number,
+  .select-time {
+    text-align: center;
+  }
 }
