@@ -17,4 +17,30 @@ function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
 
-export { calcDistance };
+function calcAllShopDistances(shopListing, origin) {
+  for (let shop of shopListing) {
+    shop.distanceFromOrigin = calcDistance(
+      origin.latitude,
+      origin.longitude,
+      shop.latitude,
+      shop.longitude
+    );
+
+    shop.distanceFromOrigin = shop.distanceFromOrigin.toFixed(2);
+
+    if (shop.distanceFromOrigin >= 1) {
+      shop.distanceMarker = "far";
+    } else if (
+      shop.distanceFromOrigin > 0.25 &&
+      shop.distanceFromOrigin <= 0.5
+    ) {
+      shop.distanceMarker = "near";
+    } else if (shop.distanceFromOrigin <= 0.25) {
+      shop.distanceMarker = "very-near";
+    } else {
+      shop.distanceMarker = "";
+    }
+  }
+}
+
+export { calcAllShopDistances };
