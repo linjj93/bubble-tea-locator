@@ -59,13 +59,12 @@ header {
 .advanced-filters {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(384px, 1fr));
-  grid-template-rows: repeat(auto-fit, minmax(30px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(10px, 1fr));
   background-color: #f9dec9;
 }
 
 .advanced-filters select {
   border-radius: 50%;
-  /* font-weight: 1000; */
   margin: 0 0.5em;
 }
 

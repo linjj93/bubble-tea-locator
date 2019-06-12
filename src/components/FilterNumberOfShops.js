@@ -19,7 +19,7 @@ function FilterNumberOfShops(props) {
       >
         {options}
       </select>
-      nearest shop(s)
+      nearest shop(s) with
     </div>
   );
 }
