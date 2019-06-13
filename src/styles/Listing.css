@@ -60,6 +60,12 @@ img {
   /* max-height: 95%; */
 }
 
+.outlet-wrapper p {
+  text-align: center;
+  margin: 10% auto;
+  font-weight: 1000;
+}
+
 @media only screen and (max-width: 768px) {
   ul li {
     font-size: 0.7em;
