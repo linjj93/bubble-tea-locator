@@ -76,21 +76,13 @@ class App extends React.Component {
   selectStores(event) {
     let choices = event.target.options;
     let chosen = [];
-    let chooseAll = false;
     for (let choice of choices) {
-      if (choice.value === "all") {
-        chooseAll = true;
+      if (choice.selected && choice.value === "all") {
+        chosen = stores;
         break;
       } else if (choice.selected) {
         chosen.push(choice.value);
       }
-    }
-
-    if (chooseAll) {
-      for (let choice of choices) {
-        choice.selected = true;
-      }
-      chosen = stores;
     }
     this.setState({
       selectedStores: chosen
