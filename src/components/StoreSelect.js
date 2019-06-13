@@ -10,7 +10,7 @@ function StoreSelect(props) {
   });
   return (
     <div className="search-brand">
-      <label htmlFor="brand-dropdown">Which Store?</label>
+      <label htmlFor="brand-dropdown">Which Store(s)?</label>
       <select id="brand-dropdown" onChange={props.onChange} multiple>
         {stores}
       </select>
