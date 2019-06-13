@@ -23,8 +23,8 @@ describe("check rendering of component", () => {
     const { getByText } = render(
       <LocationSelect userLocation={testUserLocation} />
     );
-    const selectMenu = getByText(/choose location/i);
-    expect(selectMenu).toHaveTextContent(/choose location/i);
+    const selectMenu = getByText(/select location/i);
+    expect(selectMenu).toHaveTextContent(/select location/i);
   });
 });
 
@@ -40,15 +40,19 @@ describe("check functionality of select menu", () => {
     expect(changedSelectMenu).toHaveTextContent("location 1");
   });
 
-  //   test("user cannot re-select Choose Location again", () => {
-  //     const { getByLabelText, getByText } = render(
-  //       <LocationSelect userLocation={testUserLocation} />
-  //     );
-  //     const selectMenu = getByLabelText(/where are you?/i);
-  //     expect(selectMenu).toBeInTheDocument();
-  //     fireEvent.change(selectMenu, { target: { value: "location 2" } });
-  //     const changedSelectMenu = getByText("location 2");
-  //     expect(changedSelectMenu).toHaveTextContent("location 2");
-  //     fireEvent.change(selectMenu);
-  //   });
+  test("user cannot re-select Select Location (default value) again", () => {
+    const { getByLabelText, getByText } = render(
+      <LocationSelect userLocation={testUserLocation} />
+    );
+    const selectMenu = getByLabelText(/where are you?/i);
+    expect(selectMenu).toBeInTheDocument();
+    fireEvent.change(selectMenu, { target: { value: "location 2" } });
+    const changedSelectMenu = getByText("location 2");
+    expect(changedSelectMenu).toHaveTextContent("location 2");
+    fireEvent.click(changedSelectMenu, {
+      target: { value: "Select Location" }
+    });
+    const selectMenuBackToDefault = getByText("Select Location");
+    expect(selectMenuBackToDefault).not.toBeInTheDocument();
+  });
 });
