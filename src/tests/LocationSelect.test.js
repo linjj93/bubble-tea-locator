@@ -3,56 +3,59 @@ import LocationSelect from "../components/LocationSelect";
 import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/react/cleanup-after-each";
 import "jest-dom/extend-expect";
-
-const testUserLocation = [
-  { id: "loc1", name: "location 1" },
-  { id: "loc2", name: "location 2" },
-  { id: "loc3", name: "location 3" }
-];
+import { userLocation } from "../assets/locationChoices";
 
 describe("check rendering of component", () => {
   test("renders a select menu with label - where are you?", () => {
     const { getByLabelText } = render(
-      <LocationSelect userLocation={testUserLocation} />
+      <LocationSelect userLocation={userLocation} />
     );
     const selectMenu = getByLabelText(/where are you?/i);
     expect(selectMenu).toBeInTheDocument();
   });
 
-  test("renders a select menu with default value as Choose Location", () => {
-    const { getByText } = render(
-      <LocationSelect userLocation={testUserLocation} />
+  test.only("renders a select menu with default value as Select Location", () => {
+    const { getByLabelText } = render(
+      <LocationSelect userLocation={userLocation} />
     );
-    const selectMenu = getByText(/select location/i);
-    expect(selectMenu).toHaveTextContent(/select location/i);
+    const selectMenu = getByLabelText("Where Are You?");
+    expect(selectMenu).toHaveValue("Select Location");
+    expect(selectMenu).toHaveTextContent("City Hall MRT", { exact: true });
   });
 });
 
 describe("check functionality of select menu", () => {
-  test("changes value to location 1 when location 1 is picked", () => {
+  test("changes value to Downtown MRT when Downtown MRT is picked", () => {
     const { getByLabelText, getByText } = render(
-      <LocationSelect userLocation={testUserLocation} />
+      <LocationSelect userLocation={userLocation} />
     );
     const selectMenu = getByLabelText(/where are you?/i);
+
     expect(selectMenu).toBeInTheDocument();
-    fireEvent.change(selectMenu, { target: { value: "location 1" } });
-    const changedSelectMenu = getByText("location 1");
-    expect(changedSelectMenu).toHaveTextContent("location 1");
+    fireEvent.change(selectMenu, { target: { value: "Downtown MRT" } });
+    expect(selectMenu).toHaveValue("Downtown MRT");
   });
 
-  test("user cannot re-select Select Location (default value) again", () => {
-    const { getByLabelText, getByText } = render(
-      <LocationSelect userLocation={testUserLocation} />
+  test("user cannot re-select Select Location (default value) after first selection", () => {
+    const { getByText, getByTitle } = render(
+      <LocationSelect userLocation={userLocation} />
     );
-    const selectMenu = getByLabelText(/where are you?/i);
-    expect(selectMenu).toBeInTheDocument();
-    fireEvent.change(selectMenu, { target: { value: "location 2" } });
-    const changedSelectMenu = getByText("location 2");
-    expect(changedSelectMenu).toHaveTextContent("location 2");
-    fireEvent.click(changedSelectMenu, {
-      target: { value: "Select Location" }
-    });
-    const selectMenuBackToDefault = getByText("Select Location");
-    expect(selectMenuBackToDefault).not.toBeInTheDocument();
+    const selectMenu = getByTitle("location-select");
+    expect(selectMenu).toHaveValue("Select Location");
+    const disabledOption = getByText("Select Location");
+    expect(disabledOption).toBeDisabled();
+    fireEvent.change(selectMenu, { target: { value: "Chinatown MRT" } });
+    console.log(selectMenu.value);
+    // expect(selectMenu).toHaveFormValues("Chinatown MRT");
+    expect(selectMenu).toHaveValue("Chinatown MRT");
+    // expect(chosen).toBeDisabled();
+    // expect(notChosen).toBeEnabled();
+
+    // expect(selectMenu).toHaveValue("Chinatown MRT");
+    // fireEvent.click(selectMenu, { target: { value: "Select Location" } });
+    // expect(selectMenu).toHaveValue("Select Location");
   });
 });
+
+// const chosen = getByText("Chinatown MRT");
+// expect(chosen).toBeEnabled();
