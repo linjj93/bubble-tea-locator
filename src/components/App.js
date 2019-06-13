@@ -1,13 +1,17 @@
 import React from "react";
+
 import StoreSelect from "./StoreSelect";
 import LocationSelect from "./LocationSelect";
 import Listing from "./Listing";
 import FilterNumberOfShops from "./FilterNumberOfShops";
 import FilterWaitingTime from "./FilterWaitingTime";
+
 import "../styles/App.css";
+
 import { shops } from "../assets/shops";
 import { stores } from "../assets/brands";
 import { userLocation } from "../assets/locationChoices";
+
 import {
   calcAllShopDistances,
   sortShopsByDistanceAndTime,
@@ -25,8 +29,8 @@ class App extends React.Component {
       nearestShops: [],
       showTopN: shops.length,
       limits: ["all", 1, 2, 3, 4, 5],
-      minutes: [10, 20, 30, 40, 50],
       showWaitingTime: 50,
+      minutes: [10, 20, 30, 40, 50],
       waitingTimeOrder: "↗",
       distanceOrder: "↗"
     };
@@ -148,9 +152,8 @@ class App extends React.Component {
             onChange={this.selectStores.bind(this)}
           />
           <LocationSelect
-            onChange={this.selectLocation.bind(this)}
             userLocation={userLocation}
-            selectedLocation={this.state.selectedLocation}
+            onChange={this.selectLocation.bind(this)}
           />
         </div>
         <div className="advanced-filters">
