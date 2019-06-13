@@ -31,12 +31,12 @@ function Listing(props) {
 
   return (
     <React.Fragment>
-      <ul className="outlet-wrapper">
+      <ul className="outlet-wrapper" data-testid="listing">
         <li>
           <span>Shop</span>
           <span>Location</span>
           <span>
-            Average Waiting Time{" "}
+            Waiting Time{" "}
             <span className="waiting-time" onClick={props.sortByWaitingTime}>
               {props.waitingTimeOrder}
             </span>
