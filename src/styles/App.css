@@ -43,29 +43,35 @@ header {
 #brand-dropdown,
 #location-dropdown {
   margin: 0 1em;
+  max-height: 3rem;
   /* font-weight: 700; */
   /* font-size: 1em; */
-  color: #444;
+  color: #f9dec9;
+  background-color: black;
   min-width: 60%;
   border: 1px solid #aaa;
   border-radius: 0.5em;
 }
 
-.outlet-wrapper {
+/* .outlet-wrapper {
   overflow-y: auto;
   height: calc(100vh - 120px);
-}
+} */
 
 .advanced-filters {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(384px, 1fr));
-  grid-template-rows: repeat(auto-fit, minmax(10px, 1fr));
+  display: flex;
+  justify-content: center;
+  /* grid-template-columns: repeat(auto-fit, minmax(384px, 1fr)); */
+  /* grid-template-rows: repeat(auto-fit, minmax(10px, 1fr)); */
   background-color: #f9dec9;
+  padding-bottom: 0.5em;
 }
 
 .advanced-filters select {
-  border-radius: 50%;
+  border-radius: 1%;
   margin: 0 0.5em;
+  background-color: rgb(36, 35, 35);
+  color: #f9dec9;
 }
 
 .very-near {
@@ -96,17 +102,18 @@ header {
 .select-number {
   text-align: right;
   margin-right: 0.5em;
-  font-size: 0.8em;
+  /* font-size: 0.8em; */
 }
 
 .select-time {
   text-align: left;
-  font-size: 0.8em;
+  /* font-size: 0.8em; */
 }
 
 @media only screen and (max-width: 768px) {
   .select-number,
   .select-time {
     text-align: center;
+    font-size: 0.5em;
   }
 }

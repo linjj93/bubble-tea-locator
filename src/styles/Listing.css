@@ -13,25 +13,55 @@ ul li {
 ul li span {
   flex: 2;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 ul li span:first-child {
   flex: 1;
 }
 
-ul li:first-child {
+.listing-header {
   border-bottom: double;
   background-color: #5e8199;
   color: white;
+  box-shadow: 0 0;
+}
+
+.listing-header span:first-child {
+  margin-left: 1em;
+}
+
+.listing-header span:last-child {
+  margin-right: 1em;
+}
+
+.shops {
+  overflow-y: auto;
+  height: 78vh;
+  /* height: calc(100vh - 130px); */
+}
+.shops li {
+  min-height: 80px;
+  border-radius: 0.5em;
+  margin: 1em;
+  box-shadow: 0.5em 0.5em lightgrey;
+  border: 0.5px solid lightgrey;
+}
+
+.shops li:hover {
+  transform: translate(0.1em, -0.5em);
 }
 
 img {
   max-width: 100%;
   height: auto;
+  /* max-height: 95%; */
 }
 
-.outlet-wrapper p {
-  text-align: center;
-  margin: 10% auto;
-  font-weight: 1000;
+@media only screen and (max-width: 768px) {
+  ul li {
+    font-size: 0.7em;
+  }
 }
