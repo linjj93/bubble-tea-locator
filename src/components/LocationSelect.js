@@ -12,11 +12,12 @@ function LocationSelect(props) {
     <div className="search-location">
       <label htmlFor="location-dropdown">Where Are You?</label>
       <select
+        title="location-select"
         defaultValue="Select Location"
         onChange={props.onChange}
         id="location-dropdown"
       >
-        <option defaultValue="default-option" disabled key="default">
+        <option disabled key="default">
           Select Location
         </option>
         {userLocation}

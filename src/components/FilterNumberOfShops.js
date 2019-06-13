@@ -12,6 +12,7 @@ function FilterNumberOfShops(props) {
     <div className="select-number">
       Show
       <select
+        data-testid="limit-select"
         defaultValue="all"
         onChange={props.onChange}
         name="number-of-shops"
