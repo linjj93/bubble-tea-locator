@@ -15,7 +15,7 @@ header {
 .search-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  grid-template-rows: repeat(auto-fit, minmax(60px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(10px, 1fr));
   top: 0;
   left: 0;
   right: 0;
@@ -61,8 +61,7 @@ header {
 .advanced-filters {
   display: flex;
   justify-content: center;
-  /* grid-template-columns: repeat(auto-fit, minmax(384px, 1fr)); */
-  /* grid-template-rows: repeat(auto-fit, minmax(10px, 1fr)); */
+
   background-color: #f9dec9;
   padding-bottom: 0.5em;
 }
@@ -115,5 +114,10 @@ header {
   .select-time {
     text-align: center;
     font-size: 0.5em;
+  }
+
+  .search-wrapper,
+  .advanced-filters {
+    font-size: 0.7em;
   }
 }
