@@ -17,7 +17,7 @@ function Listing(props) {
             <span>{shop.name}</span>
             <span>{shop.unit}</span>
           </span>
-          <span data-testid="waiting-time">{shop.queueTime} minutes</span>
+          <span data-testid="waiting-time">{shop.queueTime} mins</span>
           <span className={shop.distanceMarker} data-testid="distance">
             {isNaN(shop.distanceFromOrigin)
               ? "Select Location First"
