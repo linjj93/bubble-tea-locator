@@ -32,7 +32,7 @@ function Listing(props) {
   return (
     <React.Fragment>
       <ul className="outlet-wrapper" data-testid="listing">
-        <li class="listing-header">
+        <li className="listing-header">
           <span>Shop</span>
           <span>Location</span>
           <span>
@@ -48,7 +48,7 @@ function Listing(props) {
             </span> */}
           </span>
         </li>
-        <div class="shops">{populateListing(props)}</div>
+        <div className="shops">{populateListing(props)}</div>
       </ul>
     </React.Fragment>
   );
