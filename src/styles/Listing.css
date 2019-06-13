@@ -74,4 +74,8 @@ img {
   img {
     max-width: 50%;
   }
+
+  .shops li {
+    min-height: 50px;
+  }
 }
