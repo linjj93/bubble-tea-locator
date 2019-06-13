@@ -43,4 +43,33 @@ function calcAllShopDistances(shopListing, origin) {
   }
 }
 
-export { calcAllShopDistances };
+function sortShopsByDistanceAndTime(shopListing) {
+  return shopListing.sort((a, b) => {
+    if (a.distanceFromOrigin > b.distanceFromOrigin) {
+      return 1;
+    } else if (a.distanceFromOrigin < b.distanceFromOrigin) {
+      return -1;
+    } else {
+      return a.queueTime > b.queueTime ? 1 : -1;
+    }
+  });
+}
+
+function filterShopsByStore(shopListing, chosenStores) {
+  return shopListing.filter(shop => chosenStores.includes(shop.brand));
+}
+
+function filterShopsByWaitingTime(shopListing, duration) {
+  return shopListing.filter(shop => shop.queueTime <= duration);
+}
+
+function limitNumberOfShops(shopListing, n) {
+  return shopListing.filter((shop, index) => index + 1 <= n);
+}
+export {
+  calcAllShopDistances,
+  sortShopsByDistanceAndTime,
+  filterShopsByStore,
+  filterShopsByWaitingTime,
+  limitNumberOfShops
+};

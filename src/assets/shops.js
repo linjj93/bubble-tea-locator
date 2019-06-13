@@ -1,51 +1,10 @@
-import koi from "./Koi.png";
-import koiExpress from "./Koi Express.png";
-import gongCha from "./GongCha.png";
-import liHo from "./LiHo.png";
-import tigerSugar from "./Tiger Sugar.png";
+import koi from "./logos/Koi.png";
+import koiExpress from "./logos/Koi Express.png";
+import gongCha from "./logos/GongCha.png";
+import liHo from "./logos/LiHo.png";
+import tigerSugar from "./logos/Tiger Sugar.png";
 // import eachACup from "./Each-A-Cup.png";
-import tenRen from "./Tenren.png";
-
-const stores = ["Gong Cha", "Koi", "LiHo", "Ten Ren", "Tiger Sugar"];
-
-const userLocation = [
-  {
-    id: "NE5",
-    name: "Clarke Quay MRT",
-    latitude: 1.2882433,
-    longitude: 103.8463311
-  },
-  {
-    id: "NE4/DT19",
-    name: "Chinatown MRT",
-    latitude: 1.2847929,
-    longitude: 103.8417425
-  },
-  {
-    id: "EW13/NS25",
-    name: "City Hall MRT",
-    latitude: 1.2930814,
-    longitude: 103.849879
-  },
-  {
-    id: "EW14/NS26",
-    name: "Raffles Place MRT",
-    latitude: 1.2830227,
-    longitude: 103.8491478
-  },
-  {
-    id: "DT18",
-    name: "Telok Ayer MRT",
-    latitude: 1.2822264,
-    longitude: 103.846406
-  },
-  {
-    id: "DT17",
-    name: "Downtown MRT",
-    latitude: 1.279463,
-    longitude: 103.8506241
-  }
-];
+import tenRen from "./logos/Tenren.png";
 
 const koiShops = [
   {
@@ -238,4 +197,4 @@ const shops = [
   ...tenRenShops
 ];
 
-export { stores, userLocation, shops };
+export { shops };
