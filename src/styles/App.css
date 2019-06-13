@@ -114,6 +114,7 @@ header {
   .select-time {
     text-align: center;
     font-size: 0.6em;
+    font-weight: 1000;
   }
 
   .search-wrapper,
