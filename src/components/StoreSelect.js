@@ -25,16 +25,18 @@ function StoreSelect(props) {
         Which Store(s)?
       </label>
       <form id="store-dropdown" key="store-form">
-        <input
-          id="any-store"
-          key="any-store"
-          type="checkbox"
-          name="store-select"
-          value="all"
-          onChange={props.selectAllStores}
-          checked={props.allStoresAreChosen}
-        />
-        <label>Any Store</label>
+        <div className="store-checkbox">
+          <input
+            id="any-store"
+            key="any-store"
+            type="checkbox"
+            name="store-select"
+            value="all"
+            onChange={props.selectAllStores}
+            checked={props.allStoresAreChosen}
+          />
+          <label>Any Store</label>
+        </div>
         {stores}
       </form>
     </div>
