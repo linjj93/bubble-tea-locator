@@ -32,7 +32,7 @@ function StoreSelect(props) {
           name="store-select"
           value="all"
           onChange={props.selectAllStores}
-          checked={props.checkboxState["Any Store"]}
+          checked={props.allStoresAreChosen}
         />
         <label>Any Store</label>
         {stores}

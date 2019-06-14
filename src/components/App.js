@@ -31,11 +31,9 @@ class App extends React.Component {
       limits: ["all", 1, 2, 3, 4, 5],
       showWaitingTime: 50,
       minutes: [10, 20, 30, 40, 50],
-      waitingTimeOrder: "↗",
-      distanceOrder: "↗",
       checkboxState,
       allStoresAreChosen: false,
-      atLeastOneStoreUnChecked: true
+      atLeastOneStoreNotPicked: true
     };
   }
 
@@ -53,38 +51,42 @@ class App extends React.Component {
   selectAllStores() {
     const updatedCheckboxState = this.state.checkboxState;
     const allStores = [];
-    const notAllChosen = this.state.atLeastOneStoreUnChecked;
+    const atLeastOneStoreNotPicked = this.state.atLeastOneStoreNotPicked;
 
     for (let store of stores) {
       allStores.push(store);
-      !notAllChosen
-        ? (updatedCheckboxState[store] = false) // reverse, unselect all stores
-        : (updatedCheckboxState[store] = true); // choose all stores
+      atLeastOneStoreNotPicked
+        ? // reverse, unselect all stores
+          (updatedCheckboxState[store] = true)
+        : (updatedCheckboxState[store] = false); // choose all stores
     }
 
-    !notAllChosen
-      ? (updatedCheckboxState["Any Store"] = false)
-      : (updatedCheckboxState["Any Store"] = true);
+    updatedCheckboxState["Any Store"] = !updatedCheckboxState["Any Store"];
 
-    !notAllChosen
+    // this.setState({
+    //   allStoresAreChosen: atLeastOneStoreNotPicked ? true : false,
+    //   atLeastOneStoreNotPicked: atLeastOneStoreNotPicked ? false : true,
+    //   checkboxState: updatedCheckboxState,
+    //   selectedStores: atLeastOneStoreNotPicked ? [] : allStores
+    // });
+
+    atLeastOneStoreNotPicked
       ? this.setState({
-          allChecked: false,
-          allStoresAreChosen: false,
-          atLeastOneStoreUnChecked: true,
-          checkboxState: updatedCheckboxState,
-          selectedStores: []
-        })
-      : this.setState({
-          allChecked: true,
           allStoresAreChosen: true,
-          atLeastOneStoreUnChecked: false,
+          atLeastOneStoreNotPicked: false,
           checkboxState: updatedCheckboxState,
           selectedStores: allStores
+        })
+      : this.setState({
+          allStoresAreChosen: false,
+          atLeastOneStoreNotPicked: true,
+          checkboxState: updatedCheckboxState,
+          selectedStores: []
         });
 
     this.findNearestShops(
       this.state.selectedLocation,
-      !notAllChosen ? [] : allStores,
+      !atLeastOneStoreNotPicked ? [] : allStores,
       this.state.showTopN,
       this.state.showWaitingTime
     );
@@ -94,26 +96,33 @@ class App extends React.Component {
     const chosen = this.state.selectedStores;
     const choice = event.target.value;
     const updatedCheckboxState = this.state.checkboxState;
-    if (!this.state.atLeastOneStoreUnChecked) {
+
+    if (!this.state.atLeastOneStoreNotPicked) {
       updatedCheckboxState["Any Store"] = false;
       this.setState({
-        atLeastOneStoreUnChecked: true,
-        allChecked: false,
+        atLeastOneStoreNotPicked: true,
+        allStoresAreChosen: false,
         checkboxState: updatedCheckboxState
       });
     }
 
-    updatedCheckboxState[choice]
-      ? (updatedCheckboxState[choice] = false)
-      : (updatedCheckboxState[choice] = true);
+    updatedCheckboxState[choice] = !updatedCheckboxState[choice];
 
     chosen.indexOf(choice) < 0
       ? chosen.push(choice)
       : chosen.splice(chosen.indexOf(choice), 1);
 
+    const lastOptionAlsoChosen = chosen.length === stores.length;
+
+    if (lastOptionAlsoChosen) {
+      updatedCheckboxState["Any Store"] = true;
+    }
+
     this.setState({
       checkboxState: updatedCheckboxState,
-      selectedStores: chosen
+      selectedStores: chosen,
+      allStoresAreChosen: lastOptionAlsoChosen ? true : false,
+      atLeastOneStoreNotPicked: lastOptionAlsoChosen ? false : true
     });
 
     this.findNearestShops(
@@ -181,11 +190,11 @@ class App extends React.Component {
         <div className="search-wrapper">
           <StoreSelect
             stores={stores}
-            allChecked={this.state.allStoresAreChosen}
+            allStoresAreChosen={this.state.allStoresAreChosen}
             selectAllStores={this.selectAllStores.bind(this)}
             selectSingleStore={this.selectSingleStore.bind(this)}
             checkboxState={this.state.checkboxState}
-            atLeastOneStoreUnChecked={this.state.atLeastOneStoreUnChecked}
+            atLeastOneStoreNotPicked={this.state.atLeastOneStoreNotPicked}
           />
           <LocationSelect
             userLocation={userLocation}
