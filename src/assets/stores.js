@@ -1,9 +1,9 @@
 const stores = ["Gong Cha", "Koi", "LiHo", "Ten Ren", "Tiger Sugar"];
 
-let storesCheckState = {};
+let checkboxState = { "Any Store": false };
 
 for (let store of stores) {
-  storesCheckState[store] = false;
+  checkboxState[store] = false;
 }
 
-export { stores, storesCheckState };
+export { stores, checkboxState };
