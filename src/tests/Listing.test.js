@@ -32,7 +32,7 @@ describe("test rendering of component", () => {
   });
 
   test("Listing Component rendered with list of shops", () => {
-    const { getByTestId, getByText, getAllByText } = render(
+    const { getByTestId, getByText } = render(
       <Listing nearestShops={testShops} />
     );
     const shopListing = getByTestId("listing");

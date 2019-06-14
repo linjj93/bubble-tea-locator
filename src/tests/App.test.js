@@ -1,13 +1,14 @@
 import React from "react";
 import App from "../components/App";
-import { render, fireEvent, wait } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/react/cleanup-after-each";
 import "jest-dom/extend-expect";
 
+//at App level, check that individual components appear in the app, no need to check their text content
 describe("test starting UI", () => {
   test("default UI should contain prompt message ", () => {
     const { getByText, getByTestId, getByLabelText } = render(<App />);
-    const storeMenu = getByLabelText("Which Store?");
+    const storeMenu = getByLabelText("Which Store(s)?");
     const locationMenu = getByLabelText("Where Are You?");
     const shopsListing = getByTestId("listing");
     const promptMessage = getByText(
@@ -21,32 +22,34 @@ describe("test starting UI", () => {
 });
 
 describe("test effect of StoreSelect menu", () => {
+  // positive test case
   test("when user chooses Gong Cha, Gong Cha shows on listing", () => {
     const { getByLabelText, getAllByText, getAllByAltText } = render(<App />);
-    const storeMenu = getByLabelText("Which Store?");
+    const storeMenu = getByLabelText("Which Store(s)?");
     expect(storeMenu).toBeInTheDocument();
     fireEvent.change(storeMenu, { target: { value: "Gong Cha" } });
     expect(storeMenu).toHaveValue(["Gong Cha"]);
     const populatedListing = getAllByText("Select Location First");
     populatedListing.map(shop => expect(shop).toBeInTheDocument());
     const populatedStore = getAllByAltText("Gong Cha");
-    populatedStore.map(store => expect(store).toBeInTheDocument()); // positive test case
+    populatedStore.map(store => expect(store).toBeInTheDocument());
   });
 
+  // negative test case
   test("when user chooses Tiger Sugar, Koi does not show on listing", () => {
     const { queryAllByAltText, getByLabelText } = render(<App />);
-    const storeMenu = getByLabelText("Which Store?");
+    const storeMenu = getByLabelText("Which Store(s)?");
     fireEvent.change(storeMenu, { target: { value: "Tiger Sugar" } });
     expect(storeMenu).toHaveValue(["Tiger Sugar"]);
     const storeNotChosen = queryAllByAltText("Koi");
-    expect(storeNotChosen).toEqual([]); // negative test case
+    expect(storeNotChosen).toEqual([]);
   });
 });
 
 describe("test effect of NumberLimit menu", () => {
   test("shows only 2 shops when user selects to see 2 shops", () => {
     const { getByLabelText, getAllByAltText, getByTestId } = render(<App />);
-    const storeSelect = getByLabelText("Which Store?");
+    const storeSelect = getByLabelText("Which Store(s)?");
     const locationSelect = getByLabelText("Where Are You?");
     const limitSelect = getByTestId("limit-select");
     fireEvent.change(storeSelect, { target: { value: "Gong Cha" } });
@@ -66,7 +69,7 @@ describe("test effect of NumberLimit menu", () => {
 describe("test effect of WaitingTimeLimit menu", () => {
   test("filters out shops with less than or equal to 30 minutes waiting time when 30 is picked", () => {
     const { getByLabelText, getByText, getAllByTestId } = render(<App />);
-    const storeSelect = getByLabelText("Which Store?");
+    const storeSelect = getByLabelText("Which Store(s)?");
     const locationSelect = getByLabelText("Where Are You?");
     const waitingTime = getByText("50");
     fireEvent.change(storeSelect, { target: { value: "Koi" } });
@@ -87,7 +90,7 @@ describe("test effect of WaitingTimeLimit menu", () => {
 describe("test effects of StoreSelect and LocationSelect menu", () => {
   test("when user selects location without selecting store, app stays at default", () => {
     const { getByLabelText, getByText } = render(<App />);
-    const storeSelect = getByLabelText("Which Store?");
+    const storeSelect = getByLabelText("Which Store(s)?");
     const locationSelect = getByLabelText("Where Are You?");
     expect(storeSelect).toBeInTheDocument();
 
@@ -103,7 +106,7 @@ describe("test effects of StoreSelect and LocationSelect menu", () => {
 
   test("when user selects location and LiHo, list of LiHo shops are populated", () => {
     const { getByLabelText, getAllByAltText, getAllByTestId } = render(<App />);
-    const storeSelect = getByLabelText("Which Store?");
+    const storeSelect = getByLabelText("Which Store(s)?");
     const locationSelect = getByLabelText("Where Are You?");
     fireEvent.change(storeSelect, { target: { value: "LiHo" } });
     expect(storeSelect).toHaveValue(["LiHo"]);

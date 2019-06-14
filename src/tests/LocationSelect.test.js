@@ -14,7 +14,7 @@ describe("check rendering of component", () => {
     expect(selectMenu).toBeInTheDocument();
   });
 
-  test.only("renders a select menu with default value as Select Location", () => {
+  test("renders a select menu with default value as Select Location", () => {
     const { getByLabelText } = render(
       <LocationSelect userLocation={userLocation} />
     );
@@ -26,7 +26,7 @@ describe("check rendering of component", () => {
 
 describe("check functionality of select menu", () => {
   test("changes value to Downtown MRT when Downtown MRT is picked", () => {
-    const { getByLabelText, getByText } = render(
+    const { getByLabelText } = render(
       <LocationSelect userLocation={userLocation} />
     );
     const selectMenu = getByLabelText(/where are you?/i);
@@ -36,7 +36,7 @@ describe("check functionality of select menu", () => {
     expect(selectMenu).toHaveValue("Downtown MRT");
   });
 
-  test("user cannot re-select Select Location (default value) after first selection", () => {
+  xtest("user cannot re-select Select Location (default value) after first selection", () => {
     const { getByText, getByTitle } = render(
       <LocationSelect userLocation={userLocation} />
     );
@@ -46,16 +46,6 @@ describe("check functionality of select menu", () => {
     expect(disabledOption).toBeDisabled();
     fireEvent.change(selectMenu, { target: { value: "Chinatown MRT" } });
     console.log(selectMenu.value);
-    // expect(selectMenu).toHaveFormValues("Chinatown MRT");
     expect(selectMenu).toHaveValue("Chinatown MRT");
-    // expect(chosen).toBeDisabled();
-    // expect(notChosen).toBeEnabled();
-
-    // expect(selectMenu).toHaveValue("Chinatown MRT");
-    // fireEvent.click(selectMenu, { target: { value: "Select Location" } });
-    // expect(selectMenu).toHaveValue("Select Location");
   });
 });
-
-// const chosen = getByText("Chinatown MRT");
-// expect(chosen).toBeEnabled();

@@ -8,8 +8,10 @@ const minutes = [10, 20, 30, 40, 50];
 
 describe("test rendering of component", () => {
   test("select menu renders with default value of 50", () => {
-    const { getByText } = render(<FilterWaitingTime minutes={minutes} />);
-    const timeDropdown = getByText("50");
+    const { getByDisplayValue } = render(
+      <FilterWaitingTime minutes={minutes} />
+    );
+    const timeDropdown = getByDisplayValue("50");
     expect(timeDropdown).toBeInTheDocument();
   });
   test("select menu renders with descriptive text", () => {
