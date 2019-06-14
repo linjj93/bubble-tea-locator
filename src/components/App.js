@@ -9,7 +9,7 @@ import FilterWaitingTime from "./FilterWaitingTime";
 import "../styles/App.css";
 
 import { shops } from "../assets/shops";
-import { stores, storesCheckState } from "../assets/stores";
+import { stores, checkboxState } from "../assets/stores";
 import { userLocation } from "../assets/locationChoices";
 
 import {
@@ -33,34 +33,10 @@ class App extends React.Component {
       minutes: [10, 20, 30, 40, 50],
       waitingTimeOrder: "↗",
       distanceOrder: "↗",
-      storesCheckState: storesCheckState
+      checkboxState,
+      allStoresAreChosen: false,
+      atLeastOneStoreUnChecked: true
     };
-  }
-
-  sortByWaitingTime() {
-    const listing = this.state.nearestShops;
-    const order = this.state.waitingTimeOrder;
-    order === "↘"
-      ? listing.sort((a, b) => (a.queueTime > b.queueTime ? 1 : -1))
-      : listing.sort((a, b) => (a.queueTime < b.queueTime ? 1 : -1));
-    order === "↘"
-      ? this.setState({ waitingTimeOrder: "↗" })
-      : this.setState({ waitingTimeOrder: "↘" });
-  }
-
-  sortByDistance() {
-    const listing = this.state.nearestShops;
-    const order = this.state.distanceOrder;
-    order === "↘"
-      ? listing.sort((a, b) =>
-          a.distanceFromOrigin > b.distanceFromOrigin ? 1 : -1
-        )
-      : listing.sort((a, b) =>
-          a.distanceFromOrigin < b.distanceFromOrigin ? 1 : -1
-        );
-    order === "↘"
-      ? this.setState({ distanceOrder: "↗" })
-      : this.setState({ distanceOrder: "↘" });
   }
 
   selectLocation(event) {
@@ -74,59 +50,41 @@ class App extends React.Component {
     );
   }
 
-  // selectStores(event) {
-  //   let choice = event.target.value;
-  //   let chosen = this.state.selectedStores;
-  //   const anyStoreIsChosen = event.target.value === "all";
-  //   if (anyStoreIsChosen) {
-  //     event.target.checked ? (chosen = stores) : (chosen = []);
-  //   } else {
-  //     event.target.checked
-  //       ? chosen.push(choice)
-  //       : chosen.splice(chosen.indexOf(choice), 1);
-  //   }
-  //   console.log(chosen);
-  //   this.setState({
-  //     selectedStores: chosen
-  //   });
-  //   this.findNearestShops(
-  //     this.state.selectedLocation,
-  //     chosen,
-  //     this.state.showTopN,
-  //     this.state.showWaitingTime
-  //   );
-  // }
-
   selectAllStores() {
-    const updatedStoresCheckState = this.state.storesCheckState;
+    const updatedCheckboxState = this.state.checkboxState;
     const allStores = [];
+    const notAllChosen = this.state.atLeastOneStoreUnChecked;
+
     for (let store of stores) {
       allStores.push(store);
-    }
-    if (this.state.allChecked) {
-      for (let store of stores) {
-        updatedStoresCheckState[store] = false;
-      }
-    } else {
-      for (let store of stores) {
-        updatedStoresCheckState[store] = true;
-      }
+      !notAllChosen
+        ? (updatedCheckboxState[store] = false) // reverse, unselect all stores
+        : (updatedCheckboxState[store] = true); // choose all stores
     }
 
-    this.state.allChecked
+    !notAllChosen
+      ? (updatedCheckboxState["Any Store"] = false)
+      : (updatedCheckboxState["Any Store"] = true);
+
+    !notAllChosen
       ? this.setState({
           allChecked: false,
-          storesCheckState: updatedStoresCheckState,
+          allStoresAreChosen: false,
+          atLeastOneStoreUnChecked: true,
+          checkboxState: updatedCheckboxState,
           selectedStores: []
         })
       : this.setState({
           allChecked: true,
-          storesCheckState: updatedStoresCheckState,
+          allStoresAreChosen: true,
+          atLeastOneStoreUnChecked: false,
+          checkboxState: updatedCheckboxState,
           selectedStores: allStores
         });
+
     this.findNearestShops(
       this.state.selectedLocation,
-      this.state.allChecked ? [] : allStores,
+      !notAllChosen ? [] : allStores,
       this.state.showTopN,
       this.state.showWaitingTime
     );
@@ -134,22 +92,30 @@ class App extends React.Component {
 
   selectSingleStore(event) {
     const chosen = this.state.selectedStores;
-    if (event.target.value !== "all") {
-      const choice = event.target.value;
-      const updatedStoresCheckState = this.state.storesCheckState;
-      updatedStoresCheckState[choice]
-        ? (updatedStoresCheckState[choice] = false)
-        : (updatedStoresCheckState[choice] = true);
-
-      chosen.indexOf(choice) < 0
-        ? chosen.push(choice)
-        : chosen.splice(chosen.indexOf(choice), 1);
-      console.log(chosen);
+    const choice = event.target.value;
+    const updatedCheckboxState = this.state.checkboxState;
+    if (!this.state.atLeastOneStoreUnChecked) {
+      updatedCheckboxState["Any Store"] = false;
       this.setState({
-        storesCheckState: updatedStoresCheckState,
-        selectedStores: chosen
+        atLeastOneStoreUnChecked: true,
+        allChecked: false,
+        checkboxState: updatedCheckboxState
       });
     }
+
+    updatedCheckboxState[choice]
+      ? (updatedCheckboxState[choice] = false)
+      : (updatedCheckboxState[choice] = true);
+
+    chosen.indexOf(choice) < 0
+      ? chosen.push(choice)
+      : chosen.splice(chosen.indexOf(choice), 1);
+
+    this.setState({
+      checkboxState: updatedCheckboxState,
+      selectedStores: chosen
+    });
+
     this.findNearestShops(
       this.state.selectedLocation,
       chosen,
@@ -215,10 +181,11 @@ class App extends React.Component {
         <div className="search-wrapper">
           <StoreSelect
             stores={stores}
-            allChecked={this.state.allChecked}
+            allChecked={this.state.allStoresAreChosen}
             selectAllStores={this.selectAllStores.bind(this)}
             selectSingleStore={this.selectSingleStore.bind(this)}
-            storesCheckState={this.state.storesCheckState}
+            checkboxState={this.state.checkboxState}
+            atLeastOneStoreUnChecked={this.state.atLeastOneStoreUnChecked}
           />
           <LocationSelect
             userLocation={userLocation}
@@ -236,13 +203,7 @@ class App extends React.Component {
             onChange={this.selectTime.bind(this)}
           />
         </div>
-        <Listing
-          nearestShops={this.state.nearestShops}
-          waitingTimeOrder={this.state.waitingTimeOrder}
-          sortByWaitingTime={this.sortByWaitingTime.bind(this)}
-          distanceOrder={this.state.distanceOrder}
-          sortByDistance={this.sortByDistance.bind(this)}
-        />
+        <Listing nearestShops={this.state.nearestShops} />
       </React.Fragment>
     );
   }

@@ -11,7 +11,7 @@ function StoreSelect(props) {
           type="checkbox"
           name="store-select"
           value={store}
-          checked={props.storesCheckState[store]}
+          checked={props.checkboxState[store]}
         />
         <label key={store + "-label"} htmlFor={store + "-checkbox"}>
           {store}
@@ -32,6 +32,7 @@ function StoreSelect(props) {
           name="store-select"
           value="all"
           onChange={props.selectAllStores}
+          checked={props.checkboxState["Any Store"]}
         />
         <label>Any Store</label>
         {stores}
