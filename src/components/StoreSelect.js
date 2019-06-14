@@ -3,20 +3,38 @@ import React from "react";
 function StoreSelect(props) {
   const stores = props.stores.map(store => {
     return (
-      <option key={store} value={store}>
-        {store}
-      </option>
+      <div className="store-checkbox">
+        <input
+          onChange={props.onChange}
+          id={store + "-checkbox"}
+          key={store}
+          type="checkbox"
+          name="store-select"
+          value={store}
+        />
+        <label key={store + "-label"} htmlFor={store + "-checkbox"}>
+          {store}
+        </label>
+      </div>
     );
   });
   return (
-    <div className="search-brand">
-      <label htmlFor="brand-dropdown">Which Store(s)?</label>
-      <select id="brand-dropdown" onChange={props.onChange} multiple>
-        <option key="all" value="all">
-          Any Store
-        </option>
+    <div className="search-store">
+      <label id="which-store" htmlFor="store-dropdown">
+        Which Store?
+      </label>
+      <form id="store-dropdown" key="store-form">
+        <input
+          onChange={props.onChange}
+          id="any-store"
+          key="any-store"
+          type="checkbox"
+          name="store-select"
+          value="all"
+        />
+        <label>Any Store</label>
         {stores}
-      </select>
+      </form>
     </div>
   );
 }

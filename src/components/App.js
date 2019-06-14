@@ -9,7 +9,7 @@ import FilterWaitingTime from "./FilterWaitingTime";
 import "../styles/App.css";
 
 import { shops } from "../assets/shops";
-import { stores } from "../assets/brands";
+import { stores } from "../assets/stores";
 import { userLocation } from "../assets/locationChoices";
 
 import {
@@ -74,16 +74,22 @@ class App extends React.Component {
   }
 
   selectStores(event) {
-    let choices = event.target.options;
-    let chosen = [];
-    for (let choice of choices) {
-      if (choice.selected && choice.value === "all") {
-        chosen = stores;
-        break;
-      } else if (choice.selected) {
-        chosen.push(choice.value);
-      }
+    let choice = event.target.value;
+    let chosen = this.state.selectedStores;
+    const anyStoreIsChosen = event.target.value === "all";
+    if (anyStoreIsChosen) {
+      event.target.checked ? (chosen = stores) : (chosen = []);
+    } else {
+      event.target.checked ? chosen.push(choice) : chosen.pop(chosen);
+
+      // if (event.target.checked) {
+      //   chosen.push(choice);
+      // } else {
+      //   chosen.pop(choice);
+      // }
     }
+    console.log(chosen);
+
     this.setState({
       selectedStores: chosen
     });
