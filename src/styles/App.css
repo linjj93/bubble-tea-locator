@@ -24,7 +24,7 @@
   margin: 0;
   padding: 1%;
   justify-content: stretch;
-  max-height: 4.1rem;
+  /* max-height: 4.1rem; */
 }
 
 .search-store > label,
@@ -51,7 +51,7 @@
 
 #store-dropdown {
   overflow-y: scroll;
-  max-height: 4rem;
+  min-height: 4rem;
 }
 
 #store-dropdown input {
