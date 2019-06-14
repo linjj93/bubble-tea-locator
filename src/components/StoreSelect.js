@@ -21,7 +21,7 @@ function StoreSelect(props) {
   return (
     <div className="search-store">
       <label id="which-store" htmlFor="store-dropdown">
-        Which Store?
+        Which Store(s)?
       </label>
       <form id="store-dropdown" key="store-form">
         <input
