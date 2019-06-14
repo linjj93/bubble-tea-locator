@@ -9,7 +9,7 @@ import FilterWaitingTime from "./FilterWaitingTime";
 import "../styles/App.css";
 
 import { shops } from "../assets/shops";
-import { stores } from "../assets/stores";
+import { stores, storesCheckState } from "../assets/stores";
 import { userLocation } from "../assets/locationChoices";
 
 import {
@@ -32,7 +32,8 @@ class App extends React.Component {
       showWaitingTime: 50,
       minutes: [10, 20, 30, 40, 50],
       waitingTimeOrder: "↗",
-      distanceOrder: "↗"
+      distanceOrder: "↗",
+      storesCheckState: storesCheckState
     };
   }
 
@@ -73,26 +74,82 @@ class App extends React.Component {
     );
   }
 
-  selectStores(event) {
-    let choice = event.target.value;
-    let chosen = this.state.selectedStores;
-    const anyStoreIsChosen = event.target.value === "all";
-    if (anyStoreIsChosen) {
-      event.target.checked ? (chosen = stores) : (chosen = []);
-    } else {
-      event.target.checked ? chosen.push(choice) : chosen.pop(chosen);
+  // selectStores(event) {
+  //   let choice = event.target.value;
+  //   let chosen = this.state.selectedStores;
+  //   const anyStoreIsChosen = event.target.value === "all";
+  //   if (anyStoreIsChosen) {
+  //     event.target.checked ? (chosen = stores) : (chosen = []);
+  //   } else {
+  //     event.target.checked
+  //       ? chosen.push(choice)
+  //       : chosen.splice(chosen.indexOf(choice), 1);
+  //   }
+  //   console.log(chosen);
+  //   this.setState({
+  //     selectedStores: chosen
+  //   });
+  //   this.findNearestShops(
+  //     this.state.selectedLocation,
+  //     chosen,
+  //     this.state.showTopN,
+  //     this.state.showWaitingTime
+  //   );
+  // }
 
-      // if (event.target.checked) {
-      //   chosen.push(choice);
-      // } else {
-      //   chosen.pop(choice);
-      // }
+  selectAllStores() {
+    const updatedStoresCheckState = this.state.storesCheckState;
+    const allStores = [];
+    for (let store of stores) {
+      allStores.push(store);
     }
-    console.log(chosen);
+    if (this.state.allChecked) {
+      for (let store of stores) {
+        updatedStoresCheckState[store] = false;
+      }
+    } else {
+      for (let store of stores) {
+        updatedStoresCheckState[store] = true;
+      }
+    }
 
-    this.setState({
-      selectedStores: chosen
-    });
+    this.state.allChecked
+      ? this.setState({
+          allChecked: false,
+          storesCheckState: updatedStoresCheckState,
+          selectedStores: []
+        })
+      : this.setState({
+          allChecked: true,
+          storesCheckState: updatedStoresCheckState,
+          selectedStores: allStores
+        });
+    this.findNearestShops(
+      this.state.selectedLocation,
+      this.state.allChecked ? [] : allStores,
+      this.state.showTopN,
+      this.state.showWaitingTime
+    );
+  }
+
+  selectSingleStore(event) {
+    const chosen = this.state.selectedStores;
+    if (event.target.value !== "all") {
+      const choice = event.target.value;
+      const updatedStoresCheckState = this.state.storesCheckState;
+      updatedStoresCheckState[choice]
+        ? (updatedStoresCheckState[choice] = false)
+        : (updatedStoresCheckState[choice] = true);
+
+      chosen.indexOf(choice) < 0
+        ? chosen.push(choice)
+        : chosen.splice(chosen.indexOf(choice), 1);
+      console.log(chosen);
+      this.setState({
+        storesCheckState: updatedStoresCheckState,
+        selectedStores: chosen
+      });
+    }
     this.findNearestShops(
       this.state.selectedLocation,
       chosen,
@@ -158,7 +215,10 @@ class App extends React.Component {
         <div className="search-wrapper">
           <StoreSelect
             stores={stores}
-            onChange={this.selectStores.bind(this)}
+            allChecked={this.state.allChecked}
+            selectAllStores={this.selectAllStores.bind(this)}
+            selectSingleStore={this.selectSingleStore.bind(this)}
+            storesCheckState={this.state.storesCheckState}
           />
           <LocationSelect
             userLocation={userLocation}

@@ -5,12 +5,13 @@ function StoreSelect(props) {
     return (
       <div className="store-checkbox">
         <input
-          onChange={props.onChange}
+          onChange={props.selectSingleStore}
           id={store + "-checkbox"}
           key={store}
           type="checkbox"
           name="store-select"
           value={store}
+          checked={props.storesCheckState[store]}
         />
         <label key={store + "-label"} htmlFor={store + "-checkbox"}>
           {store}
@@ -25,12 +26,12 @@ function StoreSelect(props) {
       </label>
       <form id="store-dropdown" key="store-form">
         <input
-          onChange={props.onChange}
           id="any-store"
           key="any-store"
           type="checkbox"
           name="store-select"
           value="all"
+          onChange={props.selectAllStores}
         />
         <label>Any Store</label>
         {stores}
