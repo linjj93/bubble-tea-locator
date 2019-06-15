@@ -48,6 +48,20 @@ ul li span:first-child {
   margin: 1em;
   box-shadow: 0.5em 0.5em lightgrey;
   border: 0.5px solid lightgrey;
+  animation: fadeIn 0.5s ease-in;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .shops li:hover {

@@ -10,16 +10,18 @@ function FilterWaitingTime(props) {
   });
   return (
     <div className="select-time">
-      waiting time of
-      <select
-        defaultValue="50"
-        onChange={props.onChange}
-        name="time"
-        id="time-limit-dropdown"
-      >
-        {options}
-      </select>
-      minutes or less
+      <label>
+        waiting time of
+        <select
+          defaultValue="50"
+          onChange={props.onChange}
+          name="time"
+          id="time-limit-dropdown"
+        >
+          {options}
+        </select>
+        minutes or less
+      </label>
     </div>
   );
 }

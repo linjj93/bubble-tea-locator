@@ -35,18 +35,8 @@ function Listing(props) {
         <li className="listing-header">
           <span>Shop</span>
           <span>Location</span>
-          <span>
-            Waiting Time{" "}
-            {/* <span className="waiting-time" onClick={props.sortByWaitingTime}>
-              {props.waitingTimeOrder}
-            </span> */}
-          </span>
-          <span>
-            Distance (in km){" "}
-            {/* <span className="distance" onClick={props.sortByDistance}>
-              {props.distanceOrder}
-            </span> */}
-          </span>
+          <span>Waiting Time</span>
+          <span>Distance (in km)</span>
         </li>
         <div className="shops">{populateListing(props)}</div>
       </ul>
