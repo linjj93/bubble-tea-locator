@@ -36,8 +36,8 @@ describe("check functionality of select menu", () => {
     expect(selectMenu).toHaveValue("Downtown MRT");
   });
 
-  xtest("user cannot re-select Select Location (default value) after first selection", () => {
-    const { getByText, getByTitle } = render(
+  test("user cannot re-select Select Location (default value) after first selection", () => {
+    const { getByText, getByTitle, getByDisplayValue } = render(
       <LocationSelect userLocation={userLocation} />
     );
     const selectMenu = getByTitle("location-select");
@@ -45,7 +45,7 @@ describe("check functionality of select menu", () => {
     const disabledOption = getByText("Select Location");
     expect(disabledOption).toBeDisabled();
     fireEvent.change(selectMenu, { target: { value: "Chinatown MRT" } });
-    console.log(selectMenu.value);
-    expect(selectMenu).toHaveValue("Chinatown MRT");
+    const selectedLocation = getByDisplayValue("Chinatown MRT");
+    expect(selectedLocation).toHaveValue("Chinatown MRT");
   });
 });
