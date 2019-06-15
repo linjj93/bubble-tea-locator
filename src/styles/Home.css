@@ -1,0 +1,49 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Varela Round", sans-serif;
+  cursor: default;
+  overscroll-behavior: none;
+}
+
+.prompt {
+  text-align: center;
+  font-size: 3rem;
+}
+
+.category-wrapper {
+  display: flex;
+}
+
+.category {
+  text-align: center;
+  border-radius: 1em;
+  border: 1px solid black;
+  min-width: 30%;
+  height: 300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.category:hover {
+  background: blue;
+}
+
+.category:hover .label {
+  color: #f9dec9;
+}
+
+.label {
+  color: initial;
+  text-decoration: none;
+  font-size: 2em;
+  align-content: stretch;
+}
+
+.label:visited {
+  color: initial;
+}
