@@ -61,18 +61,14 @@
   /* overflow-y: scroll; */
 }
 
-/* #store-dropdown:hover {
-  overflow-y: initial;
-  z-index: 100;
-}
-
-#store-dropdown:hover #store-dropdown input {
-  z-index: 100;
-} */
-
 #store-dropdown input {
   margin: 0.5em;
   padding-top: 0.1%;
+}
+
+.store-checkbox label {
+  display: flex;
+  align-items: center;
 }
 
 .advanced-filters {
