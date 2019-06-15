@@ -1,14 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Home(props) {
   return (
-    <React.Fragment>
+    <div data-testid="home-page">
       <label htmlFor="category-select">Looking for...</label>
-      <select defaultValue="Select a category" id="category-select">
+      {/* <select defaultValue="Select a category" id="category-select">
         <option>Select a category</option>
-        <option>Bubble Tea</option>
-      </select>
-    </React.Fragment>
+        <option>BBT</option>
+      </select> */}
+      <div>
+        <Link to="/bubble-tea">Bubble Tea</Link>
+      </div>
+    </div>
   );
 }
 

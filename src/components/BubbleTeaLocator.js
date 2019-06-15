@@ -188,7 +188,7 @@ class BubbleTeaLocator extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div data-testid="bubble-tea-locator-page">
         <div className="search-wrapper">
           <StoreSelect
             stores={stores}
@@ -215,7 +215,7 @@ class BubbleTeaLocator extends React.Component {
           />
         </div>
         <Listing nearestShops={this.state.nearestShops} />
-      </React.Fragment>
+      </div>
     );
   }
 }
