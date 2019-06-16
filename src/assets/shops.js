@@ -52,7 +52,7 @@ const gongChaShops = [
     name: "One Raffles Place",
     unit: "#B1-39",
     brand: "Gong Cha",
-    queueTime: 24,
+    queueTime: 15,
     openingTime: "10:00",
     closingTime: "21:00",
     latitude: 1.2843399,
@@ -81,6 +81,18 @@ const gongChaShops = [
     closingTime: "21:00",
     latitude: 1.299381,
     longitude: 103.8554475
+  },
+  {
+    id: "gongcha-plazasingapura",
+    logo: gongCha,
+    name: "Plaza Singapura",
+    unit: "#B1-K7",
+    brand: "Gong Cha",
+    queueTime: 12,
+    openingTime: "10:00",
+    closingTime: "22:00",
+    latitude: 1.3007936,
+    longitude: 103.8425952
   }
 ];
 
@@ -144,6 +156,30 @@ const liHoShops = [
     closingTime: "21:00",
     latitude: 1.283644,
     longitude: 103.8433191
+  },
+  {
+    id: "liho-tanjongpagarcentre",
+    logo: liHo,
+    name: "Tanjong Pagar Center",
+    unit: "#B2-20",
+    brand: "LiHo",
+    queueTime: 8,
+    openingTime: "08:00",
+    closingTime: "21:00",
+    latitude: 1.2770375,
+    longitude: 103.8436887
+  },
+  {
+    id: "liho-asiasquare",
+    logo: liHo,
+    name: "Asia Square Tower 2",
+    unit: "#02-08",
+    brand: "LiHo",
+    queueTime: 12,
+    openingTime: "08:00",
+    closingTime: "20:00",
+    latitude: 1.2779532,
+    longitude: 103.8509025
   }
 ];
 
