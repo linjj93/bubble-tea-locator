@@ -17,6 +17,7 @@ function Listing(props) {
             <span>{shop.name}</span>
             <span>{shop.unit}</span>
           </span>
+          <span>{shop.openingHours}</span>
           <span data-testid="waiting-time">{shop.queueTime} mins</span>
           <span className={shop.distanceMarker} data-testid="distance">
             {isNaN(shop.distanceFromOrigin)
@@ -35,6 +36,7 @@ function Listing(props) {
         <li className="listing-header">
           <span>Shop</span>
           <span>Location</span>
+          <span>Opening Hours</span>
           <span>Waiting Time</span>
           <span>Distance (in km)</span>
         </li>
