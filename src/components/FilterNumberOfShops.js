@@ -14,7 +14,7 @@ function FilterNumberOfShops(props) {
       <select
         data-testid="limit-select"
         defaultValue="all"
-        onChange={props.onChange}
+        onChange={props.selectLimit}
         name="number-of-shops"
         id="shop-limit-dropdown"
       >

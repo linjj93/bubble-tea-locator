@@ -1,10 +1,12 @@
 import React from "react";
 
-import StoreSelect from "./StoreSelect";
-import LocationSelect from "./LocationSelect";
+import Search from "./Search";
+// import StoreSelect from "./StoreSelect";
+// import LocationSelect from "./LocationSelect";
 import Listing from "./Listing";
-import FilterNumberOfShops from "./FilterNumberOfShops";
-import FilterWaitingTime from "./FilterWaitingTime";
+import Filters from "./Filters";
+// import FilterNumberOfShops from "./FilterNumberOfShops";
+// import FilterWaitingTime from "./FilterWaitingTime";
 
 import "../styles/BubbleTeaLocator.css";
 
@@ -154,7 +156,7 @@ class BubbleTeaLocator extends React.Component {
     );
   }
 
-  selectTime(event) {
+  selectMinutes(event) {
     const newTimeLimit = event.target.value;
     this.setState({
       showWaitingTime: newTimeLimit
@@ -189,21 +191,35 @@ class BubbleTeaLocator extends React.Component {
   render() {
     return (
       <div data-testid="bubble-tea-locator-page">
-        <div className="search-wrapper">
+        {/* <div className="search-wrapper">
           <StoreSelect
             stores={stores}
             allStoresAreChosen={this.state.allStoresAreChosen}
             selectAllStores={this.selectAllStores.bind(this)}
             selectSingleStore={this.selectSingleStore.bind(this)}
             checkboxState={this.state.checkboxState}
-            // atLeastOneStoreNotPicked={this.state.atLeastOneStoreNotPicked}
           />
           <LocationSelect
             userLocation={userLocation}
             onChange={this.selectLocation.bind(this)}
           />
-        </div>
-        <div className="advanced-filters">
+        </div> */}
+        <Search
+          stores={stores}
+          allStoresAreChosen={this.state.allStoresAreChosen}
+          selectAllStores={this.selectAllStores.bind(this)}
+          selectSingleStore={this.selectSingleStore.bind(this)}
+          checkboxState={this.state.checkboxState}
+          userLocation={userLocation}
+          onChange={this.selectLocation.bind(this)}
+        />
+        <Filters
+          limits={this.state.limits}
+          selectLimit={this.selectLimit.bind(this)}
+          minutes={this.state.minutes}
+          selectMinutes={this.selectMinutes.bind(this)}
+        />
+        {/* <div className="advanced-filters">
           <FilterNumberOfShops
             limits={this.state.limits}
             onChange={this.selectLimit.bind(this)}
@@ -211,9 +227,9 @@ class BubbleTeaLocator extends React.Component {
 
           <FilterWaitingTime
             minutes={this.state.minutes}
-            onChange={this.selectTime.bind(this)}
+            onChange={this.selectMinutes.bind(this)}
           />
-        </div>
+        </div> */}
         <Listing nearestShops={this.state.nearestShops} />
       </div>
     );

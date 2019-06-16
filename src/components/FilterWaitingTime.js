@@ -14,7 +14,7 @@ function FilterWaitingTime(props) {
         waiting time of
         <select
           defaultValue="50"
-          onChange={props.onChange}
+          onChange={props.selectMinutes}
           name="time"
           id="time-limit-dropdown"
         >
