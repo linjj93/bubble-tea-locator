@@ -15,7 +15,6 @@
   margin: 0;
   padding: 1%;
   justify-content: stretch;
-  /* max-height: 4.1rem; */
 }
 
 .search-store > label,
@@ -44,12 +43,7 @@
 #store-dropdown {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  /* grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  grid-template-rows: repeat(auto-fit, minmax(10px, 1fr)); */
-
-  /* max-height: 3rem; */
   font-size: 1em;
-  /* overflow-y: scroll; */
 }
 
 #store-dropdown input {
