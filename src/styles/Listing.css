@@ -111,4 +111,12 @@ img {
   .shops li {
     min-height: 50px;
   }
+
+  .listing-header span:first-child {
+    margin-left: 1em;
+  }
+
+  .listing-header span:last-child {
+    margin-right: 1em;
+  }
 }
