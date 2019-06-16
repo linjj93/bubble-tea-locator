@@ -1,6 +1,7 @@
 import React from "react";
 import StoreSelect from "./StoreSelect";
 import LocationSelect from "./LocationSelect";
+import "../styles/Search.css";
 
 function Search(props) {
   return (

@@ -1,6 +1,7 @@
 import React from "react";
 import FilterNumberOfShops from "./FilterNumberOfShops";
 import FilterWaitingTime from "./FilterWaitingTime";
+import "../styles/Filters.css";
 
 function Filters(props) {
   return (
