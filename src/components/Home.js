@@ -11,10 +11,16 @@ function Home(props) {
           Bubble Tea
         </Link>
         <Link className="category" to="/bargain-shop">
-          ValuDollar/ABC Shops
+          ValuDollar Shops / ABC Bargain Centres
         </Link>
         <Link className="category" to="/arcade">
           Arcades
+        </Link>
+        <Link className="category" to="/cinema">
+          Cinemas
+        </Link>
+        <Link className="category" to="/supermarket">
+          Supermarkets
         </Link>
       </div>
     </div>

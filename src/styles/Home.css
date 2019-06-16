@@ -10,10 +10,13 @@
 .prompt {
   text-align: center;
   font-size: 3rem;
+  margin-top: 1rem;
 }
 
 .category-wrapper {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -22,15 +25,16 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 12em;
+  width: 20em;
   height: 10em;
   border: 0.5px solid lightgrey;
   border-radius: 1em;
   box-shadow: 0.25em 0.25em lightgrey;
-  margin: 0.5em auto;
+  margin: 1em 2em;
   padding: 1em;
   color: initial;
   text-decoration: none;
+  font-size: 1.1em;
 }
 
 .category:hover {
