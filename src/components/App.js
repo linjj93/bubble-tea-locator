@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Home";
 import BubbleTeaLocator from "./BubbleTeaLocator";
-
-const NotFound = () => <div data-testid="error-page">No Page Found</div>;
+import PageUnderConstruction from "./PageUnderConstruction";
+import PageNotFound from "./PageNotFound";
 
 function App() {
   return (
@@ -11,7 +11,9 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/bubble-tea" component={BubbleTeaLocator} />
-        <Route component={NotFound} />
+        <Route path="/bargain-shop" component={PageUnderConstruction} />
+        <Route path="/arcade" component={PageUnderConstruction} />
+        <Route component={PageNotFound} />
       </Switch>
     </Router>
   );
