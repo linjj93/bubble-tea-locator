@@ -1,12 +1,8 @@
 import React from "react";
 
 import Search from "./Search";
-// import StoreSelect from "./StoreSelect";
-// import LocationSelect from "./LocationSelect";
-import Listing from "./Listing";
 import Filters from "./Filters";
-// import FilterNumberOfShops from "./FilterNumberOfShops";
-// import FilterWaitingTime from "./FilterWaitingTime";
+import Listing from "./Listing";
 
 import "../styles/BubbleTeaLocator.css";
 
@@ -35,7 +31,6 @@ class BubbleTeaLocator extends React.Component {
       minutes: [10, 20, 30, 40, 50],
       checkboxState,
       allStoresAreChosen: false
-      // atLeastOneStoreNotPicked: true
     };
   }
 
@@ -53,28 +48,17 @@ class BubbleTeaLocator extends React.Component {
   selectAllStores() {
     const updatedCheckboxState = this.state.checkboxState;
     const allStores = [];
-    // const atLeastOneStoreNotPicked = this.state.atLeastOneStoreNotPicked;
     const allStoresAreChosen = this.state.allStoresAreChosen;
 
     for (let store of stores) {
       allStores.push(store);
-      // atLeastOneStoreNotPicked
       !allStoresAreChosen
-        ? // reverse, unselect all stores
-          (updatedCheckboxState[store] = true)
-        : (updatedCheckboxState[store] = false); // choose all stores
+        ? (updatedCheckboxState[store] = true)
+        : (updatedCheckboxState[store] = false);
     }
 
     updatedCheckboxState["Any Store"] = !updatedCheckboxState["Any Store"];
 
-    // this.setState({
-    //   allStoresAreChosen: atLeastOneStoreNotPicked ? true : false,
-    //   atLeastOneStoreNotPicked: atLeastOneStoreNotPicked ? false : true,
-    //   checkboxState: updatedCheckboxState,
-    //   selectedStores: atLeastOneStoreNotPicked ? [] : allStores
-    // });
-
-    // atLeastOneStoreNotPicked
     !allStoresAreChosen
       ? this.setState({
           allStoresAreChosen: true,
@@ -91,7 +75,6 @@ class BubbleTeaLocator extends React.Component {
 
     this.findNearestShops(
       this.state.selectedLocation,
-      // atLeastOneStoreNotPicked ? allStores : [],
       !allStoresAreChosen ? allStores : [],
       this.state.showTopN,
       this.state.showWaitingTime
@@ -106,7 +89,6 @@ class BubbleTeaLocator extends React.Component {
     if (!this.state.atLeastOneStoreNotPicked) {
       updatedCheckboxState["Any Store"] = false;
       this.setState({
-        // atLeastOneStoreNotPicked: true,
         allStoresAreChosen: false,
         checkboxState: updatedCheckboxState
       });
@@ -128,7 +110,6 @@ class BubbleTeaLocator extends React.Component {
       checkboxState: updatedCheckboxState,
       selectedStores: chosen,
       allStoresAreChosen: lastOptionAlsoChosen ? true : false
-      // atLeastOneStoreNotPicked: lastOptionAlsoChosen ? false : true
     });
 
     this.findNearestShops(
@@ -191,19 +172,6 @@ class BubbleTeaLocator extends React.Component {
   render() {
     return (
       <div data-testid="bubble-tea-locator-page">
-        {/* <div className="search-wrapper">
-          <StoreSelect
-            stores={stores}
-            allStoresAreChosen={this.state.allStoresAreChosen}
-            selectAllStores={this.selectAllStores.bind(this)}
-            selectSingleStore={this.selectSingleStore.bind(this)}
-            checkboxState={this.state.checkboxState}
-          />
-          <LocationSelect
-            userLocation={userLocation}
-            onChange={this.selectLocation.bind(this)}
-          />
-        </div> */}
         <Search
           stores={stores}
           allStoresAreChosen={this.state.allStoresAreChosen}
@@ -219,17 +187,6 @@ class BubbleTeaLocator extends React.Component {
           minutes={this.state.minutes}
           selectMinutes={this.selectMinutes.bind(this)}
         />
-        {/* <div className="advanced-filters">
-          <FilterNumberOfShops
-            limits={this.state.limits}
-            onChange={this.selectLimit.bind(this)}
-          />
-
-          <FilterWaitingTime
-            minutes={this.state.minutes}
-            onChange={this.selectMinutes.bind(this)}
-          />
-        </div> */}
         <Listing nearestShops={this.state.nearestShops} />
       </div>
     );
