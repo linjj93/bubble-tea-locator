@@ -34,12 +34,12 @@ ul li span:first-child {
 }
 
 .listing-header span:last-child {
-  margin-right: 1em;
+  margin-right: 1.75em;
 }
 
 .shops {
   overflow-y: auto;
-  height: 78vh;
+  height: 72vh;
   /* height: calc(100vh - 130px); */
 }
 .shops li {
@@ -50,6 +50,25 @@ ul li span:first-child {
   border: 0.5px solid lightgrey;
   animation: fadeIn 0.5s ease-in;
   animation-fill-mode: both;
+}
+
+.very-near {
+  color: lime;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.near {
+  color: green;
+}
+
+.far {
+  color: red;
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes fadeIn {
