@@ -1,10 +1,9 @@
-import koi from "./logos/Koi.png";
-import koiExpress from "./logos/Koi Express.png";
-import gongCha from "./logos/GongCha.png";
-import liHo from "./logos/LiHo.png";
-import tigerSugar from "./logos/Tiger Sugar.png";
-// import eachACup from "./Each-A-Cup.png";
-import tenRen from "./logos/Tenren.png";
+import koi from "../assets/logos/Koi.png";
+import koiExpress from "../assets/logos/Koi Express.png";
+import gongCha from "../assets/logos/GongCha.png";
+import liHo from "../assets/logos/LiHo.png";
+import tigerSugar from "../assets/logos/Tiger Sugar.png";
+import tenRen from "../assets/logos/Tenren.png";
 
 const koiShops = [
   {
@@ -16,8 +15,8 @@ const koiShops = [
     queueTime: 5,
     openingTime: "10:00",
     closingTime: "21:00",
-    latitude: 1.293418,
-    longitude: 103.851561
+    latitude: 1.2937075,
+    longitude: 103.8518958
   },
   {
     id: "koi-citylink",
@@ -40,8 +39,68 @@ const koiShops = [
     queueTime: 20,
     openingTime: "10:00",
     closingTime: "21:00",
-    latitude: 1.2855268,
-    longitude: 103.8451902
+    latitude: 1.2854009,
+    longitude: 103.8439811
+  },
+  {
+    id: "koi-thearcade",
+    logo: koi,
+    name: "The Arcade",
+    unit: "#01-12",
+    brand: "Koi",
+    queueTime: 8,
+    openingTime: "10:00",
+    closingTime: "20:00",
+    latitude: 1.2836638,
+    longitude: 103.8503334
+  },
+  {
+    id: "koi-plazasingapura1",
+    logo: koi,
+    name: "Plaza Singapura",
+    unit: "#01-68",
+    brand: "Koi",
+    queueTime: 11,
+    openingTime: "10:30",
+    closingTime: "22:30",
+    latitude: 1.3007936,
+    longitude: 103.8425952
+  },
+  {
+    id: "koi-plazasingapurab2",
+    logo: koi,
+    name: "Plaza Singapura (Basement)",
+    unit: "#B2-11",
+    brand: "Koi",
+    queueTime: 14,
+    openingTime: "10:00",
+    closingTime: "22:00",
+    latitude: 1.3007936,
+    longitude: 103.8425952
+  },
+  {
+    id: "koi-bugisplus",
+    logo: koi,
+    name: "Bugis+",
+    unit: "#01-01",
+    brand: "Koi",
+    queueTime: 10,
+    openingTime: "10:30",
+    closingTime: "22:30",
+    latitude: 1.2997181,
+    longitude: 103.8541392
+  },
+  {
+    id: "koi-milleniawalk",
+    logo: koi,
+    name: "Millenia Walk",
+    unit: "#01-85",
+    brand: "Koi",
+    queueTime: 5,
+    openingTime: "11:00",
+    closingTime: "21:00",
+    latitude: 1.2933613,
+    longitude: 103.8575806
   }
 ];
 
@@ -55,8 +114,8 @@ const gongChaShops = [
     queueTime: 15,
     openingTime: "10:00",
     closingTime: "21:00",
-    latitude: 1.2843399,
-    longitude: 103.8509823
+    latitude: 1.2841886,
+    longitude: 103.8505106
   },
   {
     id: "gongcha-SMU",
@@ -67,8 +126,8 @@ const gongChaShops = [
     queueTime: 9,
     openingTime: "10:00",
     closingTime: "21:00",
-    latitude: 1.2950013,
-    longitude: 103.8505781
+    latitude: 1.294981,
+    longitude: 103.850458
   },
   {
     id: "gongcha-bugis",
@@ -106,8 +165,8 @@ const liHoShops = [
     queueTime: 5,
     openingTime: "10:00",
     closingTime: "21:00",
-    latitude: 1.2891413,
-    longitude: 103.8447874
+    latitude: 1.288956,
+    longitude: 103.846964
   },
   {
     id: "liho-fareastsquare",
@@ -118,8 +177,8 @@ const liHoShops = [
     queueTime: 10,
     openingTime: "10:00",
     closingTime: "21:00",
-    latitude: 1.2831,
-    longitude: 103.848341
+    latitude: 1.283158,
+    longitude: 103.84794
   },
   {
     id: "liho-onerafflesplace",
@@ -130,8 +189,8 @@ const liHoShops = [
     queueTime: 7,
     openingTime: "10:00",
     closingTime: "21:00",
-    latitude: 1.2844078,
-    longitude: 103.8487931
+    latitude: 1.2841886,
+    longitude: 103.8505106
   },
   {
     id: "liho-capitolpiazza",
@@ -142,8 +201,8 @@ const liHoShops = [
     queueTime: 3,
     openingTime: "10:00",
     closingTime: "21:00",
-    latitude: 1.2933006,
-    longitude: 103.851904
+    latitude: 1.2930854,
+    longitude: 103.85044
   },
   {
     id: "liho-luckychinatown",
@@ -193,8 +252,8 @@ const tigerSugarShops = [
     queueTime: 40,
     openingTime: "10:00",
     closingTime: "21:00",
-    latitude: 1.2856316,
-    longitude: 103.8443801
+    latitude: 1.2854009,
+    longitude: 103.8439811
   },
   {
     id: "tiger-capitolpiazza",
@@ -205,8 +264,8 @@ const tigerSugarShops = [
     queueTime: 30,
     openingTime: "10:00",
     closingTime: "21:00",
-    latitude: 1.2933573,
-    longitude: 103.8519624
+    latitude: 1.2930854,
+    longitude: 103.85044
   }
 ];
 
@@ -220,8 +279,8 @@ const tenRenShops = [
     queueTime: 30,
     openingTime: "10:00",
     closingTime: "21:00",
-    latitude: 1.2849138,
-    longitude: 103.8424951
+    latitude: 1.2854009,
+    longitude: 103.8439811
   }
 ];
 
