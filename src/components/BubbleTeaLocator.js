@@ -59,18 +59,16 @@ class BubbleTeaLocator extends React.Component {
 
     updatedCheckboxState["Any Store"] = !updatedCheckboxState["Any Store"];
 
-    !allStoresAreChosen
+    allStoresAreChosen
       ? this.setState({
-          allStoresAreChosen: true,
-          // atLeastOneStoreNotPicked: false,
-          checkboxState: updatedCheckboxState,
-          selectedStores: allStores
-        })
-      : this.setState({
           allStoresAreChosen: false,
-          // atLeastOneStoreNotPicked: true,
           checkboxState: updatedCheckboxState,
           selectedStores: []
+        })
+      : this.setState({
+          allStoresAreChosen: true,
+          checkboxState: updatedCheckboxState,
+          selectedStores: allStores
         });
 
     this.findNearestShops(
