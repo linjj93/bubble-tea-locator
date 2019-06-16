@@ -14,36 +14,29 @@
 
 .category-wrapper {
   display: flex;
-}
-
-.category {
-  text-align: center;
-  border-radius: 1em;
-  border: 1px solid black;
-  min-width: 30%;
-  height: 300px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
 }
 
+.category {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 12em;
+  height: 10em;
+  border: 0.5px solid lightgrey;
+  border-radius: 1em;
+  box-shadow: 0.25em 0.25em lightgrey;
+  margin: 0.5em auto;
+  padding: 1em;
+  color: initial;
+  text-decoration: none;
+}
+
 .category:hover {
-  background: blue;
+  background: rgb(139, 198, 238);
 }
 
 .category:hover .label {
   color: #f9dec9;
-}
-
-.label {
-  color: initial;
-  text-decoration: none;
-  font-size: 2em;
-  align-content: stretch;
-}
-
-.label:visited {
-  color: initial;
 }
