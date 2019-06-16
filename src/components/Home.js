@@ -13,7 +13,7 @@ function Home(props) {
         <Link className="category" to="/bargain-shop">
           ValuDollar/ABC Shops
         </Link>
-        <Link className="category" to="/mala">
+        <Link className="category" to="/arcade">
           Arcades
         </Link>
       </div>
