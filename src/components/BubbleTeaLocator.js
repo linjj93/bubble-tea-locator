@@ -6,16 +6,17 @@ import Listing from "./Listing";
 
 import "../styles/BubbleTeaLocator.css";
 
-import { shops } from "../assets/shops";
-import { stores, checkboxState } from "../assets/stores";
-import { userLocation } from "../assets/locationChoices";
+import { shops } from "../data/shops";
+import { stores, checkboxState } from "../data/stores";
+import { userLocation } from "../data/locationChoices";
 
 import {
   calcAllShopDistances,
   sortShopsByDistanceAndTime,
   filterShopsByStore,
   filterShopsByWaitingTime,
-  limitNumberOfShops
+  limitNumberOfShops,
+  calculateOpeningHours
 } from "../assets/helper";
 
 class BubbleTeaLocator extends React.Component {
@@ -150,6 +151,9 @@ class BubbleTeaLocator extends React.Component {
 
   findNearestShops(chosenLocation, chosenStores, showTopN, showWaitingTime) {
     let listing = shops;
+    for (let shop of listing) {
+      calculateOpeningHours(shop);
+    }
     for (let locObj of userLocation) {
       if (chosenLocation === locObj.name) {
         calcAllShopDistances(listing, locObj);
