@@ -13,15 +13,6 @@ function Home(props) {
         <Link className="category" to="/arcade">
           Arcades (Coming Soon!)
         </Link>
-        {/* <Link className="category" to="/bargain-shop">
-          ValuDollar Shops / ABC Bargain Centres
-        </Link>
-        <Link className="category" to="/cinema">
-          Cinemas
-        </Link>
-        <Link className="category" to="/supermarket">
-          Supermarkets
-        </Link> */}
       </div>
     </div>
   );
