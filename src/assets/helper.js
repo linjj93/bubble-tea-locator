@@ -66,10 +66,19 @@ function filterShopsByWaitingTime(shopListing, duration) {
 function limitNumberOfShops(shopListing, n) {
   return shopListing.filter((shop, index) => index + 1 <= n);
 }
+
+function calculateOpeningHours(shop) {
+  shop.openingHours = `${shop.openingTime.slice(
+    0,
+    5
+  )} - ${shop.closingTime.slice(0, 5)}`;
+}
+
 export {
   calcAllShopDistances,
   sortShopsByDistanceAndTime,
   filterShopsByStore,
   filterShopsByWaitingTime,
-  limitNumberOfShops
+  limitNumberOfShops,
+  calculateOpeningHours
 };
