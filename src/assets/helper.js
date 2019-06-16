@@ -74,11 +74,23 @@ function calculateOpeningHours(shop) {
   )} - ${shop.closingTime.slice(0, 5)}`;
 }
 
+function calculateStatus(shop) {
+  const currentTime = new Date().toLocaleTimeString("it-IT");
+  const isOpen =
+    currentTime >= shop.openingTime && currentTime <= shop.closingTime;
+  if (isOpen) {
+    shop.status = `Open, closing at ${shop.closingTime.slice(0, 5)}`;
+  } else {
+    shop.status = `Opening at ${shop.openingTime.slice(0, 5)}`;
+  }
+}
+
 export {
   calcAllShopDistances,
   sortShopsByDistanceAndTime,
   filterShopsByStore,
   filterShopsByWaitingTime,
   limitNumberOfShops,
-  calculateOpeningHours
+  calculateOpeningHours,
+  calculateStatus
 };
