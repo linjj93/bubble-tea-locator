@@ -36,7 +36,7 @@ function Listing(props) {
         <li className="listing-header">
           <span>Shop</span>
           <span>Location</span>
-          <span>Status</span>
+          <span>Opening Hours</span>
           <span>Waiting Time</span>
           <span>Distance (in km)</span>
         </li>
