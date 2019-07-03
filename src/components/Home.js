@@ -5,13 +5,13 @@ import "../styles/Home.css";
 function Home(props) {
   return (
     <div data-testid="home-page">
-      <p className="prompt">Pick a category</p>
+      <p className="prompt">Welcome back!</p>
       <div className="category-wrapper">
-        <Link className="category" to="/bubble-tea">
-          Bubble Tea
+        <Link className="category" to="/find-a-shop">
+          Find a Shop
         </Link>
-        <Link className="category" to="/arcade">
-          Arcades (Coming Soon!)
+        <Link className="category" to="/drinking-history">
+          Drinking History
         </Link>
       </div>
     </div>

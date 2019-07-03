@@ -1,0 +1,23 @@
+/* * {
+  margin: 0 auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10%;
+}
+
+label {
+  margin: 0.2em auto;
+  font-size: 1.5em;
+}
+
+input {
+  max-width: 70%;
+  line-height: 3em;
+}
+
+.submit-btn {
+  font-size: 2em;
+} */
