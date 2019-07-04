@@ -1,16 +1,26 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "../styles/NavBar.css";
 
-function NavBar() {
+function NavBar(props) {
+  const { loggedInUser } = props;
   return (
-    <Router>
-      <nav>
-        navigation
-        <ul>
-          <Link to="/bubble-tea">Bubble Tea</Link>
-        </ul>
-      </nav>
-    </Router>
+    <nav>
+      <ul>
+        <Link
+          to={{
+            pathname: "/dashboard",
+            state: {
+              loggedInUser
+            }
+          }}
+        >
+          Dashboard
+        </Link>
+        <Link to="/find-a-shop">Find a Shop</Link>
+        <Link to="/">Logout</Link>
+      </ul>
+    </nav>
   );
 }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import NavBar from "./NavBar";
 
 const host = "http://localhost:3001";
 
@@ -101,6 +102,7 @@ class Tracker extends React.Component {
     const { drinks, confirmationMsg } = this.state;
     return (
       <React.Fragment>
+        <NavBar loggedInUser={this.state.loggedInUser} />
         <div>
           <ul>
             {drinks.map((drink, index) => (
