@@ -1,0 +1,50 @@
+nav {
+  box-sizing: border-box;
+  background-color: black;
+  color: white;
+  padding: 1%;
+  font-size: 1.5em;
+}
+
+.nav-item {
+  color: white;
+  text-decoration: none;
+}
+
+.nav-item:hover {
+  color: red;
+}
+
+.links {
+  display: flex;
+  justify-content: space-around;
+}
+
+.mobile-nav {
+  color: white;
+}
+
+.mobile-nav span {
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .mobile-nav span {
+    display: block;
+  }
+
+  .links {
+    display: none;
+  }
+
+  .mobile-nav:hover .links {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    background-color: black;
+    box-sizing: border-box;
+    padding: 1%;
+    left: 0;
+  }
+}
