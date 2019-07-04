@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/Login.css";
 import axios from "axios";
+import { Link, Redirect } from "react-router-dom";
 
 const host = "http://localhost:3001";
 
@@ -10,7 +11,8 @@ class Login extends React.Component {
     this.state = {
       username: "",
       password: "",
-      message: ""
+      message: "",
+      isLoggedIn: false
     };
   }
 
@@ -37,49 +39,67 @@ class Login extends React.Component {
         console.log(res);
         if (res.data.message) {
           this.setState({
-            message: res.data.message
+            message: `${res.data.message}`
           });
         } else {
           this.setState({
             loggedInUser: res.data.username,
-            message: res.data.username
+            isLoggedIn: true
           });
-        }
-        if (res.data.token) {
-          sessionStorage.setItem("jwt", res.data.token);
+          if (res.data.token) {
+            sessionStorage.setItem("jwt", res.data.token);
+          }
         }
       })
       .catch(err => console.log(err.message));
   }
 
   render() {
+    const { isLoggedIn, loggedInUser, message } = this.state;
+
+    if (isLoggedIn) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/dashboard",
+            state: { loggedInUser }
+          }}
+        />
+      );
+    }
     return (
       <React.Fragment>
-        <form>
-          <label>
-            Username:
+        <form className="login-form" autoComplete="off">
+          <p className="warning">{message}</p>
+          <div>
+            <label>Username</label>
             <input
+              className="detail-box"
               onChange={this.handleUsername.bind(this)}
               type="text"
               name="name"
             />
-          </label>
-          <label>
-            Password:{" "}
+          </div>
+          <div>
+            <label>Password</label>
             <input
+              className="detail-box"
               onChange={this.handlePassword.bind(this)}
-              type="text"
+              type="password"
               name="password"
             />
-          </label>
+          </div>
+
           <input
             onClick={this.handleLogin.bind(this)}
-            className="submit-btn"
+            className="login-btn"
             type="submit"
             value="Login"
           />
+          <Link to="/register">
+            <input className="register-btn" type="button" value="Sign Up" />
+          </Link>
         </form>
-        <p>{this.state.message}</p>
       </React.Fragment>
     );
   }

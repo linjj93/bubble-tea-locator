@@ -1,23 +1,50 @@
-/* * {
-  margin: 0 auto;
-}
-
-form {
+.login-form {
   display: flex;
   flex-direction: column;
-  margin-top: 10%;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  width: 400px;
+  height: 40px;
+  padding: 40px;
+  box-sizing: border-box;
 }
 
-label {
-  margin: 0.2em auto;
+.login-form div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.5em;
+  margin-bottom: 5%;
+  min-width: 20%;
 }
 
-input {
-  max-width: 70%;
-  line-height: 3em;
+.login-form div label {
+  width: 7em;
 }
 
-.submit-btn {
-  font-size: 2em;
-} */
+.login-btn {
+  font-size: 1.5em;
+  width: 200px;
+}
+
+.login-form div input {
+  line-height: 1.5em;
+  width: 200px;
+  font-size: 1.5rem;
+}
+
+.warning {
+  color: red;
+}
+
+.register-btn {
+  text-decoration: none;
+  color: black;
+  font-size: 1.5em;
+  width: 200px;
+  margin-top: 5%;
+}
