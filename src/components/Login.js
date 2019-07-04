@@ -30,28 +30,26 @@ class Login extends React.Component {
 
   handleLogin(event) {
     event.preventDefault();
+    const { username, password } = this.state;
     axios
       .post(`${host}/users/login`, {
-        username: this.state.username,
-        password: this.state.password
+        username,
+        password
       })
       .then(res => {
-        console.log(res);
-        if (res.data.message) {
-          this.setState({
-            message: `${res.data.message}`
-          });
-        } else {
-          this.setState({
-            loggedInUser: res.data.username,
-            isLoggedIn: true
-          });
-          if (res.data.token) {
-            sessionStorage.setItem("jwt", res.data.token);
-          }
+        this.setState({
+          loggedInUser: res.data.username,
+          isLoggedIn: true
+        });
+        if (res.data.token) {
+          sessionStorage.setItem("jwt", res.data.token);
         }
       })
-      .catch(err => console.log(err.message));
+      .catch(err =>
+        this.setState({
+          message: err.response.data.message
+        })
+      );
   }
 
   render() {
