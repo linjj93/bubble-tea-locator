@@ -1,9 +1,11 @@
 import React from "react";
-import Login from "./Login";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Login from "./Login";
+import Register from "./Register";
 import Dashboard from "./Dashboard";
 import BubbleTeaLocator from "./BubbleTeaLocator";
 import Tracker from "./Tracker";
+
 import PageNotFound from "./PageNotFound";
 
 class App extends React.Component {
@@ -22,6 +24,7 @@ class App extends React.Component {
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/find-a-shop" component={BubbleTeaLocator} />
           <Route path="/drinking-history" component={Tracker} />
+          <Route path="/register" component={Register} />
           <Route component={PageNotFound} />
         </Switch>
       </Router>
