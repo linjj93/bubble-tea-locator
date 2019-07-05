@@ -17,7 +17,7 @@ import {
   filterShopsByWaitingTime,
   limitNumberOfShops,
   calculateOpeningHours
-} from "../assets/helper";
+} from "../utils/helper";
 
 class BubbleTeaLocator extends React.Component {
   constructor(props) {

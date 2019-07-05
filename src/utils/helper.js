@@ -85,6 +85,15 @@ function calculateStatus(shop) {
   }
 }
 
+function setAuthorizationHeader() {
+  let headers = {};
+  const jwt = sessionStorage.getItem("jwt");
+  if (jwt) {
+    headers.Authorization = "Bearer " + jwt;
+  }
+  return headers;
+}
+
 export {
   calcAllShopDistances,
   sortShopsByDistanceAndTime,
@@ -92,5 +101,6 @@ export {
   filterShopsByWaitingTime,
   limitNumberOfShops,
   calculateOpeningHours,
-  calculateStatus
+  calculateStatus,
+  setAuthorizationHeader
 };
