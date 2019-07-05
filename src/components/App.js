@@ -23,8 +23,9 @@ class App extends React.Component {
           <Route exact path="/" component={Login} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/find-a-shop" component={BubbleTeaLocator} />
-          <Route path="/drinking-history" component={Tracker} />
+          <Route path="/drink-diary" component={Tracker} />
           <Route path="/register" component={Register} />
+
           <Route component={PageNotFound} />
         </Switch>
       </Router>
