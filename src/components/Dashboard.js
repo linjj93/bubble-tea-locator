@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Dashboard.css";
 import axios from "axios";
+import { setAuthorizationHeader } from "../utils/helper";
 
 const host = "http://localhost:3001";
 
@@ -15,11 +16,6 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    let headers = {};
-    const jwt = sessionStorage.getItem("jwt");
-    if (jwt) {
-      headers.Authorization = "Bearer " + jwt;
-    }
     const { loggedInUser } = this.props.location.state;
 
     this.setState({
@@ -30,7 +26,7 @@ class Dashboard extends React.Component {
     axios({
       method: "get",
       url: `${host}/users/${loggedInUser}/dashboard`,
-      headers
+      headers: setAuthorizationHeader()
     })
       .then(res => {
         console.log(res.data);
@@ -51,7 +47,7 @@ class Dashboard extends React.Component {
           <Link
             className="category"
             to={{
-              pathname: "/drinking-history",
+              pathname: "/drink-diary",
               state: {
                 loggedInUser
               }
