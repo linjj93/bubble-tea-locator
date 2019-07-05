@@ -38,11 +38,6 @@ class Register extends React.Component {
   handleSignUp(event) {
     event.preventDefault();
     const { username, password, passwordCfm } = this.state;
-    // if (password !== passwordCfm) {
-    //   this.setState({
-    //     message: "Password confirmation is different"
-    //   });
-    // }
     axios
       .post(`${host}/users/register`, {
         username,
