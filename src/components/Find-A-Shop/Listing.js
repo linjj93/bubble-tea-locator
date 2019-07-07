@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/Listing.css";
+import "../../styles/Listing.css";
 
 function Listing(props) {
   function populateListing(props) {

@@ -41,13 +41,16 @@ class Dashboard extends React.Component {
       <div data-testid="home-page">
         <p className="prompt">{message}</p>
         <div className="category-wrapper">
-          <Link className="category" to="/find-a-shop">
+          <Link
+            className="category"
+            to={{ pathname: "/find-a-shop", state: { loggedInUser } }}
+          >
             Find a Shop
           </Link>
           <Link
             className="category"
             to={{
-              pathname: "/drink-diary",
+              pathname: "/drink-tracker",
               state: {
                 loggedInUser
               }

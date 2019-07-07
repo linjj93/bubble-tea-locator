@@ -1,9 +1,9 @@
 import React from "react";
-import "../styles/DrinkAdder.css";
+import "../../styles/DrinkAdder.css";
 
 function DrinkAdder(props) {
   return (
-    <form className="add-drink-form">
+    <form autoComplete="off" className="add-drink-form">
       <div className="single-inputs">
         <div>
           <label htmlFor="drink">Drink:</label>
@@ -33,7 +33,7 @@ function DrinkAdder(props) {
       <div className="multiple-selects">
         <div>
           <label htmlFor="store">Store:</label>
-          <select name="store" onChange={props.handleStore}>
+          <select defaultValue="Koi" name="store" onChange={props.handleStore}>
             <option value="Koi">Koi</option>
             <option value="LiHo">LiHo</option>
             <option value="Tiger Sugar">Tiger Sugar</option>

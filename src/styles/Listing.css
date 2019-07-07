@@ -39,7 +39,7 @@ ul li span:first-child {
 
 .shops {
   overflow-y: auto;
-  height: 72vh;
+  height: 63vh;
   /* height: calc(100vh - 130px); */
 }
 .shops li {

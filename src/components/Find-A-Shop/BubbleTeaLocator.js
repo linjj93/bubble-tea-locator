@@ -4,11 +4,11 @@ import Search from "./Search";
 import Filters from "./Filters";
 import Listing from "./Listing";
 
-import "../styles/BubbleTeaLocator.css";
+import "../../styles/BubbleTeaLocator.css";
 
-import { shops } from "../data/shops";
-import { stores, checkboxState } from "../data/stores";
-import { userLocation } from "../data/locationChoices";
+import { shops } from "../../data/shops";
+import { stores, checkboxState } from "../../data/stores";
+import { userLocation } from "../../data/locationChoices";
 
 import {
   calcAllShopDistances,
@@ -17,7 +17,8 @@ import {
   filterShopsByWaitingTime,
   limitNumberOfShops,
   calculateOpeningHours
-} from "../utils/helper";
+} from "../../utils/helper";
+import NavBar from "../NavBar";
 
 class BubbleTeaLocator extends React.Component {
   constructor(props) {
@@ -31,8 +32,19 @@ class BubbleTeaLocator extends React.Component {
       showWaitingTime: 50,
       minutes: [10, 20, 30, 40, 50],
       checkboxState,
-      allStoresAreChosen: false
+      allStoresAreChosen: false,
+      loggedInUser: "",
+      navBarPath: "/drink-tracker",
+      navBarDisplay: "Drink Tracker"
     };
+  }
+
+  componentDidMount() {
+    console.log(this.props.location.state);
+
+    this.setState({
+      loggedInUser: this.props.location.state.loggedInUser
+    });
   }
 
   selectLocation(event) {
@@ -172,25 +184,42 @@ class BubbleTeaLocator extends React.Component {
   }
 
   render() {
+    const {
+      loggedInUser,
+      navBarPath,
+      navBarDisplay,
+      allStoresAreChosen,
+      checkboxState,
+      limits,
+      minutes,
+      nearestShops
+    } = this.state;
     return (
-      <div data-testid="bubble-tea-locator-page">
-        <Search
-          stores={stores}
-          allStoresAreChosen={this.state.allStoresAreChosen}
-          selectAllStores={this.selectAllStores.bind(this)}
-          selectSingleStore={this.selectSingleStore.bind(this)}
-          checkboxState={this.state.checkboxState}
-          userLocation={userLocation}
-          onChange={this.selectLocation.bind(this)}
+      <React.Fragment>
+        <NavBar
+          loggedInUser={loggedInUser}
+          navBarPath={navBarPath}
+          navBarDisplay={navBarDisplay}
         />
-        <Filters
-          limits={this.state.limits}
-          selectLimit={this.selectLimit.bind(this)}
-          minutes={this.state.minutes}
-          selectMinutes={this.selectMinutes.bind(this)}
-        />
-        <Listing nearestShops={this.state.nearestShops} />
-      </div>
+        <div data-testid="bubble-tea-locator-page">
+          <Search
+            stores={stores}
+            allStoresAreChosen={allStoresAreChosen}
+            selectAllStores={this.selectAllStores.bind(this)}
+            selectSingleStore={this.selectSingleStore.bind(this)}
+            checkboxState={checkboxState}
+            userLocation={userLocation}
+            onChange={this.selectLocation.bind(this)}
+          />
+          <Filters
+            limits={limits}
+            selectLimit={this.selectLimit.bind(this)}
+            minutes={minutes}
+            selectMinutes={this.selectMinutes.bind(this)}
+          />
+          <Listing nearestShops={nearestShops} />
+        </div>
+      </React.Fragment>
     );
   }
 }

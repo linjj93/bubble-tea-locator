@@ -5,6 +5,10 @@ import axios from "axios";
 const host = "http://localhost:3001";
 
 class NavBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   handleLogout() {
     sessionStorage.removeItem("jwt");
     axios
@@ -16,7 +20,7 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const { loggedInUser } = this.props;
+    const { loggedInUser, navBarPath, navBarDisplay } = this.props;
     return (
       <nav>
         <div className="mobile-nav">
@@ -34,8 +38,11 @@ class NavBar extends React.Component {
               Dashboard
             </Link>
 
-            <Link className="nav-item" to="/find-a-shop">
-              Find a Shop
+            <Link
+              className="nav-item"
+              to={{ pathname: navBarPath, state: { loggedInUser } }}
+            >
+              {navBarDisplay}
             </Link>
 
             <Link
