@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import DrinkAdder from "./DrinkAdder";
 import NavBar from "../NavBar";
+import ItemContainer from "./ItemContainer";
 import "../../styles/Tracker.css";
 import { setAuthorizationHeader } from "../../utils/helper";
 
@@ -23,7 +24,9 @@ class Tracker extends React.Component {
       store: "",
       dateBought: "",
       navBarPath: "/find-a-shop",
-      navBarDisplay: "Find a Shop"
+      navBarDisplay: "Find a Shop",
+      inEditMode: false,
+      drinkToEditId: ""
     };
   }
 
@@ -142,13 +145,72 @@ class Tracker extends React.Component {
           this.state.loggedInUser
         }/drinks/${drinkToDeleteId}`,
         headers: setAuthorizationHeader()
-      }).then(res => {
-        this.setState({
-          drinks: res.data.drinksLeft,
-          confirmationMsg: "Drink deleted!"
-        });
-      });
+      })
+        .then(res => {
+          this.setState({
+            drinks: res.data.drinksLeft,
+            confirmationMsg: "Drink deleted!"
+          });
+        })
+        .catch(err =>
+          this.setState({
+            confirmationMsg: err.response.data.message || err.message
+          })
+        );
     }
+  }
+
+  triggerEdit(event) {
+    const drinkToEditId = event.target.name;
+    this.setState({
+      drinkToEditId,
+      inEditMode: true
+    });
+  }
+
+  confirmEdit(event) {
+    const {
+      drinks,
+      drinkToEditId,
+      loggedInUser,
+      drink,
+      price,
+      sugarLevel,
+      store,
+      dateBought,
+      toppings
+    } = this.state;
+
+    const drinkToEdit = drinks.find(
+      drink => drink._id === this.state.drinkToEditId
+    );
+
+    axios({
+      method: "put",
+      url: `${host}/users/${loggedInUser}/${drinkToEditId}`,
+      data: {
+        drink,
+        price,
+        sugarLevel,
+        store,
+        dateBought,
+        toppings
+      },
+      headers: setAuthorizationHeader()
+    }).then(res => {
+      this.setState({
+        drinks: res.data.drinksAfterUpdate
+      }).catch(err =>
+        this.setState({
+          confirmationMsg: err.response.data.message || err.message
+        })
+      );
+    });
+
+    this.setState({
+      drinkToEditId: "",
+      inEditMode: false
+    });
   }
 
   render() {
@@ -157,7 +219,9 @@ class Tracker extends React.Component {
       confirmationMsg,
       loggedInUser,
       navBarPath,
-      navBarDisplay
+      navBarDisplay,
+      inEditMode,
+      drinkToEditId
     } = this.state;
 
     return (
@@ -170,17 +234,29 @@ class Tracker extends React.Component {
 
         <div>
           <ul>
-            {drinks.map((drink, index) => (
-              <li key={drink._id}>
-                <div>{drink.drink}</div>
-                <div>{drink.price}</div>
-                <div>{drink.sugarLevel}</div>
-                <div>{drink.store}</div>
-
-                <button name={drink._id} onClick={this.deleteDrink.bind(this)}>
-                  DELETE
-                </button>
-              </li>
+            <li className="table-header">
+              <div>Drink</div>
+              <div>Price</div>
+              <div>Sugar Level</div>
+              <div>Store</div>
+              <div>Edit Item</div>
+              <div>Delete Item</div>
+            </li>
+            {drinks.map(drink => (
+              <ItemContainer
+                className="item-container"
+                drinkToEditId={drinkToEditId}
+                drink={drink}
+                inEditMode={inEditMode}
+                deleteDrink={this.deleteDrink.bind(this)}
+                triggerEdit={this.triggerEdit.bind(this)}
+                handleDrink={this.handleDrink.bind(this)}
+                handlePrice={this.handlePrice.bind(this)}
+                handleSugarLevel={this.handleSugarLevel.bind(this)}
+                handleStore={this.handleStore.bind(this)}
+                handleToppings={this.handleToppings.bind(this)}
+                handleDateBought={this.handleDateBought.bind(this)}
+              />
             ))}
           </ul>
         </div>

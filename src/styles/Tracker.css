@@ -1,0 +1,12 @@
+.item-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: underline;
+}

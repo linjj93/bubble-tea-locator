@@ -4,7 +4,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Dashboard from "./Dashboard";
 import BubbleTeaLocator from "./Find-A-Shop/BubbleTeaLocator";
-import Tracker from "./Drink-Diary/Tracker";
+import Tracker from "./Drink-Tracker/Tracker";
 
 import PageNotFound from "./PageNotFound";
 

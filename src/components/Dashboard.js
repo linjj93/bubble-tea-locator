@@ -31,7 +31,9 @@ class Dashboard extends React.Component {
       .then(res => {
         console.log(res.data);
       })
-      .catch(err => console.log(err.message));
+      .catch(err => {
+        console.log(err.message);
+      });
   }
 
   render() {
