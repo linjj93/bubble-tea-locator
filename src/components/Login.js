@@ -3,9 +3,8 @@ import "../styles/Login.css";
 import axios from "axios";
 import { Link, Redirect } from "react-router-dom";
 
-const host =
-  "https://jj-bubble-tea-app.herokuapp.com" || "http://localhost:3001";
-// const host = process.env.REACT_APP_URL || "http://localhost:3001";
+// const host = "https://jj-bubble-tea-app.herokuapp.com" || "http://localhost:3001";
+const host = process.env.REACT_APP_URL || "http://localhost:3001";
 // const host = "http://localhost:3001";
 
 class Login extends React.Component {
