@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/NavBar.css";
 import axios from "axios";
-const host = "http://jj-bubble-tea-app.herokuapp.com" || "http://localhost:3001";
+const host = "https://jj-bubble-tea-app.herokuapp.com" || "http://localhost:3001";
 
 
 

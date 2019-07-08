@@ -5,7 +5,7 @@ import NavBar from "../NavBar";
 import ItemContainer from "./ItemContainer";
 import "../../styles/Tracker.css";
 import { setAuthorizationHeader } from "../../utils/helper";
-const host = "http://jj-bubble-tea-app.herokuapp.com" || "http://localhost:3001";
+const host = "https://jj-bubble-tea-app.herokuapp.com" || "http://localhost:3001";
 
 
 
