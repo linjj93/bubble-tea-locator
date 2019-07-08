@@ -4,7 +4,8 @@ import "../styles/Dashboard.css";
 import axios from "axios";
 import { setAuthorizationHeader } from "../utils/helper";
 
-const host = "jj-bubble-tea-app.herokuapp.com" || "http://localhost:3001";
+const host = "http://jj-bubble-tea-app.herokuapp.com" || "http://localhost:3001";
+
 
 
 class Dashboard extends React.Component {

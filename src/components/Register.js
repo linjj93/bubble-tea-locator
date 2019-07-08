@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import axios from "axios";
 import "../styles/Register.css";
 
-const host = "jj-bubble-tea-app.herokuapp.com" || "http://localhost:3001";
+const host = "http://jj-bubble-tea-app.herokuapp.com" || "http://localhost:3001";
 class Register extends React.Component {
   constructor(props) {
     super(props);
