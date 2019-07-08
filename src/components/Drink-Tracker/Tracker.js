@@ -5,8 +5,8 @@ import NavBar from "../NavBar";
 import ItemContainer from "./ItemContainer";
 import "../../styles/Tracker.css";
 import { setAuthorizationHeader } from "../../utils/helper";
+const host = "jj-bubble-tea-app.herokuapp.com" || "http://localhost:3001";
 
-const host = "http://localhost:3001";
 
 class Tracker extends React.Component {
   constructor(props) {
