@@ -3,9 +3,8 @@ import { Redirect } from "react-router-dom";
 import axios from "axios";
 import "../styles/Register.css";
 
-// const host = "https://jj-bubble-tea-app.herokuapp.com" || "http://localhost:3001";
 const host = process.env.REACT_APP_URL || "http://localhost:3001";
-// const host = "http://localhost:3001"
+
 class Register extends React.Component {
   constructor(props) {
     super(props);
