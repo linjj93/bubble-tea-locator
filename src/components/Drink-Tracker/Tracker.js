@@ -107,7 +107,7 @@ class Tracker extends React.Component {
     } = this.state;
     axios({
       method: "post",
-      url: `${host}/users/${loggedInUser}/drinks`,
+      url: `${host}users/${loggedInUser}/drinks`,
       headers: setAuthorizationHeader(),
       data: {
         drink,

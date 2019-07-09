@@ -40,7 +40,7 @@ class Register extends React.Component {
     event.preventDefault();
     const { username, password, passwordCfm } = this.state;
     axios
-      .post(`${host}/users/register`, {
+      .post(`${host}users/register`, {
         username,
         password,
         passwordCfm
