@@ -30,21 +30,15 @@ class Tracker extends React.Component {
     };
   }
 
-  handleDrink(event) {
+  handleChange(event) {
+    const {
+      target: { name, value }
+    } = event;
     this.setState({
-      drink: event.target.value
+      [name]: value
     });
   }
-  handlePrice(event) {
-    this.setState({
-      price: event.target.value
-    });
-  }
-  handleSugarLevel(event) {
-    this.setState({
-      sugarLevel: event.target.value
-    });
-  }
+
   handleDateBought(event) {
     this.setState({
       dateBought: event.target.value
@@ -181,10 +175,6 @@ class Tracker extends React.Component {
       toppings
     } = this.state;
 
-    const drinkToEdit = drinks.find(
-      drink => drink._id === this.state.drinkToEditId
-    );
-
     axios({
       method: "put",
       url: `${host}/users/${loggedInUser}/${drinkToEditId}`,
@@ -250,12 +240,10 @@ class Tracker extends React.Component {
                 inEditMode={inEditMode}
                 deleteDrink={this.deleteDrink.bind(this)}
                 triggerEdit={this.triggerEdit.bind(this)}
-                handleDrink={this.handleDrink.bind(this)}
-                handlePrice={this.handlePrice.bind(this)}
-                handleSugarLevel={this.handleSugarLevel.bind(this)}
                 handleStore={this.handleStore.bind(this)}
                 handleToppings={this.handleToppings.bind(this)}
                 handleDateBought={this.handleDateBought.bind(this)}
+                handleChange={this.handleChange.bind(this)}
               />
             ))}
           </ul>
@@ -263,9 +251,7 @@ class Tracker extends React.Component {
 
         <DrinkAdder
           addDrink={this.addDrink.bind(this)}
-          handleDrink={this.handleDrink.bind(this)}
-          handlePrice={this.handlePrice.bind(this)}
-          handleSugarLevel={this.handleSugarLevel.bind(this)}
+          handleChange={this.handleChange.bind(this)}
           handleStore={this.handleStore.bind(this)}
           handleToppings={this.handleToppings.bind(this)}
           handleDateBought={this.handleDateBought.bind(this)}

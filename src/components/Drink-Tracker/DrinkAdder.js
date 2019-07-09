@@ -1,39 +1,37 @@
 import React from "react";
 import "../../styles/DrinkAdder.css";
 
-function DrinkAdder(props) {
+function DrinkAdder({
+  handleChange,
+  handleDateBought,
+  handleStore,
+  handleToppings,
+  addDrink
+}) {
   return (
     <form autoComplete="off" className="add-drink-form">
       <div className="single-inputs">
         <div>
           <label htmlFor="drink">Drink:</label>
-          <input type="text" name="drink" onChange={props.handleDrink} />
+          <input type="text" name="drink" onChange={handleChange} />
         </div>
         <div>
           <label htmlFor="price">Price:</label>
-          <input type="number" name="price" onChange={props.handlePrice} />
+          <input type="number" name="price" onChange={handleChange} />
         </div>
         <div>
           <label htmlFor="sugar-level">Sugar Level:</label>
-          <input
-            type="number"
-            name="sugar-level"
-            onChange={props.handleSugarLevel}
-          />
+          <input type="number" name="sugar-level" onChange={handleChange} />
         </div>
         <div>
           <label htmlFor="date-bought">Date Bought</label>
-          <input
-            type="date"
-            name="date-bought"
-            onChange={props.handleDateBought}
-          />
+          <input type="date" name="date-bought" onChange={handleDateBought} />
         </div>
       </div>
       <div className="multiple-selects">
         <div>
           <label htmlFor="store">Store:</label>
-          <select defaultValue="Koi" name="store" onChange={props.handleStore}>
+          <select defaultValue="Koi" name="store" onChange={handleStore}>
             <option value="Koi">Koi</option>
             <option value="LiHo">LiHo</option>
             <option value="Tiger Sugar">Tiger Sugar</option>
@@ -43,7 +41,7 @@ function DrinkAdder(props) {
         </div>
         <div>
           <label htmlFor="toppings">Toppings:</label>
-          <select multiple name="toppings" onChange={props.handleToppings}>
+          <select multiple name="toppings" onChange={handleToppings}>
             <option value="Tapioca Pearls">Tapioca Pearls</option>
             <option value="White Pearls">White Pearls</option>
             <option value="Herbal Jelly">Herbal Jelly</option>
@@ -52,7 +50,7 @@ function DrinkAdder(props) {
           </select>
         </div>
       </div>
-      <input type="submit" value="Add Drink" onClick={props.addDrink} />
+      <input type="submit" value="Add Drink" onClick={addDrink} />
     </form>
   );
 }
