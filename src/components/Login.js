@@ -32,7 +32,7 @@ class Login extends React.Component {
     event.preventDefault();
     const { username, password } = this.state;
     axios
-      .post(`${host}users/login`, {
+      .post(`${host}/users/login`, {
         username,
         password
       })

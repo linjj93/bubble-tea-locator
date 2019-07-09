@@ -25,7 +25,7 @@ class Dashboard extends React.Component {
 
     axios({
       method: "get",
-      url: `${host}users/${loggedInUser}/dashboard`,
+      url: `${host}/users/${loggedInUser}/dashboard`,
       headers: setAuthorizationHeader()
     })
       .then(res => {
