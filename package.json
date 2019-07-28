@@ -4,18 +4,22 @@
   "private": true,
   "dependencies": {
     "axios": "^0.19.0",
+    "bootstrap": "^4.3.1",
     "dotenv": "^8.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "reactstrap": "^8.0.1"
   },
   "scripts": {
     "test": "react-scripts test",
     "test:watch": "react-scripts test --watch",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "coverage": "CI=true react-scripts test --env=jsdom --coverage --watchAll=false",
+    "local:coverage": "react-scripts test --coverage --watchAll=false"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,5 +40,18 @@
     "@testing-library/react": "^8.0.1",
     "history": "^4.9.0",
     "jest-dom": "^3.5.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "<rootDir>/src/components/**/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    }
   }
 }

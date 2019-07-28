@@ -1,9 +1,9 @@
 import React from "react";
 import "../styles/Login.css";
 import axios from "axios";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const host = process.env.REACT_APP_URL || "http://localhost:3001";
+const host = process.env.REACT_APP_URL || "http://localhost:3002";
 
 class Login extends React.Component {
   constructor(props) {
@@ -12,92 +12,119 @@ class Login extends React.Component {
       username: "",
       password: "",
       message: "",
-      isLoggedIn: false
+      loginSuccess: false
     };
   }
 
-  handleUsername(event) {
-    this.setState({
-      username: event.target.value
-    });
-  }
+  componentDidMount = async () => {
+    const jwt = sessionStorage.getItem("JWT");
 
-  handlePassword(event) {
-    this.setState({
-      password: event.target.value
-    });
-  }
+    if (jwt && !this.state.username) {
+      await axios({
+        method: "get",
+        url: host + "/users/userprofile",
+        headers: { Authorization: "Bearer " + jwt }
+      })
+        .then(res => {
+          this.updateUser(res.data.username);
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+    }
+  };
 
-  handleLogin(event) {
+  componentDidUpdate = async () => {
+    const jwt = sessionStorage.getItem("JWT");
+    if (jwt && !this.state.username) {
+      await axios({
+        method: "get",
+        url: host + "/users/userprofile",
+        headers: { Authorization: "Bearer " + jwt }
+      })
+        .then(res => {
+          this.updateUser(res.data.username);
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+    }
+  };
+
+  updateUser = username => {
+    this.setState({
+      username,
+      loginSuccess: true
+    });
+  };
+
+  handleChange = event => {
+    const {
+      target: { name, value }
+    } = event;
+    this.setState({ [name]: value });
+  };
+
+  handleLogin = async event => {
     event.preventDefault();
     const { username, password } = this.state;
-    axios
+    await axios
       .post(`${host}/users/login`, {
         username,
         password
       })
       .then(res => {
+        sessionStorage.setItem("JWT", res.data.token);
         this.setState({
-          loggedInUser: res.data.username,
-          isLoggedIn: true
+          message: res.data.message
         });
-        if (res.data.token) {
-          sessionStorage.setItem("jwt", res.data.token);
-        }
+        this.updateUser(res.data.username);
+        this.props.history.push("/dashboard");
       })
       .catch(err =>
         this.setState({
           message: err.response.data.message
         })
       );
-  }
+  };
 
   render() {
-    const { isLoggedIn, loggedInUser, message } = this.state;
+    const { message, loginSuccess } = this.state;
 
-    if (isLoggedIn) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/dashboard",
-            state: { loggedInUser }
-          }}
-        />
-      );
-    }
     return (
       <React.Fragment>
-        <form className="login-form" autoComplete="off">
-          <p className="warning">{message}</p>
-          <div>
-            <label>Username</label>
+        {!loginSuccess && (
+          <form className="login-form" autoComplete="off">
+            <p className="warning">{message}</p>
+            <div>
+              <label>Username</label>
+              <input
+                className="detail-box"
+                onChange={this.handleChange}
+                type="text"
+                name="username"
+              />
+            </div>
+            <div>
+              <label>Password</label>
+              <input
+                className="detail-box"
+                onChange={this.handleChange}
+                type="password"
+                name="password"
+              />
+            </div>
             <input
-              className="detail-box"
-              onChange={this.handleUsername.bind(this)}
-              type="text"
-              name="name"
+              onClick={this.handleLogin}
+              className="login-btn"
+              type="submit"
+              value="Login"
             />
-          </div>
-          <div>
-            <label>Password</label>
-            <input
-              className="detail-box"
-              onChange={this.handlePassword.bind(this)}
-              type="password"
-              name="password"
-            />
-          </div>
-
-          <input
-            onClick={this.handleLogin.bind(this)}
-            className="login-btn"
-            type="submit"
-            value="Login"
-          />
-          <Link to="/register">
-            <input className="register-btn" type="button" value="Sign Up" />
-          </Link>
-        </form>
+            <Link to="/register">
+              <input className="register-btn" type="button" value="Sign Up" />
+            </Link>
+          </form>
+        )}
       </React.Fragment>
     );
   }

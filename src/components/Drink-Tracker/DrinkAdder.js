@@ -1,57 +1,126 @@
 import React from "react";
 import "../../styles/DrinkAdder.css";
+import {
+  Col,
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  CustomInput,
+  Modal
+} from "reactstrap";
 
 function DrinkAdder({
   handleChange,
   handleDateBought,
   handleStore,
   handleToppings,
-  addDrink
+  addDrink,
+  modalIsOpen
 }) {
   return (
-    <form autoComplete="off" className="add-drink-form">
-      <div className="single-inputs">
-        <div>
-          <label htmlFor="drink">Drink:</label>
-          <input type="text" name="drink" onChange={handleChange} />
-        </div>
-        <div>
-          <label htmlFor="price">Price:</label>
-          <input type="number" name="price" onChange={handleChange} />
-        </div>
-        <div>
-          <label htmlFor="sugar-level">Sugar Level:</label>
-          <input type="number" name="sugar-level" onChange={handleChange} />
-        </div>
-        <div>
-          <label htmlFor="date-bought">Date Bought</label>
-          <input type="date" name="date-bought" onChange={handleDateBought} />
-        </div>
-      </div>
-      <div className="multiple-selects">
-        <div>
-          <label htmlFor="store">Store:</label>
-          <select defaultValue="Koi" name="store" onChange={handleStore}>
-            <option value="Koi">Koi</option>
-            <option value="LiHo">LiHo</option>
-            <option value="Tiger Sugar">Tiger Sugar</option>
-            <option value="Gong Cha">Gong Cha</option>
-            <option value="Ten Ren">Ten Ren</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="toppings">Toppings:</label>
-          <select multiple name="toppings" onChange={handleToppings}>
-            <option value="Tapioca Pearls">Tapioca Pearls</option>
-            <option value="White Pearls">White Pearls</option>
-            <option value="Herbal Jelly">Herbal Jelly</option>
-            <option value="Konjac">Konjac</option>
-            <option value="3J">3J</option>
-          </select>
-        </div>
-      </div>
-      <input type="submit" value="Add Drink" onClick={addDrink} />
-    </form>
+    <Modal isOpen={modalIsOpen}>
+      <Form>
+        <FormGroup row>
+          <Label for="drink" sm={2}>
+            Drink
+          </Label>
+          <Col sm={10}>
+            <Input
+              type="text"
+              name="drink"
+              id="drink"
+              placeholder="Add your drink here"
+              onChange={handleChange}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="price" sm={2}>
+            Price
+          </Label>
+          <Col sm={10}>
+            <Input
+              type="number"
+              name="price"
+              id="price"
+              placeholder="Price of drink"
+              onChange={handleChange}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="sugar-level" sm={2}>
+            Sugar Level (%)
+          </Label>
+          <Col sm={10}>
+            <Input
+              type="number"
+              name="sugar-level"
+              id="sugar-level"
+              placeholder="In percentage"
+              onChange={handleChange}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="topping" sm={2}>
+            Store
+          </Label>
+          <Col sm={10}>
+            <Input
+              type="text"
+              name="store"
+              id="store"
+              placeholder="Which Store?"
+              onChange={handleChange}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="topping" sm={2}>
+            Toppings
+          </Label>
+          <div>
+            <CustomInput
+              type="checkbox"
+              id="white-pearl"
+              label="White Pearl"
+              onChange={handleToppings}
+            />
+            <CustomInput
+              type="checkbox"
+              id="black-pearl"
+              label="Black Pearl"
+              onChange={handleToppings}
+            />
+            <CustomInput
+              type="checkbox"
+              id="jelly"
+              label="Jelly"
+              onChange={handleToppings}
+            />
+          </div>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="date-bought" sm={2}>
+            Date
+          </Label>
+          <Col sm={10}>
+            <Input
+              type="date"
+              name="date-bought"
+              id="exampleText"
+              onChange={handleDateBought}
+            />
+          </Col>
+        </FormGroup>
+        <Button color="primary" onClick={addDrink}>
+          Add Drink!
+        </Button>{" "}
+      </Form>
+    </Modal>
   );
 }
 

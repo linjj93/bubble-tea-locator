@@ -1,12 +1,12 @@
 import React from "react";
 import axios from "axios";
-import DrinkAdder from "./DrinkAdder";
 import NavBar from "../NavBar";
-import ItemContainer from "./ItemContainer";
 import "../../styles/Tracker.css";
 import { setAuthorizationHeader } from "../../utils/helper";
+import { Table, Button } from "reactstrap";
+import DrinkAdder from "./DrinkAdder";
 
-const host = process.env.REACT_APP_URL || "http://localhost:3001";
+const host = process.env.REACT_APP_URL || "http://localhost:3002";
 
 class Tracker extends React.Component {
   constructor(props) {
@@ -26,7 +26,8 @@ class Tracker extends React.Component {
       navBarPath: "/find-a-shop",
       navBarDisplay: "Find a Shop",
       inEditMode: false,
-      drinkToEditId: ""
+      drinkToEditId: "",
+      modalIsOpen: false
     };
   }
 
@@ -54,41 +55,54 @@ class Tracker extends React.Component {
   }
 
   handleToppings(event) {
-    const choices = event.target.options;
-    const chosenToppings = [];
+    const chosenToppings = this.state.toppings;
+    const targetTopping = event.target.id
+      .split("-")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
 
-    for (let choice of choices) {
-      if (choice.selected) {
-        chosenToppings.push(choice.value);
-      }
-    }
+    event.target.checked
+      ? chosenToppings.push(targetTopping)
+      : chosenToppings.splice(chosenToppings.indexOf(targetTopping), 1);
 
     this.setState({
       toppings: chosenToppings
     });
   }
 
-  componentDidMount() {
-    const { loggedInUser } = this.props.location.state;
+  async componentDidMount() {
+    const jwt = sessionStorage.getItem("JWT");
+    if (jwt && !this.state.loggedInUser) {
+      await axios({
+        method: "get",
+        url: host + "/users/userprofile",
+        headers: { Authorization: "Bearer " + jwt }
+      })
+        .then(res => {
+          this.setState({
+            message: `Welcome, ${res.data.username}!`,
+            loggedInUser: res.data.username
+          });
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+    }
 
-    this.setState({
-      loggedInUser
-    });
-    axios({
+    await axios({
       method: "get",
-      url: `${host}/users/${loggedInUser}/drinks`,
+      url: `${host}/users/${this.state.loggedInUser}/drinks`,
       headers: setAuthorizationHeader()
     })
       .then(res => {
         this.setState({
-          drinks: res.data.drinks,
-          loggedInUser
+          drinks: res.data.drinks
         });
       })
       .catch(err => console.log(err.message));
   }
 
-  addDrink(event) {
+  async addDrink(event) {
     event.preventDefault();
     const {
       drink,
@@ -99,7 +113,7 @@ class Tracker extends React.Component {
       toppings,
       loggedInUser
     } = this.state;
-    axios({
+    await axios({
       method: "post",
       url: `${host}/users/${loggedInUser}/drinks`,
       headers: setAuthorizationHeader(),
@@ -115,7 +129,8 @@ class Tracker extends React.Component {
       .then(res => {
         this.setState({
           confirmationMsg: "drink added!",
-          drinks: res.data.drinksAfterAddition
+          drinks: res.data.drinksAfterAddition,
+          modalIsOpen: false
         });
       })
       .catch(err =>
@@ -162,9 +177,14 @@ class Tracker extends React.Component {
     });
   }
 
+  openForm = () => {
+    this.setState({
+      modalIsOpen: true
+    });
+  };
+
   confirmEdit(event) {
     const {
-      drinks,
       drinkToEditId,
       loggedInUser,
       drink,
@@ -205,15 +225,27 @@ class Tracker extends React.Component {
 
   render() {
     const {
-      drinks,
-      confirmationMsg,
       loggedInUser,
       navBarPath,
       navBarDisplay,
-      inEditMode,
-      drinkToEditId
+      modalIsOpen,
+      drinks
     } = this.state;
-
+    const listOfDrinks = drinks.map((drink, index) => (
+      <tr key={drink._id}>
+        <th scope="row">{index + 1}</th>
+        <td>{drink.drink}</td>
+        <td>{drink.price}</td>
+        <td>{drink.sugarLevel}%</td>
+        <td>{drink.store}</td>
+        <td>
+          {drink.toppings.map(topping => (
+            <p>{topping}</p>
+          ))}
+        </td>
+        <td>{drink.dateBought.slice(0, 10)}</td>
+      </tr>
+    ));
     return (
       <React.Fragment>
         <NavBar
@@ -221,43 +253,29 @@ class Tracker extends React.Component {
           navBarPath={navBarPath}
           navBarDisplay={navBarDisplay}
         />
-
-        <div>
-          <ul>
-            <li className="table-header">
-              <div>Drink</div>
-              <div>Price</div>
-              <div>Sugar Level</div>
-              <div>Store</div>
-              <div>Edit Item</div>
-              <div>Delete Item</div>
-            </li>
-            {drinks.map(drink => (
-              <ItemContainer
-                className="item-container"
-                drinkToEditId={drinkToEditId}
-                drink={drink}
-                inEditMode={inEditMode}
-                deleteDrink={this.deleteDrink.bind(this)}
-                triggerEdit={this.triggerEdit.bind(this)}
-                handleStore={this.handleStore.bind(this)}
-                handleToppings={this.handleToppings.bind(this)}
-                handleDateBought={this.handleDateBought.bind(this)}
-                handleChange={this.handleChange.bind(this)}
-              />
-            ))}
-          </ul>
-        </div>
+        <Table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Drink</th>
+              <th>Price</th>
+              <th>Sugar Level</th>
+              <th>Store</th>
+              <th>Toppings</th>
+              <th>Date Bought</th>
+            </tr>
+          </thead>
+          <tbody>{listOfDrinks}</tbody>
+        </Table>
+        <Button onClick={this.openForm}>Add Drink</Button>
 
         <DrinkAdder
+          modalIsOpen={modalIsOpen}
           addDrink={this.addDrink.bind(this)}
           handleChange={this.handleChange.bind(this)}
-          handleStore={this.handleStore.bind(this)}
           handleToppings={this.handleToppings.bind(this)}
           handleDateBought={this.handleDateBought.bind(this)}
         />
-
-        <p>{confirmationMsg}</p>
       </React.Fragment>
     );
   }

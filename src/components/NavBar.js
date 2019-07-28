@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/NavBar.css";
 import axios from "axios";
 
-const host = process.env.REACT_APP_URL || "http://localhost:3001";
+const host = process.env.REACT_APP_URL || "http://localhost:3002";
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class NavBar extends React.Component {
     this.state = {};
   }
   handleLogout() {
-    sessionStorage.removeItem("jwt");
+    sessionStorage.removeItem("JWT");
     axios
       .post(`${host}/users/logout`)
       .then(res => {
@@ -21,7 +21,7 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const { loggedInUser, navBarPath, navBarDisplay } = this.props;
+    const { navBarPath, navBarDisplay } = this.props;
     return (
       <nav>
         <div className="mobile-nav">
@@ -30,19 +30,13 @@ class NavBar extends React.Component {
             <Link
               className="nav-item"
               to={{
-                pathname: "/dashboard",
-                state: {
-                  loggedInUser
-                }
+                pathname: "/dashboard"
               }}
             >
               Dashboard
             </Link>
 
-            <Link
-              className="nav-item"
-              to={{ pathname: navBarPath, state: { loggedInUser } }}
-            >
+            <Link className="nav-item" to={{ pathname: navBarPath }}>
               {navBarDisplay}
             </Link>
 

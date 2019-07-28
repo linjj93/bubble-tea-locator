@@ -1,9 +1,9 @@
 import React from "react";
-import StoreSelect from "../components/StoreSelect";
+import StoreSelect from "../components/Find-A-Shop/StoreSelect";
 import { render, fireEvent, getByTestId } from "@testing-library/react";
 import "@testing-library/react/cleanup-after-each";
 import "jest-dom/extend-expect";
-import { stores, checkboxState } from "../assets/stores";
+import { stores, checkboxState } from "../data/stores";
 
 describe("check rendering of component", () => {
   test("renders a select menu with label- Which Store(s)?", () => {

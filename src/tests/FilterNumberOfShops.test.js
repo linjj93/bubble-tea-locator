@@ -1,5 +1,5 @@
 import React from "react";
-import FilterNumberOfShops from "../components/FilterNumberOfShops";
+import FilterNumberOfShops from "../components/Find-A-Shop/FilterNumberOfShops";
 import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/react/cleanup-after-each";
 import "jest-dom/extend-expect";

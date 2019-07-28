@@ -8,7 +8,7 @@ import Tracker from "./Drink-Tracker/Tracker";
 
 import PageNotFound from "./PageNotFound";
 
-class App extends React.Component {
+export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,19 +18,22 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/find-a-shop" component={BubbleTeaLocator} />
-          <Route path="/drink-tracker" component={Tracker} />
-          <Route path="/register" component={Register} />
-
-          <Route component={PageNotFound} />
-        </Switch>
-      </Router>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/find-a-shop" component={BubbleTeaLocator} />
+        <Route path="/drink-tracker" component={Tracker} />
+        <Route path="/register" component={Register} />
+        <Route component={PageNotFound} />
+      </Switch>
     );
   }
 }
 
-export default App;
+const MainApp = () => (
+  <Router>
+    <App />
+  </Router>
+);
+
+export default MainApp;

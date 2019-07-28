@@ -20,6 +20,9 @@ import {
 } from "../../utils/helper";
 import NavBar from "../NavBar";
 
+import axios from "axios";
+const host = process.env.REACT_APP_URL || "http://localhost:3002";
+
 class BubbleTeaLocator extends React.Component {
   constructor(props) {
     super(props);
@@ -39,12 +42,28 @@ class BubbleTeaLocator extends React.Component {
     };
   }
 
-  componentDidMount() {
-    console.log(this.props.location.state);
-
-    this.setState({
-      loggedInUser: this.props.location.state.loggedInUser
-    });
+  async componentDidMount() {
+    const jwt = sessionStorage.getItem("JWT");
+    if (jwt && !this.state.loggedInUser) {
+      await axios({
+        method: "get",
+        url: host + "/users/userprofile",
+        headers: { Authorization: "Bearer " + jwt }
+      })
+        .then(res => {
+          this.setState({
+            loggedInUser: res.data.username
+          });
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+    } else {
+      this.setState({
+        loggedInUser: ""
+      });
+      this.props.history.push("/");
+    }
   }
 
   selectLocation(event) {

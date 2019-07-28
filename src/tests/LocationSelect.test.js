@@ -1,9 +1,9 @@
 import React from "react";
-import LocationSelect from "../components/LocationSelect";
+import LocationSelect from "../components/Find-A-Shop/LocationSelect";
 import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/react/cleanup-after-each";
 import "jest-dom/extend-expect";
-import { userLocation } from "../assets/locationChoices";
+import { userLocation } from "../data/locationChoices";
 
 describe("check rendering of component", () => {
   test("renders a select menu with label - where are you?", () => {

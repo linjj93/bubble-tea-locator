@@ -1,12 +1,12 @@
 import React from "react";
-import Listing from "../components/Listing";
+import Listing from "../components/Find-A-Shop/Listing";
 import { render } from "@testing-library/react";
 import "@testing-library/react/cleanup-after-each";
 import "jest-dom/extend-expect";
-import { shops } from "../assets/shops";
+import { shops } from "../data/shops";
 
 const testShops = shops.slice(0, 3);
-console.log(testShops);
+
 const startingCondition = [];
 
 describe("test rendering of component", () => {

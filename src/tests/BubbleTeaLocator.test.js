@@ -1,15 +1,21 @@
 import React from "react";
-import BubbleTeaLocator from "../components/BubbleTeaLocator";
+import BubbleTeaLocator from "../components/Find-A-Shop/BubbleTeaLocator";
 import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/react/cleanup-after-each";
 import "jest-dom/extend-expect";
-// import { checkboxState } from "../assets/stores";
+import { BrowserRouter as Router } from "react-dom";
+import { createMemoryHistory } from "history";
 
 //at BubbleTeaLocator level, check that individual components appear in the app, no need to check their text content
 describe("test starting UI", () => {
   test("default UI should contain prompt message ", () => {
+    const history = createMemoryHistory({
+      initialEntries: ["/"]
+    });
     const { getByText, getByTestId, getByLabelText } = render(
-      <BubbleTeaLocator />
+      <Router history={history}>
+        <BubbleTeaLocator />
+      </Router>
     );
     const storeMenu = getByLabelText("Which Store(s)?");
     const locationMenu = getByLabelText("Where Are You?");
@@ -28,8 +34,13 @@ describe("test effect of StoreSelect menu", () => {
   // positive test case
 
   test("when user chooses Gong Cha, Gong Cha shows on listing", () => {
+    const history = createMemoryHistory({
+      initialEntries: ["/"]
+    });
     const { getByLabelText, getAllByText, getAllByAltText, getByText } = render(
-      <BubbleTeaLocator />
+      <Router history={history}>
+        <BubbleTeaLocator />
+      </Router>
     );
     const storeMenu = getByLabelText("Which Store(s)?");
     expect(storeMenu).toBeInTheDocument();
@@ -46,7 +57,14 @@ describe("test effect of StoreSelect menu", () => {
   });
 
   test("select all options when Any Store is picked", () => {
-    const { getByLabelText, getAllByAltText } = render(<BubbleTeaLocator />);
+    const history = createMemoryHistory({
+      initialEntries: ["/"]
+    });
+    const { getByLabelText, getAllByAltText } = render(
+      <Router history={history}>
+        <BubbleTeaLocator />
+      </Router>
+    );
     const gongCha = getByLabelText("Gong Cha");
     const koi = getByLabelText("Koi");
     const liHo = getByLabelText("LiHo");
@@ -77,8 +95,13 @@ describe("test effect of StoreSelect menu", () => {
   });
 
   test("goes back to default when any store is checked, then unchecked", () => {
+    const history = createMemoryHistory({
+      initialEntries: ["/"]
+    });
     const { getByLabelText, getAllByAltText, getByText } = render(
-      <BubbleTeaLocator />
+      <Router history={history}>
+        <BubbleTeaLocator />
+      </Router>
     );
     const gongCha = getByLabelText("Gong Cha");
     const koi = getByLabelText("Koi");
@@ -119,8 +142,13 @@ describe("test effect of StoreSelect menu", () => {
   });
 
   test("when user chooses Koi and LiHo, Koi and LiHo shops show on listing", () => {
+    const history = createMemoryHistory({
+      initialEntries: ["/"]
+    });
     const { getByLabelText, getAllByText, getAllByAltText, getByText } = render(
-      <BubbleTeaLocator />
+      <Router history={history}>
+        <BubbleTeaLocator />
+      </Router>
     );
     const storeMenu = getByLabelText("Which Store(s)?");
     expect(storeMenu).toBeInTheDocument();
@@ -143,8 +171,13 @@ describe("test effect of StoreSelect menu", () => {
 
   // negative test case
   test("when user chooses Tiger Sugar, Ten Ren does not show on listing", () => {
+    const history = createMemoryHistory({
+      initialEntries: ["/"]
+    });
     const { queryAllByAltText, getByLabelText, getAllByAltText } = render(
-      <BubbleTeaLocator />
+      <Router history={history}>
+        <BubbleTeaLocator />
+      </Router>
     );
     const storeMenu = getByLabelText("Which Store(s)?");
     const tigerSugar = getByLabelText("Tiger Sugar");
@@ -159,8 +192,13 @@ describe("test effect of StoreSelect menu", () => {
 
 describe("test effect of NumberLimit menu", () => {
   test("shows only 2 shops when user selects to see 2 shops", () => {
+    const history = createMemoryHistory({
+      initialEntries: ["/"]
+    });
     const { getByLabelText, getAllByAltText, getByTestId } = render(
-      <BubbleTeaLocator />
+      <Router history={history}>
+        <BubbleTeaLocator />
+      </Router>
     );
     const locationSelect = getByLabelText("Where Are You?");
     const limitSelect = getByTestId("limit-select");
@@ -181,8 +219,13 @@ describe("test effect of NumberLimit menu", () => {
 
 describe("test effect of WaitingTimeLimit menu", () => {
   test("when 30 minutes and Tiger Sugar is selected, only 1 Tiger Sugar out of 2 will be populated", () => {
+    const history = createMemoryHistory({
+      initialEntries: ["/"]
+    });
     const { getByLabelText, getAllByTestId, getAllByAltText } = render(
-      <BubbleTeaLocator />
+      <Router history={history}>
+        <BubbleTeaLocator />
+      </Router>
     );
     const tigerSugar = getByLabelText("Tiger Sugar");
     const locationSelect = getByLabelText("Where Are You?");
@@ -215,7 +258,15 @@ describe("test effect of WaitingTimeLimit menu", () => {
 
 describe("test effects of StoreSelect and LocationSelect menu", () => {
   test("when user selects location without selecting store, app stays at default", () => {
-    const { getByLabelText, getByText } = render(<BubbleTeaLocator />);
+    const history = createMemoryHistory({
+      initialEntries: ["/"]
+    });
+
+    const { getByLabelText, getByText } = render(
+      <Router history={history}>
+        <BubbleTeaLocator />
+      </Router>
+    );
     const storeSelect = getByLabelText("Which Store(s)?");
     const locationSelect = getByLabelText("Where Are You?");
     expect(storeSelect).toBeInTheDocument();
@@ -231,8 +282,13 @@ describe("test effects of StoreSelect and LocationSelect menu", () => {
   });
 
   test("when user selects location and LiHo, list of LiHo shops are populated", () => {
+    const history = createMemoryHistory({
+      initialEntries: ["/"]
+    });
     const { getByLabelText, getAllByAltText, getAllByTestId } = render(
-      <BubbleTeaLocator />
+      <Router history={history}>
+        <BubbleTeaLocator />
+      </Router>
     );
     const liHo = getByLabelText("LiHo");
     const locationSelect = getByLabelText("Where Are You?");
@@ -252,13 +308,20 @@ describe("test effects of StoreSelect and LocationSelect menu", () => {
 
 describe("test effects of all four filters - Store, Location, Number of Shop and Waiting Time", () => {
   test("when user selects Koi+GongCha/City Hall MRT/top 2 shops/10 minutes, will populate 2 Kois", () => {
+    const history = createMemoryHistory({
+      initialEntries: ["/"]
+    });
     const {
       getByLabelText,
       getByTestId,
       getAllByAltText,
       getAllByTestId,
       queryAllByAltText
-    } = render(<BubbleTeaLocator />);
+    } = render(
+      <Router history={history}>
+        <BubbleTeaLocator />
+      </Router>
+    );
     const koi = getByLabelText("Koi");
     const gongCha = getByLabelText("Gong Cha");
     const locationSelect = getByLabelText("Where Are You?");

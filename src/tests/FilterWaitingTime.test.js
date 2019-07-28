@@ -1,7 +1,7 @@
 import React from "react";
 import "@testing-library/react/cleanup-after-each";
 import "jest-dom/extend-expect";
-import FilterWaitingTime from "../components/FilterWaitingTime";
+import FilterWaitingTime from "../components/Find-A-Shop/FilterWaitingTime";
 import { render, fireEvent } from "@testing-library/react";
 
 const minutes = [10, 20, 30, 40, 50];

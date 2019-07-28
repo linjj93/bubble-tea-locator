@@ -1,9 +1,8 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
 import axios from "axios";
 import "../styles/Register.css";
 
-const host = process.env.REACT_APP_URL || "http://localhost:3001";
+const host = process.env.REACT_APP_URL || "http://localhost:3002";
 
 class Register extends React.Component {
   constructor(props) {
@@ -18,23 +17,12 @@ class Register extends React.Component {
     };
   }
 
-  handleUsername(event) {
-    this.setState({
-      username: event.target.value
-    });
-  }
-
-  handlePassword(event) {
-    this.setState({
-      password: event.target.value
-    });
-  }
-
-  handleConfirmPassword(event) {
-    this.setState({
-      passwordCfm: event.target.value
-    });
-  }
+  handleChange = event => {
+    const {
+      target: { name, value }
+    } = event;
+    this.setState({ [name]: value });
+  };
 
   handleSignUp(event) {
     event.preventDefault();
@@ -46,13 +34,11 @@ class Register extends React.Component {
         passwordCfm
       })
       .then(res => {
+        sessionStorage.setItem("JWT", res.data.token);
         this.setState({
-          loggedInUser: username,
           registrationSuccess: true
         });
-        if (res.data.token) {
-          sessionStorage.setItem("jwt", res.data.token);
-        }
+        this.props.history.push("/dashboard");
       })
       .catch((err, res) => {
         this.setState({
@@ -62,57 +48,49 @@ class Register extends React.Component {
   }
 
   render() {
-    const { registrationSuccess, loggedInUser, message } = this.state;
+    const { registrationSuccess, message } = this.state;
 
-    if (registrationSuccess) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/dashboard",
-            state: { loggedInUser }
-          }}
-        />
-      );
-    }
     return (
       <React.Fragment>
-        <form className="signup-form" autoComplete="off">
-          <p className="warning">{message}</p>
-          <div>
-            <label>Username</label>
-            <input
-              className="detail-box"
-              onChange={this.handleUsername.bind(this)}
-              type="text"
-              name="name"
-            />
-          </div>
-          <div>
-            <label>Password</label>
-            <input
-              className="detail-box"
-              onChange={this.handlePassword.bind(this)}
-              type="password"
-              name="password"
-            />
-          </div>
-          <div>
-            <label>Confirm Password</label>
-            <input
-              className="detail-box"
-              onChange={this.handleConfirmPassword.bind(this)}
-              type="password"
-              name="password"
-            />
-          </div>
+        {!registrationSuccess && (
+          <form className="signup-form" autoComplete="off">
+            <p className="warning">{message}</p>
+            <div>
+              <label>Username</label>
+              <input
+                className="detail-box"
+                onChange={this.handleChange}
+                type="text"
+                name="username"
+              />
+            </div>
+            <div>
+              <label>Password</label>
+              <input
+                className="detail-box"
+                onChange={this.handleChange}
+                type="password"
+                name="password"
+              />
+            </div>
+            <div>
+              <label>Confirm Password</label>
+              <input
+                className="detail-box"
+                onChange={this.handleChange}
+                type="password"
+                name="passwordCfm"
+              />
+            </div>
 
-          <input
-            onClick={this.handleSignUp.bind(this)}
-            className="signup-btn"
-            type="submit"
-            value="Sign Up"
-          />
-        </form>
+            <input
+              onClick={this.handleSignUp.bind(this)}
+              className="signup-btn"
+              type="submit"
+              value="Sign Up"
+            />
+          </form>
+        )}
       </React.Fragment>
     );
   }
