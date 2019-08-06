@@ -10,3 +10,7 @@
   align-items: center;
   text-decoration: underline;
 }
+
+.add-drink-button {
+  width: 100%;
+}

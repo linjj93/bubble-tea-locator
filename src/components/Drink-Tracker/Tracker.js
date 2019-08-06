@@ -31,30 +31,30 @@ class Tracker extends React.Component {
     };
   }
 
-  handleChange(event) {
+  handleChange = event => {
     const {
       target: { name, value }
     } = event;
     this.setState({
       [name]: value
     });
-  }
+  };
 
-  handleDateBought(event) {
+  handleDateBought = event => {
     this.setState({
       dateBought: event.target.value
     });
-  }
+  };
 
-  handleStore(event) {
+  handleStore = event => {
     const choices = event.target.options;
     const chosenStore = Array.from(choices).find(choice => choice.selected);
     this.setState({
       store: chosenStore.value
     });
-  }
+  };
 
-  handleToppings(event) {
+  handleToppings = event => {
     const chosenToppings = this.state.toppings;
     const targetTopping = event.target.id
       .split("-")
@@ -68,7 +68,7 @@ class Tracker extends React.Component {
     this.setState({
       toppings: chosenToppings
     });
-  }
+  };
 
   async componentDidMount() {
     const jwt = sessionStorage.getItem("JWT");
@@ -102,7 +102,7 @@ class Tracker extends React.Component {
       .catch(err => console.log(err.message));
   }
 
-  async addDrink(event) {
+  addDrink = async event => {
     event.preventDefault();
     const {
       drink,
@@ -138,9 +138,9 @@ class Tracker extends React.Component {
           confirmationMsg: err.response.data.message || err.message
         })
       );
-  }
+  };
 
-  deleteDrink(event) {
+  deleteDrink = async event => {
     const userWantsToDelete = window.confirm(
       "Are you sure you want to delete?"
     );
@@ -148,7 +148,7 @@ class Tracker extends React.Component {
     if (userWantsToDelete) {
       const drinkToDeleteId = event.target.name;
 
-      axios({
+      await axios({
         method: "delete",
         url: `${host}/users/${
           this.state.loggedInUser
@@ -167,15 +167,15 @@ class Tracker extends React.Component {
           })
         );
     }
-  }
+  };
 
-  triggerEdit(event) {
+  triggerEdit = event => {
     const drinkToEditId = event.target.name;
     this.setState({
       drinkToEditId,
       inEditMode: true
     });
-  }
+  };
 
   openForm = () => {
     this.setState({
@@ -183,7 +183,13 @@ class Tracker extends React.Component {
     });
   };
 
-  confirmEdit(event) {
+  closeForm = () => {
+    this.setState({
+      modalIsOpen: false
+    });
+  };
+
+  confirmEdit = async event => {
     const {
       drinkToEditId,
       loggedInUser,
@@ -195,7 +201,7 @@ class Tracker extends React.Component {
       toppings
     } = this.state;
 
-    axios({
+    await axios({
       method: "put",
       url: `${host}/users/${loggedInUser}/${drinkToEditId}`,
       data: {
@@ -221,7 +227,7 @@ class Tracker extends React.Component {
       drinkToEditId: "",
       inEditMode: false
     });
-  }
+  };
 
   render() {
     const {
@@ -232,17 +238,13 @@ class Tracker extends React.Component {
       drinks
     } = this.state;
     const listOfDrinks = drinks.map((drink, index) => (
-      <tr key={drink._id}>
+      <tr key={drink._id} className="drink-row">
         <th scope="row">{index + 1}</th>
         <td>{drink.drink}</td>
         <td>{drink.price}</td>
         <td>{drink.sugarLevel}%</td>
         <td>{drink.store}</td>
-        <td>
-          {drink.toppings.map(topping => (
-            <p>{topping}</p>
-          ))}
-        </td>
+        {populateToppings(drink)}
         <td>{drink.dateBought.slice(0, 10)}</td>
       </tr>
     ));
@@ -267,14 +269,17 @@ class Tracker extends React.Component {
           </thead>
           <tbody>{listOfDrinks}</tbody>
         </Table>
-        <Button onClick={this.openForm}>Add Drink</Button>
+        <Button onClick={this.openForm} className="add-drink-button">
+          Add Drink
+        </Button>
 
         <DrinkAdder
           modalIsOpen={modalIsOpen}
-          addDrink={this.addDrink.bind(this)}
-          handleChange={this.handleChange.bind(this)}
-          handleToppings={this.handleToppings.bind(this)}
-          handleDateBought={this.handleDateBought.bind(this)}
+          addDrink={this.addDrink}
+          handleChange={this.handleChange}
+          handleToppings={this.handleToppings}
+          handleDateBought={this.handleDateBought}
+          closeForm={this.closeForm}
         />
       </React.Fragment>
     );
@@ -282,3 +287,21 @@ class Tracker extends React.Component {
 }
 
 export default Tracker;
+
+const populateToppings = drink => {
+  return (
+    <React.Fragment>
+      {drink.toppings.length > 0 ? (
+        <td>
+          {drink.toppings.map((topping, index) => (
+            <span>
+              {topping} {index !== drink.toppings.length - 1 && "/"}
+            </span>
+          ))}
+        </td>
+      ) : (
+        <td>No Toppings</td>
+      )}
+    </React.Fragment>
+  );
+};

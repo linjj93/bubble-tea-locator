@@ -8,7 +8,8 @@ import {
   Label,
   Input,
   CustomInput,
-  Modal
+  Modal,
+  ModalHeader
 } from "reactstrap";
 
 function DrinkAdder({
@@ -17,16 +18,25 @@ function DrinkAdder({
   handleStore,
   handleToppings,
   addDrink,
-  modalIsOpen
+  modalIsOpen,
+  closeForm
 }) {
+  const closeBtn = (
+    <button className="close" onClick={closeForm}>
+      &times;
+    </button>
+  );
   return (
-    <Modal isOpen={modalIsOpen}>
+    <Modal isOpen={modalIsOpen} className="drink-modal">
+      <ModalHeader close={closeBtn} className="modal-header">
+        Add your Drink!
+      </ModalHeader>
       <Form>
         <FormGroup row>
-          <Label for="drink" sm={2}>
+          <Label for="drink" sm={4}>
             Drink
           </Label>
-          <Col sm={10}>
+          <Col sm={8}>
             <Input
               type="text"
               name="drink"
@@ -37,10 +47,10 @@ function DrinkAdder({
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label for="price" sm={2}>
+          <Label for="price" sm={4}>
             Price
           </Label>
-          <Col sm={10}>
+          <Col sm={8}>
             <Input
               type="number"
               name="price"
@@ -51,13 +61,13 @@ function DrinkAdder({
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label for="sugar-level" sm={2}>
+          <Label for="sugar-level" sm={4}>
             Sugar Level (%)
           </Label>
-          <Col sm={10}>
+          <Col sm={8}>
             <Input
               type="number"
-              name="sugar-level"
+              name="sugarLevel"
               id="sugar-level"
               placeholder="In percentage"
               onChange={handleChange}
@@ -65,10 +75,10 @@ function DrinkAdder({
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label for="topping" sm={2}>
+          <Label for="topping" sm={4}>
             Store
           </Label>
-          <Col sm={10}>
+          <Col sm={8}>
             <Input
               type="text"
               name="store"
@@ -79,10 +89,10 @@ function DrinkAdder({
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label for="topping" sm={2}>
+          <Label for="topping" sm={4}>
             Toppings
           </Label>
-          <div>
+          <div className="checkboxes">
             <CustomInput
               type="checkbox"
               id="white-pearl"
@@ -104,10 +114,10 @@ function DrinkAdder({
           </div>
         </FormGroup>
         <FormGroup row>
-          <Label for="date-bought" sm={2}>
+          <Label for="date-bought" sm={4}>
             Date
           </Label>
-          <Col sm={10}>
+          <Col sm={8}>
             <Input
               type="date"
               name="date-bought"
