@@ -87,7 +87,7 @@ function calculateStatus(shop) {
 
 function setAuthorizationHeader() {
   let headers = {};
-  const jwt = sessionStorage.getItem("jwt");
+  const jwt = sessionStorage.getItem("JWT");
   if (jwt) {
     headers.Authorization = "Bearer " + jwt;
   }
