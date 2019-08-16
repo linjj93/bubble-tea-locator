@@ -54,30 +54,33 @@ class Register extends React.Component {
           <form className="signup-form" autoComplete="off">
             <p className="warning">{message}</p>
             <div>
-              <label>Username</label>
+              <label htmlFor="username">Username</label>
               <input
                 className="detail-box"
                 onChange={this.handleChange}
                 type="text"
                 name="username"
+                id="username"
               />
             </div>
             <div>
-              <label>Password</label>
+              <label htmlFor="password">Password</label>
               <input
                 className="detail-box"
                 onChange={this.handleChange}
                 type="password"
                 name="password"
+                id="password"
               />
             </div>
             <div>
-              <label>Confirm Password</label>
+              <label htmlFor="passwordCfm">Confirm Password</label>
               <input
                 className="detail-box"
                 onChange={this.handleChange}
                 type="password"
                 name="passwordCfm"
+                id="passwordCfm"
               />
             </div>
 

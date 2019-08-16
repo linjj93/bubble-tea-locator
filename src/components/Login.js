@@ -25,6 +25,7 @@ class Login extends React.Component {
       })
         .then(res => {
           this.updateUser(res.data.username);
+          this.props.history.push("/dashboard");
         })
         .catch(err => {
           console.log(err.message);
@@ -42,6 +43,7 @@ class Login extends React.Component {
       })
         .then(res => {
           this.updateUser(res.data.username);
+          this.props.history.push("/dashboard");
         })
         .catch(err => {
           console.log(err.message);
@@ -86,6 +88,10 @@ class Login extends React.Component {
       );
   };
 
+  redirectTo = path => {
+    this.props.history.push(path);
+  };
+
   render() {
     const { message, loginSuccess } = this.state;
 
@@ -95,21 +101,23 @@ class Login extends React.Component {
           <form className="login-form" autoComplete="off">
             <p className="warning">{message}</p>
             <div>
-              <label>Username</label>
+              <label htmlFor="username">Username</label>
               <input
                 className="detail-box"
                 onChange={this.handleChange}
                 type="text"
                 name="username"
+                id="username"
               />
             </div>
             <div>
-              <label>Password</label>
+              <label htmlFor="password">Password</label>
               <input
                 className="detail-box"
                 onChange={this.handleChange}
                 type="password"
                 name="password"
+                id="password"
               />
             </div>
             <input
@@ -118,9 +126,14 @@ class Login extends React.Component {
               type="submit"
               value="Login"
             />
-            <Link to="/register">
-              <input className="register-btn" type="button" value="Sign Up" />
-            </Link>
+            <input
+              className="register-btn"
+              type="button"
+              value="Sign Up"
+              onClick={() => {
+                this.redirectTo("/register");
+              }}
+            />
           </form>
         )}
       </React.Fragment>

@@ -91,7 +91,7 @@ class Dashboard extends React.Component {
   };
 
   render() {
-    const { isLoading, message, loggedInUser } = this.state;
+    const { isLoading, message } = this.state;
 
     return (
       <React.Fragment>

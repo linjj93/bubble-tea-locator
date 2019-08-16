@@ -6,6 +6,8 @@ import Dashboard from "./Dashboard";
 import BubbleTeaLocator from "./Find-A-Shop/BubbleTeaLocator";
 import Tracker from "./Drink-Tracker/Tracker";
 import PageNotFound from "./PageNotFound";
+import { createBrowserHistory } from "history";
+const appHistory = createBrowserHistory();
 
 export class App extends React.Component {
   constructor(props) {
@@ -18,7 +20,11 @@ export class App extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" component={Login} />
+        <Route
+          exact
+          path="/"
+          render={props => <Login history={appHistory} {...props} />}
+        />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/find-a-shop" component={BubbleTeaLocator} />
         <Route path="/drink-tracker" component={Tracker} />
