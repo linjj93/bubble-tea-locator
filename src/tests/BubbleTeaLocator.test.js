@@ -3,16 +3,25 @@ import BubbleTeaLocator from "../components/Find-A-Shop/BubbleTeaLocator";
 import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/react/cleanup-after-each";
 import "jest-dom/extend-expect";
-import { BrowserRouter as Router } from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 
-//at BubbleTeaLocator level, check that individual components appear in the app, no need to check their text content
+const mockJwt = () => {
+  const mockJwtToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzYWxseUBnbWFpbC5jb20iLCJ1c2VyIjoiU2FsbHkiLCJpYXQiOjE1NjM4NTk5NjcyMDUsImV4cCI6MTU2Mzg1OTk3MDgwNX0.rC3dnj_r-mhL1tp3hj9JecjOpuZFrVY64SPSpS1fBPQ";
+
+  jest
+    .spyOn(window.sessionStorage.__proto__, "getItem")
+    .mockReturnValue(mockJwtToken);
+};
+
 describe("test starting UI", () => {
-  test("default UI should contain prompt message ", () => {
+  test("default UI should contain prompt message ", async () => {
+    mockJwt();
     const history = createMemoryHistory({
-      initialEntries: ["/"]
+      initialEntries: ["/find-a-shop"]
     });
-    const { getByText, getByTestId, getByLabelText } = render(
+    const { getByText, getByTestId, getByLabelText } = await render(
       <Router history={history}>
         <BubbleTeaLocator />
       </Router>
@@ -31,8 +40,6 @@ describe("test starting UI", () => {
 });
 
 describe("test effect of StoreSelect menu", () => {
-  // positive test case
-
   test("when user chooses Gong Cha, Gong Cha shows on listing", () => {
     const history = createMemoryHistory({
       initialEntries: ["/"]

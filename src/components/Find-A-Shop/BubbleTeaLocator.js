@@ -1,7 +1,8 @@
 import React from "react";
-
-import Search from "./Search";
-import Filters from "./Filters";
+import FilterNumberOfShops from "./FilterNumberOfShops";
+import FilterWaitingTime from "./FilterWaitingTime";
+import StoreSelect from "./StoreSelect";
+import LocationSelect from "./LocationSelect";
 import Listing from "./Listing";
 
 import "../../styles/BubbleTeaLocator.css";
@@ -66,7 +67,7 @@ class BubbleTeaLocator extends React.Component {
     }
   }
 
-  selectLocation(event) {
+  selectLocation = event => {
     const newLocation = event.target.value;
     this.setState({ selectedLocation: newLocation });
     this.findNearestShops(
@@ -75,9 +76,9 @@ class BubbleTeaLocator extends React.Component {
       this.state.showTopN,
       this.state.showWaitingTime
     );
-  }
+  };
 
-  selectAllStores() {
+  selectAllStores = () => {
     const updatedCheckboxState = this.state.checkboxState;
     const allStores = [];
     const allStoresAreChosen = this.state.allStoresAreChosen;
@@ -109,9 +110,9 @@ class BubbleTeaLocator extends React.Component {
       this.state.showTopN,
       this.state.showWaitingTime
     );
-  }
+  };
 
-  selectSingleStore(event) {
+  selectSingleStore = event => {
     const chosen = this.state.selectedStores;
     const choice = event.target.value;
     const updatedCheckboxState = this.state.checkboxState;
@@ -148,9 +149,9 @@ class BubbleTeaLocator extends React.Component {
       this.state.showTopN,
       this.state.showWaitingTime
     );
-  }
+  };
 
-  selectLimit(event) {
+  selectLimit = event => {
     let newLimit = event.target.value;
     if (newLimit === "all") {
       newLimit = shops.length;
@@ -165,9 +166,9 @@ class BubbleTeaLocator extends React.Component {
       newLimit,
       this.state.showWaitingTime
     );
-  }
+  };
 
-  selectMinutes(event) {
+  selectMinutes = event => {
     const newTimeLimit = event.target.value;
     this.setState({
       showWaitingTime: newTimeLimit
@@ -178,9 +179,14 @@ class BubbleTeaLocator extends React.Component {
       this.state.showTopN,
       newTimeLimit
     );
-  }
+  };
 
-  findNearestShops(chosenLocation, chosenStores, showTopN, showWaitingTime) {
+  findNearestShops = (
+    chosenLocation,
+    chosenStores,
+    showTopN,
+    showWaitingTime
+  ) => {
     let listing = shops;
     for (let shop of listing) {
       calculateOpeningHours(shop);
@@ -200,7 +206,7 @@ class BubbleTeaLocator extends React.Component {
     this.setState({
       nearestShops: listing
     });
-  }
+  };
 
   render() {
     const {
@@ -221,21 +227,29 @@ class BubbleTeaLocator extends React.Component {
           navBarDisplay={navBarDisplay}
         />
         <div data-testid="bubble-tea-locator-page">
-          <Search
-            stores={stores}
-            allStoresAreChosen={allStoresAreChosen}
-            selectAllStores={this.selectAllStores.bind(this)}
-            selectSingleStore={this.selectSingleStore.bind(this)}
-            checkboxState={checkboxState}
-            userLocation={userLocation}
-            onChange={this.selectLocation.bind(this)}
-          />
-          <Filters
-            limits={limits}
-            selectLimit={this.selectLimit.bind(this)}
-            minutes={minutes}
-            selectMinutes={this.selectMinutes.bind(this)}
-          />
+          <div className="search-wrapper">
+            <StoreSelect
+              stores={stores}
+              allStoresAreChosen={allStoresAreChosen}
+              selectAllStores={this.selectAllStores}
+              selectSingleStore={this.selectSingleStore}
+              checkboxState={checkboxState}
+            />
+            <LocationSelect
+              userLocation={userLocation}
+              onChange={this.selectLocation}
+            />
+          </div>
+          <div className="advanced-filters">
+            <FilterNumberOfShops
+              limits={limits}
+              selectLimit={this.selectLimit}
+            />
+            <FilterWaitingTime
+              minutes={minutes}
+              selectMinutes={this.selectMinutes}
+            />
+          </div>
           <Listing nearestShops={nearestShops} />
         </div>
       </React.Fragment>
