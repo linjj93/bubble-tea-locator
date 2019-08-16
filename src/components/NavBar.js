@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import "../styles/NavBar.css";
 import axios from "axios";
 
-const host = process.env.REACT_APP_URL || "http://localhost:3002";
-
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -13,7 +11,7 @@ class NavBar extends React.Component {
   handleLogout() {
     sessionStorage.removeItem("JWT");
     axios
-      .post(`${host}/users/logout`)
+      .post(`${process.env.REST_API_LOCATION}/users/logout`)
       .then(res => {
         console.log("logout");
       })

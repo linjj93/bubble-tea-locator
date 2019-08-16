@@ -2,8 +2,6 @@ import React from "react";
 import axios from "axios";
 import "../styles/Register.css";
 
-const host = process.env.REACT_APP_URL || "http://localhost:3002";
-
 class Register extends React.Component {
   constructor(props) {
     super(props);
@@ -28,7 +26,7 @@ class Register extends React.Component {
     event.preventDefault();
     const { username, password, passwordCfm } = this.state;
     axios
-      .post(`${host}/users/register`, {
+      .post(`${process.env.REST_API_LOCATION}/users/register`, {
         username,
         password,
         passwordCfm

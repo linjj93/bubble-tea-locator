@@ -6,8 +6,6 @@ import { setAuthorizationHeader } from "../../utils/helper";
 import { Table, Button } from "reactstrap";
 import DrinkAdder from "./DrinkAdder";
 
-const host = process.env.REACT_APP_URL || "http://localhost:3002";
-
 class Tracker extends React.Component {
   constructor(props) {
     super(props);
@@ -75,7 +73,7 @@ class Tracker extends React.Component {
     if (jwt && !this.state.loggedInUser) {
       await axios({
         method: "get",
-        url: host + "/users/userprofile",
+        url: process.env.REST_API_LOCATION + "/users/userprofile",
         headers: { Authorization: "Bearer " + jwt }
       })
         .then(res => {
@@ -91,7 +89,9 @@ class Tracker extends React.Component {
 
     await axios({
       method: "get",
-      url: `${host}/users/${this.state.loggedInUser}/drinks`,
+      url: `${process.env.REST_API_LOCATION}/users/${
+        this.state.loggedInUser
+      }/drinks`,
       headers: setAuthorizationHeader()
     })
       .then(res => {
@@ -115,7 +115,7 @@ class Tracker extends React.Component {
     } = this.state;
     await axios({
       method: "post",
-      url: `${host}/users/${loggedInUser}/drinks`,
+      url: `${process.env.REST_API_LOCATION}/users/${loggedInUser}/drinks`,
       headers: setAuthorizationHeader(),
       data: {
         drink,
@@ -150,7 +150,7 @@ class Tracker extends React.Component {
 
       await axios({
         method: "delete",
-        url: `${host}/users/${
+        url: `${process.env.REST_API_LOCATION}/users/${
           this.state.loggedInUser
         }/drinks/${drinkToDeleteId}`,
         headers: setAuthorizationHeader()
@@ -203,7 +203,9 @@ class Tracker extends React.Component {
 
     await axios({
       method: "put",
-      url: `${host}/users/${loggedInUser}/${drinkToEditId}`,
+      url: `${
+        process.env.REST_API_LOCATION
+      }/users/${loggedInUser}/${drinkToEditId}`,
       data: {
         drink,
         price,

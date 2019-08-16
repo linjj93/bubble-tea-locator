@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import "../styles/Dashboard.css";
 import axios from "axios";
 
-const host = process.env.REACT_APP_URL || "http://localhost:3002";
-
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -17,10 +15,10 @@ class Dashboard extends React.Component {
 
   componentDidMount = async () => {
     const jwt = sessionStorage.getItem("JWT");
-    if (jwt && !this.state.loggedInUser) {
+    if (jwt) {
       await axios({
         method: "get",
-        url: host + "/users/userprofile",
+        url: process.env.REST_API_LOCATION + "/users/userprofile",
         headers: { Authorization: "Bearer " + jwt }
       })
         .then(res => {
@@ -46,7 +44,7 @@ class Dashboard extends React.Component {
     if (jwt && !this.state.loggedInUser) {
       await axios({
         method: "get",
-        url: host + "/users/userprofile",
+        url: process.env.REST_API_LOCATION + "/users/userprofile",
         headers: { Authorization: "Bearer " + jwt }
       })
         .then(res => {
@@ -63,8 +61,6 @@ class Dashboard extends React.Component {
   };
 
   handleChange = event => {
-    console.log("chng");
-
     const {
       target: { name, value }
     } = event;
@@ -75,7 +71,7 @@ class Dashboard extends React.Component {
     event.preventDefault();
     const { username, password } = this.state;
     await axios
-      .post(`${host}/users/login`, {
+      .post(`${process.env.REST_API_LOCATION}/users/login`, {
         username,
         password
       })
