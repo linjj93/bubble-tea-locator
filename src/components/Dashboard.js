@@ -13,9 +13,9 @@ class Dashboard extends React.Component {
     };
   }
 
-  componentDidMount = async () => {
+  async componentDidMount() {
     const jwt = sessionStorage.getItem("JWT");
-    if (jwt) {
+    if (jwt && !this.state.loggedInUser) {
       await axios({
         method: "get",
         url: process.env.REACT_APP_REST_API_LOCATION + "/users/userprofile",
@@ -23,9 +23,9 @@ class Dashboard extends React.Component {
       })
         .then(res => {
           this.setState({
+            isLoading: false,
             message: `Welcome, ${res.data.username}!`,
-            loggedInUser: res.data.username,
-            isLoading: false
+            loggedInUser: res.data.username
           });
         })
         .catch(err => {
@@ -37,9 +37,9 @@ class Dashboard extends React.Component {
       });
       this.props.history.push("/");
     }
-  };
+  }
 
-  componentDidUpdate = async () => {
+  async componentDidUpdate() {
     const jwt = sessionStorage.getItem("JWT");
     if (jwt && !this.state.loggedInUser) {
       await axios({
@@ -58,7 +58,7 @@ class Dashboard extends React.Component {
           console.log(err.message);
         });
     }
-  };
+  }
 
   handleChange = event => {
     const {
@@ -101,10 +101,7 @@ class Dashboard extends React.Component {
           <div data-testid="home-page">
             <p className="prompt">{message}</p>
             <div className="category-wrapper">
-              <Link
-                className="category"
-                to={{ pathname: "/find-a-shop", state: { loggedInUser } }}
-              >
+              <Link className="category" to={{ pathname: "/find-a-shop" }}>
                 Find a Shop
               </Link>
               <Link

@@ -5,7 +5,6 @@ import Register from "./Register";
 import Dashboard from "./Dashboard";
 import BubbleTeaLocator from "./Find-A-Shop/BubbleTeaLocator";
 import Tracker from "./Drink-Tracker/Tracker";
-
 import PageNotFound from "./PageNotFound";
 
 export class App extends React.Component {
