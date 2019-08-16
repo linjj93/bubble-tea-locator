@@ -3,7 +3,7 @@ import BubbleTeaLocator from "../components/Find-A-Shop/BubbleTeaLocator";
 import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/react/cleanup-after-each";
 import "jest-dom/extend-expect";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 
 const mockJwt = () => {
@@ -40,9 +40,9 @@ describe("test starting UI", () => {
 });
 
 describe("test effect of StoreSelect menu", () => {
-  test("when user chooses Gong Cha, Gong Cha shows on listing", () => {
+  test("when user chooses Any Store, listing populates", () => {
     const history = createMemoryHistory({
-      initialEntries: ["/"]
+      initialEntries: ["/find-a-shop"]
     });
     const { getByLabelText, getAllByText, getAllByAltText, getByText } = render(
       <Router history={history}>
@@ -51,38 +51,15 @@ describe("test effect of StoreSelect menu", () => {
     );
     const storeMenu = getByLabelText("Which Store(s)?");
     expect(storeMenu).toBeInTheDocument();
-    const checkBox = getByLabelText("Gong Cha");
+    const checkBox = getByLabelText("Any Store");
     const defaultMessage = getByText(
       "Select the store you like and your location!"
     );
     expect(defaultMessage).toBeInTheDocument();
+
     fireEvent.click(checkBox);
     const populatedListing = getAllByText("Select Location First");
     populatedListing.map(shop => expect(shop).toBeInTheDocument());
-    const populatedStore = getAllByAltText("Gong Cha");
-    populatedStore.map(store => expect(store).toBeInTheDocument());
-  });
-
-  test("select all options when Any Store is picked", () => {
-    const history = createMemoryHistory({
-      initialEntries: ["/"]
-    });
-    const { getByLabelText, getAllByAltText } = render(
-      <Router history={history}>
-        <BubbleTeaLocator />
-      </Router>
-    );
-    const gongCha = getByLabelText("Gong Cha");
-    const koi = getByLabelText("Koi");
-    const liHo = getByLabelText("LiHo");
-    const tenRen = getByLabelText("Ten Ren");
-    const tigerSugar = getByLabelText("Tiger Sugar");
-
-    fireEvent.click(gongCha);
-    fireEvent.click(koi);
-    fireEvent.click(liHo);
-    fireEvent.click(tenRen);
-    fireEvent.click(tigerSugar);
 
     const gongChaShops = getAllByAltText("Gong Cha");
     const koiShops = getAllByAltText("Koi");
@@ -103,54 +80,27 @@ describe("test effect of StoreSelect menu", () => {
 
   test("goes back to default when any store is checked, then unchecked", () => {
     const history = createMemoryHistory({
-      initialEntries: ["/"]
+      initialEntries: ["/find-a-shop"]
     });
     const { getByLabelText, getAllByAltText, getByText } = render(
       <Router history={history}>
         <BubbleTeaLocator />
       </Router>
     );
-    const gongCha = getByLabelText("Gong Cha");
-    const koi = getByLabelText("Koi");
-    const liHo = getByLabelText("LiHo");
-    const tenRen = getByLabelText("Ten Ren");
-    const tigerSugar = getByLabelText("Tiger Sugar");
-
-    fireEvent.click(gongCha);
-    fireEvent.click(koi);
-    fireEvent.click(liHo);
-    fireEvent.click(tenRen);
-    fireEvent.click(tigerSugar);
-
-    const gongChaShops = getAllByAltText("Gong Cha");
-    const koiShops = getAllByAltText("Koi");
-    const liHoShops = getAllByAltText("LiHo");
-    const tenRenShops = getAllByAltText("Ten Ren");
-    const tigerSugarShops = getAllByAltText("Tiger Sugar");
-
-    const allShops = [
-      ...gongChaShops,
-      ...koiShops,
-      ...liHoShops,
-      ...tenRenShops,
-      ...tigerSugarShops
-    ];
-
-    allShops.forEach(shop => expect(shop).toBeInTheDocument());
 
     const anyStore = getByLabelText("Any Store");
+
+    fireEvent.click(anyStore);
     fireEvent.click(anyStore);
     const promptMessage = getByText(
       "Select the store you like and your location!"
     );
-    expect(promptMessage).toContainHTML(
-      "<p>Select the store you like and your location!</p>"
-    );
+    expect(promptMessage).toBeInTheDocument();
   });
 
   test("when user chooses Koi and LiHo, Koi and LiHo shops show on listing", () => {
     const history = createMemoryHistory({
-      initialEntries: ["/"]
+      initialEntries: ["/find-a-shop"]
     });
     const { getByLabelText, getAllByText, getAllByAltText, getByText } = render(
       <Router history={history}>

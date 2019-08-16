@@ -3,11 +3,12 @@ import React from "react";
 function StoreSelect(props) {
   const stores = props.stores.map(store => {
     return (
-      <div id={store + "-checkbox"} className="store-checkbox">
+      <div className="store-checkbox" key={store}>
         <label key={store + "-label"} htmlFor={store + "-checkbox"}>
           <input
             onChange={props.selectSingleStore}
-            key={store}
+            id={store + "-checkbox"}
+            key={store + "-checkbox"}
             type="checkbox"
             name="store-select"
             value={store}
@@ -34,7 +35,6 @@ function StoreSelect(props) {
               name="store-select"
               value="all"
               onChange={props.selectAllStores}
-              // checked={!props.atLeastOneStoreNotPicked}
               checked={props.allStoresAreChosen}
             />
             Any Store
