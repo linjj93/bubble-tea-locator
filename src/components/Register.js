@@ -26,7 +26,7 @@ class Register extends React.Component {
     event.preventDefault();
     const { username, password, passwordCfm } = this.state;
     axios
-      .post(`${process.env.REST_API_LOCATION}/users/register`, {
+      .post(`${process.env.REACT_APP_REST_API_LOCATION}/users/register`, {
         username,
         password,
         passwordCfm

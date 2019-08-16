@@ -47,7 +47,7 @@ class BubbleTeaLocator extends React.Component {
     if (jwt && !this.state.loggedInUser) {
       await axios({
         method: "get",
-        url: process.env.REST_API_LOCATION + "/users/userprofile",
+        url: process.env.REACT_APP_REST_API_LOCATION + "/users/userprofile",
         headers: { Authorization: "Bearer " + jwt }
       })
         .then(res => {

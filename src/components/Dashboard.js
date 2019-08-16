@@ -18,7 +18,7 @@ class Dashboard extends React.Component {
     if (jwt) {
       await axios({
         method: "get",
-        url: process.env.REST_API_LOCATION + "/users/userprofile",
+        url: process.env.REACT_APP_REST_API_LOCATION + "/users/userprofile",
         headers: { Authorization: "Bearer " + jwt }
       })
         .then(res => {
@@ -44,7 +44,7 @@ class Dashboard extends React.Component {
     if (jwt && !this.state.loggedInUser) {
       await axios({
         method: "get",
-        url: process.env.REST_API_LOCATION + "/users/userprofile",
+        url: process.env.REACT_APP_REST_API_LOCATION + "/users/userprofile",
         headers: { Authorization: "Bearer " + jwt }
       })
         .then(res => {
@@ -71,7 +71,7 @@ class Dashboard extends React.Component {
     event.preventDefault();
     const { username, password } = this.state;
     await axios
-      .post(`${process.env.REST_API_LOCATION}/users/login`, {
+      .post(`${process.env.REACT_APP_REST_API_LOCATION}/users/login`, {
         username,
         password
       })

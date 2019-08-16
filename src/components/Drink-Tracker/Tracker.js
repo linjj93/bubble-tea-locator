@@ -73,7 +73,7 @@ class Tracker extends React.Component {
     if (jwt && !this.state.loggedInUser) {
       await axios({
         method: "get",
-        url: process.env.REST_API_LOCATION + "/users/userprofile",
+        url: process.env.REACT_APP_REST_API_LOCATION + "/users/userprofile",
         headers: { Authorization: "Bearer " + jwt }
       })
         .then(res => {
@@ -89,7 +89,7 @@ class Tracker extends React.Component {
 
     await axios({
       method: "get",
-      url: `${process.env.REST_API_LOCATION}/users/${
+      url: `${process.env.REACT_APP_REST_API_LOCATION}/users/${
         this.state.loggedInUser
       }/drinks`,
       headers: setAuthorizationHeader()
@@ -115,7 +115,9 @@ class Tracker extends React.Component {
     } = this.state;
     await axios({
       method: "post",
-      url: `${process.env.REST_API_LOCATION}/users/${loggedInUser}/drinks`,
+      url: `${
+        process.env.REACT_APP_REST_API_LOCATION
+      }/users/${loggedInUser}/drinks`,
       headers: setAuthorizationHeader(),
       data: {
         drink,
@@ -150,7 +152,7 @@ class Tracker extends React.Component {
 
       await axios({
         method: "delete",
-        url: `${process.env.REST_API_LOCATION}/users/${
+        url: `${process.env.REACT_APP_REST_API_LOCATION}/users/${
           this.state.loggedInUser
         }/drinks/${drinkToDeleteId}`,
         headers: setAuthorizationHeader()
@@ -204,7 +206,7 @@ class Tracker extends React.Component {
     await axios({
       method: "put",
       url: `${
-        process.env.REST_API_LOCATION
+        process.env.REACT_APP_REST_API_LOCATION
       }/users/${loggedInUser}/${drinkToEditId}`,
       data: {
         drink,

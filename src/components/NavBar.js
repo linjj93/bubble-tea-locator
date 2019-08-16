@@ -11,7 +11,7 @@ class NavBar extends React.Component {
   handleLogout() {
     sessionStorage.removeItem("JWT");
     axios
-      .post(`${process.env.REST_API_LOCATION}/users/logout`)
+      .post(`${process.env.REACT_APP_REST_API_LOCATION}/users/logout`)
       .then(res => {
         console.log("logout");
       })
