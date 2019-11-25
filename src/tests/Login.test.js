@@ -1,7 +1,7 @@
 import React from "react";
 import Login from "../components/Login";
 import "@testing-library/react/cleanup-after-each";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, act } from "@testing-library/react";
 import "jest-dom/extend-expect";
 import { Router } from "react-router-dom";
 import mockAxios from "jest-mock-axios";
@@ -42,7 +42,9 @@ describe("default UI", () => {
       </Router>
     );
     const usernameInput = getByLabelText("Username");
-    fireEvent.change(usernameInput, { target: { value: "user1" } });
+    act(() => {
+      fireEvent.change(usernameInput, { target: { value: "user1" } });
+    });
     expect(getByDisplayValue("user1")).toBeInTheDocument();
   });
 });
@@ -55,8 +57,10 @@ describe("login functionality", () => {
       </Router>
     );
     const loginBtn = getByText("Login");
-    fireEvent.click(loginBtn);
-    mockAxios.mockResponse({ data: { username: "hello", message: "hello" } });
+    act(() => {
+      fireEvent.click(loginBtn);
+      mockAxios.mockResponse({ data: { username: "hello", message: "hello" } });
+    });
     expect(mockAxios.post).toHaveBeenCalledTimes(1);
   });
 });
